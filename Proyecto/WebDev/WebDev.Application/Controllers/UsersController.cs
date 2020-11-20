@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebDev.Application.Models;
+using WebDev.Application.Config;
+using Microsoft.Extensions.Options;
+using WebDev.Services.Entities;
 
 namespace WebDev.Application.Controllers
 {
@@ -13,9 +16,11 @@ namespace WebDev.Application.Controllers
     {
         private static List<User> _userList;
         private static int numUsers;
+        private readonly ApiConfiguration _apiConfiguration;
 
-        public UsersController()
+        public UsersController(IOptions<ApiConfiguration> apiConfiguration)
         {
+            _apiConfiguration = apiConfiguration.Value;
             // Mock User List
             if (_userList is null)
             {
@@ -39,10 +44,18 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            return View();
+            var userFound = _userList.FirstOrDefault(u => u.Id == id);
+
+            if (userFound == null)
+            {
+                return NotFound();
+            }
+
+            return View(userFound);
         }
 
         // GET: UsersController/Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
@@ -51,10 +64,16 @@ namespace WebDev.Application.Controllers
         // POST: UsersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(User user)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    user.Id = ++numUsers;
+                    _userList.Add(user);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -64,19 +83,37 @@ namespace WebDev.Application.Controllers
         }
 
         // GET: UsersController/Edit/5
+        [HttpGet]
         public ActionResult Edit(int id)
         {
-            return View();
+            var userFound = _userList.FirstOrDefault(u => u.Id == id);
+
+            if (userFound == null)
+            {
+                return NotFound();
+            }
+
+            return View(userFound);
         }
 
         // POST: UsersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(User user)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var userFound = _userList.FirstOrDefault(u => u.Id == user.Id);
+                    userFound.Email = user.Email;
+                    userFound.Name = user.Name;
+                    userFound.Username = user.Username;
+                    userFound.Password = user.Password;
+
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(user);
             }
             catch
             {
@@ -85,18 +122,34 @@ namespace WebDev.Application.Controllers
         }
 
         // GET: UsersController/Delete/5
+        [HttpGet]
         public ActionResult Delete(int id)
         {
-            return View();
+            var userFound = _userList.FirstOrDefault(u => u.Id == id);
+
+            if (userFound == null)
+            {
+                return NotFound();
+            }
+
+            return View(userFound);
         }
 
         // POST: UsersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(User user)
         {
             try
             {
+                var userFound = _userList.FirstOrDefault(u => u.Id == user.Id);
+
+                if (userFound == null)
+                {
+                    return View();
+                }
+
+                _userList.Remove(userFound);
                 return RedirectToAction(nameof(Index));
             }
             catch
