@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using WebDev.Api.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.OpenApi.Models;
 
 namespace WebDev.Api
 {
@@ -30,6 +31,7 @@ namespace WebDev.Api
         {
             services.AddControllers();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CnnStr")));
+            services.AddSwaggerGen(s => s.SwaggerDoc("v1", new OpenApiInfo { Title = "User API", Version = "v1" }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +41,13 @@ namespace WebDev.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML. JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint
+            app.UseSwaggerUI(s => s.SwaggerEndpoint("/swagger/v1/swagger.json", "Users API"));
 
             app.UseHttpsRedirection();
 
