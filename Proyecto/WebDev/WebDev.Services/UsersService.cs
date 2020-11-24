@@ -98,6 +98,7 @@ namespace WebDev.Services
             }
 
             return userDtoResponse;
+            //return userDtoResponse.Id;
         }
 
         public async Task<UserDto> UpdateUser(UserDto user)
@@ -120,6 +121,8 @@ namespace WebDev.Services
             }
 
             return userDtoResponse;
+            //return ok();
+            //o return; se le quita arriba Task<UserDto>
         }
 
         public async Task<UserDto> DeleteUser(int id)
@@ -127,7 +130,7 @@ namespace WebDev.Services
             UserDto userDtoResponse = null;
 
             // Sending request to find web api REST service resource to Delete the User using HttpClient
-            HttpResponseMessage response = await _httpClient.DeleteAsync($"api/Users/{id}");
+            HttpResponseMessage response = await _httpClient.DeleteAsync($"api/Users/{id}"); //quitar /api dejar solo /Users
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)
@@ -140,6 +143,7 @@ namespace WebDev.Services
             }
 
             return userDtoResponse;
+            //lo mismo del de arriba
         }
     }
 }

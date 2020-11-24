@@ -26,6 +26,14 @@ namespace WebDev.Application
         {
             services.AddControllersWithViews();
             services.Configure<ApiConfiguration>(Configuration.GetSection("ApiConfiguration"));
+
+            // Enable Session Handler
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time
+            });
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +52,10 @@ namespace WebDev.Application
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            // Configure Sessions
+            app.UseCookiePolicy();
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -51,10 +63,10 @@ namespace WebDev.Application
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                  name: "default",
-                  pattern: "{controller=Home}/{action=Index}/{id?}");
+                          name: "default",
+                          pattern: "{controller=Home}/{action=Index}/{id?}");
                 // Users
-                endpoints.MapControllerRoute(
+                _ = endpoints.MapControllerRoute(
                   name: "Users",
                   pattern: "{controller=Users}/{action=Index}/{id?}");
             });
