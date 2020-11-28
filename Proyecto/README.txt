@@ -7,4 +7,4 @@ Email usuario prueba:
 Contraseña:
 sofi
 
-instrucciones para conectarse a alwaysdata dentro de la carperta apiRest_users_kotlin_jpc
+instrucciones para conectarse a alwaysdata dentro de la carpeta apiRest_users_kotlin_jpc
