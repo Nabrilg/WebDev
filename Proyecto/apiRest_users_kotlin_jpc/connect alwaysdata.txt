@@ -1,0 +1,14 @@
+
+conectarse bd alwaysdata:
+
+Login:
+andres96@javerianacali.edu.co
+contraseña:
+Javeriana2020
+
+usuario de MySQL:
+salacho
+Contraseña:
+Salacho123@123
+
+MySQL host: mysql-salacho.alwaysdata.net

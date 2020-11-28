@@ -184,10 +184,10 @@ namespace WebDev.Application.Controllers
             return new User
             {
                 Id = userDto.Id,
-                Email = userDto.Email,
-                Name = userDto.Name,
-                Username = userDto.Username,
-                Password = userDto.Password
+                Email = userDto.email,
+                Name = userDto.name,
+                Username = userDto.username,
+                Password = userDto.password
             };
         }
 
@@ -195,10 +195,10 @@ namespace WebDev.Application.Controllers
         {
             return UserDto.Build(
               id: user.Id,
-              email: user.Email,
-              name: user.Name,
-              username: user.Username,
-              password: user.Password
+              _email: user.Email,
+              _name: user.Name,
+              _username: user.Username,
+              _password: user.Password
             );
         }
 

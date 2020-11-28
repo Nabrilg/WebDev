@@ -43,7 +43,7 @@ namespace WebDev.Services
             var usersList = new List<UserDto>();
 
             // Sending request to find web api REST service resource to Get All Users using HttpClient
-            HttpResponseMessage response = await _httpClient.GetAsync("api/Users");
+            HttpResponseMessage response = await _httpClient.GetAsync("http://localhost:8082/users");
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)
@@ -63,7 +63,7 @@ namespace WebDev.Services
             UserDto user = null;
 
             // Sending request to find web api REST service resource to Get All Users using HttpClient
-            HttpResponseMessage response = await _httpClient.GetAsync($"api/Users/{id}");
+            HttpResponseMessage response = await _httpClient.GetAsync($"http://localhost:8082/users/{id}");
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)
@@ -85,7 +85,7 @@ namespace WebDev.Services
             StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
 
             // Sending request to find web api REST service resource to Add an User using HttpClient
-            HttpResponseMessage response = await _httpClient.PostAsync($"api/Users", content);
+            HttpResponseMessage response = await _httpClient.PostAsync($"http://localhost:8082/users", content);
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)
@@ -107,8 +107,10 @@ namespace WebDev.Services
 
             StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
 
+            Console.WriteLine(user.Id);
+            //int wa = user.Id;               //aqui quedamos
             // Sending request to find web api REST service resource to Add an User using HttpClient
-            HttpResponseMessage response = await _httpClient.PutAsync($"api/Users/{user.Id}", content);
+            HttpResponseMessage response = await _httpClient.PutAsync($"http://localhost:8082/users/{user.Id}", content);
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)
@@ -130,7 +132,7 @@ namespace WebDev.Services
             UserDto userDtoResponse = null;
 
             // Sending request to find web api REST service resource to Delete the User using HttpClient
-            HttpResponseMessage response = await _httpClient.DeleteAsync($"api/Users/{id}"); //quitar /api dejar solo /Users
+            HttpResponseMessage response = await _httpClient.DeleteAsync($"http://localhost:8082/users/{id}"); //quitar /api dejar solo /Users
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)

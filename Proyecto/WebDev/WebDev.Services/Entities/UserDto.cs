@@ -7,25 +7,25 @@ namespace WebDev.Services.Entities
     public class UserDto
     {
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Name { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string email { get; set; }
+        public string name { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
 
         private UserDto()
         {
 
         }
 
-        public static UserDto Build(int id, string email, string name, string username, string password)
+        public static UserDto Build( int id, string _email, string _name, string _username, string _password)
         {
             return new UserDto
             {
                 Id = id,
-                Email = email,
-                Name = name,
-                Username = username,
-                Password = password
+                email = _email,
+                name = _name,
+                username = _username,
+                password = _password
             };
         }
 
