@@ -1,7 +1,7 @@
 ﻿
 namespace WebDev.Services.Entities
 {
-    public class UserDto
+    public class CreateUserDto
     {
         #region Properties
         public int id { get; set; }
@@ -12,14 +12,14 @@ namespace WebDev.Services.Entities
         #endregion
 
         #region Initialize
-        private UserDto()
+        private CreateUserDto()
         {
 
         }
 
-        public static UserDto Build(int id, string email, string name, string username, string password)
+        public static CreateUserDto Build(int id, string email, string name, string username, string password)
         {
-            return new UserDto
+            return new CreateUserDto
             {
                 id = id,
                 email = email,

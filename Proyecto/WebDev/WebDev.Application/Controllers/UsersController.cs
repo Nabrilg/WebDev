@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,37 +14,30 @@ namespace WebDev.Application.Controllers
     public class UsersController : Controller
     {
         #region Properties
-        private static List<User> userList;
-        private static int numUsers;
+        private List<User> userList;
         private readonly ApiConfiguration apiConfiguration;
         private UsersService usersService;
+        //private static int numUsers;
         #endregion
 
         public UsersController(IOptions<ApiConfiguration> apiConfig)
         {
             apiConfiguration = apiConfig.Value;
             usersService = new UsersService(apiConfiguration.ApiUsersUrl);
-            //// Mock User List
-            //if (userList is null)
-            //{
-            //    userList = new List<User>()
-            //    {
-            //        new User{Id=1, Email="Julio.Robles@email.com", Name="Julio Robles", Username="jrobles", Password="Password"},
-            //        new User{Id=2, Email="Pilar.Lopez@email.com", Name="Pilar Lopez", Username="plopez", Password="Password"},
-            //        new User{Id=3, Email="Felipe.Daza@email.com", Name="Felipe Daza", Username="fdaza", Password="Password"},
-            //    };
-            //    numUsers = userList.Count;
-            //}
+            // MockUserList();
         }
 
         // GET: UsersController
         public async Task<ActionResult> Index()
         {
             // Set Object Model
-            IList<UserDto> users = await usersService.GetUsers();
-
-            userList = users.Select(userDto => MapperToUser(userDto)).ToList();
-
+            IList<UserDto> users = await usersService.GetUsers(HttpContext.Session.GetString("Token"));
+            if (users != null)
+            {
+                userList = users.Select(userDto => MapperToUser(userDto)).ToList();
+            }
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["Name"] = HttpContext.Session.GetString("Name");
             return View(userList);
         }
 
@@ -51,7 +45,7 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            var userFound = await usersService.GetUserById(id);
+            var userFound = await usersService.GetUserById(id, HttpContext.Session.GetString("Token"));
 
             if (userFound == null)
             {
@@ -79,7 +73,7 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var userAdded = await usersService.AddUser(MapperToUserDto(user));
+                    var userIdAdded = await usersService.AddUser(MapperToCreateUserDto(user), HttpContext.Session.GetString("Token"));
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -94,7 +88,7 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
-            var userFound = await usersService.GetUserById(id);
+            var userFound = await usersService.GetUserById(id, HttpContext.Session.GetString("Token"));
 
             if (userFound == null)
             {
@@ -113,13 +107,16 @@ namespace WebDev.Application.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    var userModified = await usersService.UpdateUser(MapperToUserDto(user));
+                var userFound = await usersService.GetUserById(user.Id, HttpContext.Session.GetString("Token"));
 
-                    return RedirectToAction(nameof(Index));
+                if (userFound == null)
+                {
+                    return NotFound();
                 }
-                return View(user);
+
+                var isSuccessUserModified = await usersService.UpdateUser(MapperToUpdateUserDto(user), user.Id, HttpContext.Session.GetString("Token"));
+
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -131,7 +128,7 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
-            var userFound = await usersService.GetUserById(id);
+            var userFound = await usersService.GetUserById(id, HttpContext.Session.GetString("Token"));
 
             if (userFound == null)
             {
@@ -150,14 +147,14 @@ namespace WebDev.Application.Controllers
         {
             try
             {
-                var userFound = await usersService.GetUserById(user.Id);
+                var userFound = await usersService.GetUserById(user.Id, HttpContext.Session.GetString("Token"));
 
                 if (userFound == null)
                 {
                     return View();
                 }
 
-                var userDeleted = await usersService.DeleteUser(user.Id);
+                var isSuccessUserDeleted = await usersService.DeleteUser(user.Id, HttpContext.Session.GetString("Token"));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -171,23 +168,45 @@ namespace WebDev.Application.Controllers
         {
             return new User
             {
-                Id = userDto.Id,
-                Email = userDto.Email,
-                Name = userDto.Name,
-                Username = userDto.Username,
-                Password = userDto.Password
+                Id = userDto.id,
+                Email = userDto.email,
+                Name = userDto.name,
+                Username = userDto.username,
+                Password = userDto.password
             };
         }
 
-        private UserDto MapperToUserDto(User user)
+        private UpdateUserDto MapperToUpdateUserDto(User user)
         {
-            return UserDto.Build(
+            return UpdateUserDto.Build(
+              name: user.Name,
+              username: user.Username
+            );
+        }
+
+        private CreateUserDto MapperToCreateUserDto(User user)
+        {
+            return CreateUserDto.Build(
               id: user.Id,
               email: user.Email,
               name: user.Name,
               username: user.Username,
               password: user.Password
             );
+        }
+
+        private void MockUserList()
+        {
+            if (userList is null)
+            {
+                userList = new List<User>()
+                {
+                    new User{Id=1, Email="Julio.Robles@email.com", Name="Julio Robles", Username="jrobles", Password="Password"},
+                    new User{Id=2, Email="Pilar.Lopez@email.com", Name="Pilar Lopez", Username="plopez", Password="Password"},
+                    new User{Id=3, Email="Felipe.Daza@email.com", Name="Felipe Daza", Username="fdaza", Password="Password"},
+                };
+                //numUsers = userList.Count;
+            }
         }
     }
 }
