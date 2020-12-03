@@ -96,6 +96,7 @@ namespace WebDev.Application.Controllers
             {
                 HttpContext.Session.SetString("IsUserLogged", "true");
                 HttpContext.Session.SetString("User", login.Email);
+                HttpContext.Session.SetString("Token", loginAuthentication.Token);
                 return true;
             }
             HttpContext.Session.SetString("IsUserLogged", "false");
