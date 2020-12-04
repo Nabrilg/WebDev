@@ -31,18 +31,18 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            IList<UserDto> users = await usersService.GetUsers();
+            IList<UserDto> users = await usersService.GetUsers(HttpContext.Session.GetString("Token"));
 
             _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
 
             return View(_userList);
         }
 
-        // GET: UsersController/Details/5
+        //GET: UsersController/Details/5
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            var userFound = await usersService.GetUserById(id);
+            var userFound = await usersService.GetUserById(id, HttpContext.Session.GetString("Token"));
 
             if (userFound == null)
             {
@@ -69,7 +69,7 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var userAdded = await usersService.AddUser(MapperToUserDto(user));
+                    var userAdded = await usersService.AddUser(MapperToCreateUserDto(user), HttpContext.Session.GetString("Token"));
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -83,7 +83,7 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
-            var userFound = await usersService.GetUserById(id);
+            var userFound = await usersService.GetUserById(id, HttpContext.Session.GetString("Token"));
 
             if (userFound == null)
             {
@@ -95,7 +95,7 @@ namespace WebDev.Application.Controllers
             return View(user);
         }
 
-        // POST: UsersController/Edit/5
+       // POST: UsersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(User user)
@@ -104,7 +104,7 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var userModified = await usersService.UpdateUser(MapperToUserDto(user));
+                    var userModified = await usersService.UpdateUser(MapperToUpdatedUserDto(user), HttpContext.Session.GetString("Token"));
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -116,44 +116,44 @@ namespace WebDev.Application.Controllers
             }
         }
         // GET: UsersController/Delete/5
-        [HttpGet]
-        public async Task<ActionResult> Delete(int id)
-        {
-            var userFound = await usersService.GetUserById(id);
+        //[HttpGet]
+        //public async Task<ActionResult> Delete(int id)
+        //{
+        //    var userFound = await usersService.GetUserById(id);
 
-            if (userFound == null)
-            {
-                return NotFound();
-            }
+        //    if (userFound == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var user = MapperToUser(userFound);
+        //    var user = MapperToUser(userFound);
 
-            return View(user);
-        }
+        //    return View(user);
+        //}
 
         // POST: UsersController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(User user)
-        {
-            try
-            {
-                var userFound = await usersService.GetUserById(user.Id);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Delete(User user)
+        //{
+        //    try
+        //    {
+        //        var userFound = await usersService.GetUserById(user.Id);
 
-                if (userFound == null)
-                {
-                    return View();
-                }
+        //        if (userFound == null)
+        //        {
+        //            return View();
+        //        }
 
-                var userDeleted = await usersService.DeleteUser(user.Id);
+        //        var userDeleted = await usersService.DeleteUser(user.Id);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         private User MapperToUser(UserDto userDto)
         {
@@ -170,6 +170,25 @@ namespace WebDev.Application.Controllers
         private UserDto MapperToUserDto(User user)
         {
             return UserDto.Build(
+              id: user.Id,
+              email: user.Email,
+              name: user.Name,
+              username: user.Username,
+              password: user.Password
+            );
+        }
+        private CreateUserDto MapperToCreateUserDto(User user)
+        {
+            return CreateUserDto.Build(
+              email: user.Email,
+              name: user.Name,
+              username: user.Username,
+              password: user.Password
+            );
+        }
+        private UpdatedUserDto MapperToUpdatedUserDto(User user)
+        {
+            return UpdatedUserDto.Build(
               id: user.Id,
               email: user.Email,
               name: user.Name,

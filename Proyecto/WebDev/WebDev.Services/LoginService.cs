@@ -8,50 +8,41 @@ using System.Threading.Tasks;
 using WebDev.Services.Entities;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using RestSharp;
+using System.Net;
 
 namespace WebDev.Services
 {
     public class LoginService
     {
-        private HttpClient _httpClient;
+        private readonly RestClient _restClient;
         private string BaseUrl { get; }
         public LoginService(string baseUrl)
         {
             BaseUrl = baseUrl;
+            _restClient = new RestClient();
 
-            _httpClient = new HttpClient();
-
-            SetupHttpConnection(_httpClient, baseUrl);
         }
-        private void SetupHttpConnection(HttpClient httpClient, string baseUrl)
-        {
-            //Passing service base url  
-            httpClient.BaseAddress = new Uri(baseUrl);
 
-            httpClient.DefaultRequestHeaders.Clear();
-
-            //Define request data format  
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
         public async Task<TokenDto> LoginUsers(LoginDto login)
         {
             TokenDto tokenDtoResponse = null;
+            // Assign the URL
+            _restClient.BaseUrl = new Uri($"{BaseUrl}login");
+            // Wait until to get a response
+            _restClient.Timeout = -1;
+            // Assign the Method Type
+            var request = new RestRequest(Method.POST);
             var objectJson = JsonConvert.SerializeObject(login);
-           // var stringJson = JsonConvert.SerializeObject(objectJson);
-          //  StringContent content = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
-            // StringContent content = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
-            //content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            // Sending request to find web api REST service resource to Add an User using HttpClient
-            HttpResponseMessage response = await _httpClient.PostAsync($"login", new StringContent(objectJson, Encoding.UTF8, "application/json"));
-            //HttpResponseMessage response = await _httpClient.PostAsJsonAsync($"login", login);
+            request.AddParameter("application/json", objectJson, ParameterType.RequestBody);
+            // Execute the Call
+            IRestResponse response = await _restClient.ExecuteAsync(request);
 
             // Checking the response is successful or not which is sent using HttpClient
-            // Checking the response is successful or not which is sent using HttpClient
-            if (response.IsSuccessStatusCode)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
                 // Storing the content response recieved from web api
-                var responseContent = response.Content.ReadAsStringAsync().Result;
-
+                var responseContent = response.Content;
                 //Deserializing the response recieved from web api and storing into the Employee list
                 tokenDtoResponse = JsonConvert.DeserializeObject<TokenDto>(responseContent);
             }
