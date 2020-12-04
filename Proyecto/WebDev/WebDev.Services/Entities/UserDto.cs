@@ -1,15 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace WebDev.Services.Entities
 {
     public class UserDto
     {
+        [JsonProperty("id")]
         public int Id { get; set; }
+
+        [JsonProperty("email")]
         public string Email { get; set; }
+
+        [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("username")]
         public string Username { get; set; }
+
+        [JsonProperty("password")]
         public string Password { get; set; }
 
         private UserDto()

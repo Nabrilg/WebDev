@@ -17,27 +17,20 @@ namespace WebDev.Application.Controllers
         private static List<User> _userList;
         private static int numUsers;
 
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
 
         private readonly ApiConfiguration _apiConfiguration;
         private UsersService usersService;
 
-        public UsersController(IOptions<ApiConfiguration> apiConfiguration)
+        // Inject the context in order to access the JWToken got in HomeController
+        public UsersController(IOptions<ApiConfiguration> apiConfiguration, IHttpContextAccessor httpContextAccessor)
         {
 
             _apiConfiguration = apiConfiguration.Value;
-            usersService = new UsersService(_apiConfiguration.ApiUsersUrl);
+            _httpContextAccessor = httpContextAccessor;
+            usersService = new UsersService(_apiConfiguration.ApiUsersUrl, _session.GetString("Token"));
 
-            // Mock User List
-            //if (_userList is null)
-            //{
-            //    _userList = new List<User>()
-            //    {
-            //      new User{Id=1, Email="Julio.Robles@email.com", Name="Julio Robles", Username="jrobles", Password="Password"},
-            //      new User{Id=2, Email="Pilar.Lopez@email.com", Name="Pilar Lopez", Username="plopez", Password="Password"},
-            //     new User{Id=3, Email="Felipe.Daza@email.com", Name="Felipe Daza", Username="fdaza", Password="Password"},
-            //    };
-            //    numUsers = _userList.Count;
-            //}
         }
 
         // GET: UsersController
@@ -64,6 +57,7 @@ namespace WebDev.Application.Controllers
 
             return View(user);
         }
+
         // GET: UsersController/Create
         [HttpGet]
         public ActionResult Create()
@@ -90,6 +84,7 @@ namespace WebDev.Application.Controllers
                 return View();
             }
         }
+
         // GET: UsersController/Edit/5
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
@@ -126,6 +121,7 @@ namespace WebDev.Application.Controllers
                 return View();
             }
         }
+
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {

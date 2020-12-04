@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WebDev.Application.Models
 {
@@ -6,6 +7,7 @@ namespace WebDev.Application.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required(ErrorMessage = "El email es obligatorio")]
         public string Email { get; set; }
         [Required(ErrorMessage = "El nombre es obligatorio")]
