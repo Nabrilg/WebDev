@@ -147,24 +147,35 @@ namespace WebDev.Services
 
             return userDtoResponse;
         }
-        //public async Task<UserDto> DeleteUser(int id)
-        //{
-        //    UserDto userDtoResponse = null;
+        public async Task<UserDto> DeleteUser(UpdatedUserDto user, string CurrentToken)
+        {
+            UserDto userDtoResponse = null;
+            // Assign the URL
+            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{user.id}");
 
-        //    // Sending request to find web api REST service resource to Delete the User using HttpClient
-        //    HttpResponseMessage response = await _httpClient.DeleteAsync($"api/Users/{id}");
+            // Wait until to get a response
+            _restClient.Timeout = -1;
 
-        //    // Checking the response is successful or not which is sent using HttpClient
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        // Storing the content response recieved from web api
-        //        var responseContent = response.Content.ReadAsStringAsync().Result;
+            // Assign the Method Type
+            var request = new RestRequest(Method.DELETE);
 
-        //        // Deserializing the response recieved from web api
-        //        userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
-        //    }
+            // Assign the Headers
+            request.AddHeader("Authorization", CurrentToken);
+            request.AddHeader("Content-Type", "application/json");
 
-        //    return userDtoResponse;
-        //}
+            // Execute the Call
+            IRestResponse response = await _restClient.ExecuteAsync(request);
+            // Checking the response is successful or not which is sent using HttpClient
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                // Storing the content response recieved from web api
+                var responseContent = response.Content;
+
+                // Deserializing the response recieved from web api
+                userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
+            }
+
+            return userDtoResponse;
+        }
     }
 }

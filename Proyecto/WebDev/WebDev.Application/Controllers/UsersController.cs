@@ -116,44 +116,44 @@ namespace WebDev.Application.Controllers
             }
         }
         // GET: UsersController/Delete/5
-        //[HttpGet]
-        //public async Task<ActionResult> Delete(int id)
-        //{
-        //    var userFound = await usersService.GetUserById(id);
+        [HttpGet]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var userFound = await usersService.GetUserById(id, HttpContext.Session.GetString("Token"));
 
-        //    if (userFound == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (userFound == null)
+            {
+                return NotFound();
+            }
 
-        //    var user = MapperToUser(userFound);
+            var user = MapperToUser(userFound);
 
-        //    return View(user);
-        //}
+            return View(user);
+        }
 
-        // POST: UsersController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Delete(User user)
-        //{
-        //    try
-        //    {
-        //        var userFound = await usersService.GetUserById(user.Id);
+        //POST: UsersController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(User user)
+        {
+            try
+            {
+                var userFound = await usersService.GetUserById(user.Id, HttpContext.Session.GetString("Token"));
 
-        //        if (userFound == null)
-        //        {
-        //            return View();
-        //        }
+                if (userFound == null)
+                {
+                    return View();
+                }
 
-        //        var userDeleted = await usersService.DeleteUser(user.Id);
+                var userDeleted = await usersService.DeleteUser(MapperToUpdatedUserDto(user), HttpContext.Session.GetString("Token"));
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
         private User MapperToUser(UserDto userDto)
         {
