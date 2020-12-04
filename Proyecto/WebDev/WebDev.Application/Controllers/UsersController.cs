@@ -15,37 +15,33 @@ namespace WebDev.Application.Controllers
     public class UsersController : Controller
     {
         private static List<User> _userList;
-        private static int numUsers;
 
 
         private readonly ApiConfiguration _apiConfiguration;
         private UsersService usersService;
 
+        public TokenDto tokenDto;
+
         public UsersController(IOptions<ApiConfiguration> apiConfiguration)
         {
 
             _apiConfiguration = apiConfiguration.Value;
-            usersService = new UsersService(_apiConfiguration.ApiUsersUrl); 
+            usersService = new UsersService(_apiConfiguration.ApiUsersUrl);
             
-            // Mock User List
-            //if (_userList is null)
-            //{
-            //    _userList = new List<User>()
-            //    {
-            //      new User{Id=1, Email="Julio.Robles@email.com", Name="Julio Robles", Username="jrobles", Password="Password"},
-            //      new User{Id=2, Email="Pilar.Lopez@email.com", Name="Pilar Lopez", Username="plopez", Password="Password"},
-            //     new User{Id=3, Email="Felipe.Daza@email.com", Name="Felipe Daza", Username="fdaza", Password="Password"},
-            //    };
-            //    numUsers = _userList.Count;
-            //}
         }
 
         // GET: UsersController
         [HttpGet]
         public async Task<ActionResult> Index()
         {
+            usersService.TokenDto = HttpContext.Session.GetString("Token");
+
             IList<UserDto> users = await usersService.GetUsers();
-            _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
+            _userList = users.Select(userDto => MapperToUser(userDto)).ToList(); 
+            
+            //Session variables
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["Token "] = HttpContext.Session.GetString("Token");
             return View(_userList);
         }
 
@@ -53,8 +49,10 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            var userFound = await usersService.GetUserById(id);
 
+            usersService.TokenDto = HttpContext.Session.GetString("Token");
+            var userFound = await usersService.GetUserById(id);
+            //Check if the user is not found.
             if (userFound == null)
             {
                 return NotFound();
@@ -68,6 +66,9 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            //Session variables
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["Token "] = HttpContext.Session.GetString("Token");
             return View();
         }
 
@@ -80,7 +81,9 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var userAdded = await usersService.AddUser(MapperToUserDto(user));
+                    usersService.TokenDto = HttpContext.Session.GetString("Token");
+
+                    var userAdded = await usersService.AddUser(MapperToUserDtoCreate(user));
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -94,6 +97,8 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
+            usersService.TokenDto = HttpContext.Session.GetString("Token");
+
             var userFound = await usersService.GetUserById(id);
 
             if (userFound == null)
@@ -103,6 +108,9 @@ namespace WebDev.Application.Controllers
 
             var user = MapperToUser(userFound);
 
+            //Session variables
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["Token "] = HttpContext.Session.GetString("Token");
             return View(user);
         }
 
@@ -115,7 +123,9 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var userModified = await usersService.UpdateUser(MapperToUserDto(user));
+                    usersService.TokenDto = HttpContext.Session.GetString("Token");
+
+                    await usersService.UpdateUser(MapperToUserDto(user));
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -129,6 +139,8 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
+            usersService.TokenDto = HttpContext.Session.GetString("Token");
+
             var userFound = await usersService.GetUserById(id);
 
             if (userFound == null)
@@ -138,6 +150,9 @@ namespace WebDev.Application.Controllers
 
             var user = MapperToUser(userFound);
 
+            //Session variables
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["Token "] = HttpContext.Session.GetString("Token");
             return View(user);
         }
 
@@ -148,6 +163,8 @@ namespace WebDev.Application.Controllers
         {
             try
             {
+                usersService.TokenDto = HttpContext.Session.GetString("Token");
+
                 var userFound = await usersService.GetUserById(user.Id);
 
                 if (userFound == null)
@@ -155,7 +172,7 @@ namespace WebDev.Application.Controllers
                     return View();
                 }
 
-                var userDeleted = await usersService.DeleteUser(user.Id);
+                await usersService.DeleteUser(user.Id);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -169,11 +186,11 @@ namespace WebDev.Application.Controllers
         {
             return new User
             {
-                Id = userDto.Id,
-                Email = userDto.Email,
-                Name = userDto.Name,
-                Username = userDto.Username,
-                Password = userDto.Password
+                Id = userDto.id,
+                Email = userDto.email,
+                Name = userDto.name,
+                Username = userDto.username,
+                Password = userDto.password
             };
         }
 
@@ -187,5 +204,16 @@ namespace WebDev.Application.Controllers
               password: user.Password
             );
         }
+
+        private CreateUserDto MapperToUserDtoCreate(User user)
+        {
+            return CreateUserDto.Build(
+              email: user.Email,
+              name: user.Name,
+              username: user.Username,
+              password: user.Password
+            );
+        }
+
     }
 }
