@@ -30,13 +30,15 @@ namespace WebDev.Application.Controllers
             _apiConfiguration = apiConfiguration.Value;
             _httpContextAccessor = httpContextAccessor;
             usersService = new UsersService(_apiConfiguration.ApiUsersUrl, _session.GetString("Token"));
-
         }
 
         // GET: UsersController
         [HttpGet]
         public async Task<ActionResult> Index()
         {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
             IList<UserDto> users = await usersService.GetUsers();
             _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
             return View(_userList);

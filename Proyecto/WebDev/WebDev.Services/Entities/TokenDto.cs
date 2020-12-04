@@ -23,15 +23,5 @@ namespace WebDev.Services.Entities
         {
 
         }
-
-        public static TokenDto Build(string token, string userId, string name)
-        {
-            return new TokenDto
-            {
-                Token = token,
-                UserId = userId,
-                Name = name
-            };
-        }
     }
 }
