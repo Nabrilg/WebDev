@@ -48,6 +48,9 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
             var userFound = await usersService.GetUserById(id);
 
             if (userFound == null)
@@ -64,6 +67,9 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
             return View();
         }
 
@@ -72,6 +78,9 @@ namespace WebDev.Application.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(User user)
         {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
             try
             {
                 if (ModelState.IsValid)
@@ -91,6 +100,9 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
             var userFound = await usersService.GetUserById(id);
 
             if (userFound == null)
@@ -108,6 +120,9 @@ namespace WebDev.Application.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(User user)
         {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
             try
             {
                 if (ModelState.IsValid)
@@ -127,6 +142,9 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
             var userFound = await usersService.GetUserById(id);
 
             if (userFound == null)
@@ -144,6 +162,9 @@ namespace WebDev.Application.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(User user)
         {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
             try
             {
                 var userFound = await usersService.GetUserById(user.Id);

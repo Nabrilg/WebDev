@@ -9,7 +9,7 @@ RAM               = 500   # Default memory size in MB
 
 # Network configuration
 DOMAIN            = ".example.com"
-NETWORK           = " "
+NETWORK           = "192.168.56."
 NETMASK           = "255.255.255.0"
 
 # Default Virtualbox .box
@@ -30,6 +30,8 @@ Vagrant.configure(2) do |config|
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     config.vm.synced_folder "./KotlinAPI", "/home/vagrant/KotlinAPI"
+    config.vm.synced_folder "./kotlin-concepts-service-api", "/home/vagrant/kotlin-concepts-service-api"
+
 
     config.vm.define name do |machine|
       machine.vm.box   = box
