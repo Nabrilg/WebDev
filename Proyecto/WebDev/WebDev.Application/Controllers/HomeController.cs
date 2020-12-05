@@ -1,20 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using WebDev.Application.Config;
 using WebDev.Application.Models;
-using Microsoft.AspNetCore.Http;
+using WebDev.Services;
+using WebDev.Services.Entities;
 
 namespace WebDev.Application.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private LoginService loginService;
+        private readonly ApiConfiguration _apiConfiguration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IOptions<ApiConfiguration> apiConfiguration)
         {
             _logger = logger;
+            _apiConfiguration = apiConfiguration.Value;
+            loginService = new LoginService(_apiConfiguration.ApiLoginUrl);
         }
 
         public IActionResult Index()
@@ -51,7 +59,8 @@ namespace WebDev.Application.Controllers
                 if (ModelState.IsValid)
                 {
                     // Llamar a la API para validar el Login
-                    if (await IsValidUser(login.Email, login.Password))
+                    var logVal = await loginService.ValidUser(MapperToLoginDto(login));
+                    if (IsValidUser(logVal))
                     {
                         return RedirectToAction(nameof(Index));
                     }
@@ -71,16 +80,35 @@ namespace WebDev.Application.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> IsValidUser(string email, string password)
+        private bool IsValidUser(TokenDto tokenDto)
         {
-            if (email.Equals("demouser@email.com") && password.Equals("Password*01"))
+            if (tokenDto != null)
             {
                 HttpContext.Session.SetString("IsUserLogged", "true");
-                HttpContext.Session.SetString("User", email);
+                HttpContext.Session.SetString("User", tokenDto.Name);
+                HttpContext.Session.SetString("TokenData", tokenDto.Token);
                 return true;
             }
             HttpContext.Session.SetString("IsUserLogged", "false");
             return false;
+        }
+
+        private Login MapperToLogin(LoginDto loginDto)
+        {
+            return new Login
+            {
+                Email = loginDto.Email,
+                Password = loginDto.Password,
+                RememberMe = false
+            };
+        }
+
+        private LoginDto MapperToLoginDto(Login login)
+        {
+            return LoginDto.Build(
+              email : login.Email,       
+              password: login.Password
+            );
         }
     }
 }

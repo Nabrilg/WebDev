@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,7 @@ namespace WebDev.Application.Controllers
         {
             _apiConfiguration = apiConfiguration.Value;
             usersService = new UsersService(_apiConfiguration.ApiUsersUrl);
-
-
+            
             // Mock User List
             ///if (_userList is null)
             //{
@@ -40,7 +40,10 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["User"] = HttpContext.Session.GetString("User");
             IList<UserDto> users = await usersService.GetUsers();
+
 
             _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
 
@@ -79,6 +82,7 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    usersService.Token = HttpContext.Session.GetString("TokenData");
                     var userAdded = await usersService.AddUser(MapperToUserDto(user));
                 }
 
@@ -89,8 +93,6 @@ namespace WebDev.Application.Controllers
                 return View();
             }
         }
-
-
 
         // POST: UsersController/Edit/5
         [HttpGet]
