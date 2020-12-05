@@ -1,10 +1,12 @@
-﻿
+﻿using Newtonsoft.Json;
+
 namespace WebDev.Services.Entities
 {
     public class IdResponseDto
     {
         #region Properties
-        public long id { get; set; }
+        [JsonProperty("id")]
+        public long Id { get; set; }
         #endregion
 
         #region Initialize
@@ -14,7 +16,7 @@ namespace WebDev.Services.Entities
         {
             return new IdResponseDto()
             {
-                id = id
+                Id = id
             };
         }
         #endregion

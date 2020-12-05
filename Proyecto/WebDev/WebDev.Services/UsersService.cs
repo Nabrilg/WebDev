@@ -24,6 +24,7 @@ namespace WebDev.Services
             httpClientHandler = new HttpClientHandler();
             httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
             httpClient = new HttpClient(httpClientHandler);
+            httpClient.DefaultRequestHeaders.Clear();
             SetupHttpConnection(httpClient, baseUrl);
         }
         #endregion
@@ -59,8 +60,15 @@ namespace WebDev.Services
 
                 var usersList = new List<UserDto>();
 
+                // Building a request with an empty json so the api can consume it
+                HttpRequestMessage request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    Content = new StringContent("{}", Encoding.UTF8, "application/json")
+                };
+
                 // Sending request to find web api REST service resource to Get All Users using HttpClient
-                HttpResponseMessage response = await httpClient.GetAsync("users/getAllUsers");
+                HttpResponseMessage response = await httpClient.SendAsync(request);
 
                 // Checking the response is successful or not which is sent using HttpClient
                 if (response.IsSuccessStatusCode)
@@ -89,8 +97,16 @@ namespace WebDev.Services
                 // Asuming the token change or expires every certain time
                 UpdateCurrentToken(token);
 
+                // Building a request with an empty json so the api can consume it
+                HttpRequestMessage request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri($"{httpClient.BaseAddress}/{id}"),
+                    Content = new StringContent("{}", Encoding.UTF8, "application/json")
+                };
+
                 // Sending request to find web api REST service resource to Get All Users using HttpClient
-                HttpResponseMessage response = await httpClient.GetAsync($"users/getById/{id}");
+                HttpResponseMessage response = await httpClient.SendAsync(request);
 
                 // Checking the response is successful or not which is sent using HttpClient
                 if (response.IsSuccessStatusCode)
@@ -117,10 +133,16 @@ namespace WebDev.Services
                 // Asuming the token change or expires every certain time
                 UpdateCurrentToken(token);
 
-                StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                // Building the request
+                HttpRequestMessage request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = new Uri($"{httpClient.BaseAddress}"),
+                    Content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json")
+                };
 
                 // Sending request to find web api REST service resource to Add an User using HttpClient
-                HttpResponseMessage response = await httpClient.PostAsync($"users/create", content);
+                HttpResponseMessage response = await httpClient.SendAsync(request);
 
                 // Checking the response is successful or not which is sent using HttpClient
                 if (response.IsSuccessStatusCode)
@@ -144,10 +166,16 @@ namespace WebDev.Services
             // Asuming the token change or expires every certain time
             UpdateCurrentToken(token);
 
-            StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+            // Building the request
+            HttpRequestMessage request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Put,
+                RequestUri = new Uri($"{httpClient.BaseAddress}/{id}"),
+                Content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json")
+            };
 
             // Sending request to find web api REST service resource to Add an User using HttpClient
-            HttpResponseMessage response = await httpClient.PutAsync($"users/edit/{id}", content);
+            HttpResponseMessage response = await httpClient.SendAsync(request);
 
             return response.IsSuccessStatusCode;
         }
@@ -157,8 +185,16 @@ namespace WebDev.Services
             // Asuming the token change or expires every certain time
             UpdateCurrentToken(token);
 
-            // Sending request to find web api REST service resource to Delete the User using HttpClient
-            HttpResponseMessage response = await httpClient.DeleteAsync($"users/delete/{id}");
+            // Building a request with an empty json so the api can consume it
+            HttpRequestMessage request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"{httpClient.BaseAddress}/{id}"),
+                Content = new StringContent("{}", Encoding.UTF8, "application/json")
+            };
+
+            // Sending request to find web api REST service resource to Get All Users using HttpClient
+            HttpResponseMessage response = await httpClient.SendAsync(request);
 
             return response.IsSuccessStatusCode;
         }

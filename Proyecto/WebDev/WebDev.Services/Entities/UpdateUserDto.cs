@@ -1,22 +1,34 @@
-﻿
+﻿using Newtonsoft.Json;
+
 namespace WebDev.Services.Entities
 {
     public class UpdateUserDto
     {
         #region Properties
-        public string name { get; set; }
-        public string username { get; set; }
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("username")]
+        public string Username { get; set; }
+
+        [JsonProperty("password")]
+        public string Password { get; set; }
         #endregion
 
         #region Initialize
         public UpdateUserDto() { }
 
-        public static UpdateUserDto Build(string name, string username)
+        public static UpdateUserDto Build(string email, string name, string username, string password)
         {
             return new UpdateUserDto()
             {
-                name = name,
-                username = username
+                Email = email,
+                Name = name,
+                Username = username,
+                Password = password
             };
         }
         #endregion

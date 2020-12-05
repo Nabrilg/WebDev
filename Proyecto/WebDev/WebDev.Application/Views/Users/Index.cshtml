@@ -26,9 +26,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Username)
                 </th>
-                @*<th>
+                <th>
                     @Html.DisplayNameFor(model => model.Password)
-                </th>*@
+                </th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -48,9 +48,10 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Username)
                     </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Password)
-                    </td>*@
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Password)*@
+                        ********
+                    </td>
                     <td>
                         <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                         <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Details</a>

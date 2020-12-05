@@ -17,14 +17,12 @@ namespace WebDev.Application.Controllers
         private List<User> userList;
         private readonly ApiConfiguration apiConfiguration;
         private UsersService usersService;
-        //private static int numUsers;
         #endregion
 
         public UsersController(IOptions<ApiConfiguration> apiConfig)
         {
             apiConfiguration = apiConfig.Value;
             usersService = new UsersService(apiConfiguration.ApiUsersUrl);
-            // MockUserList();
         }
 
         // GET: UsersController
@@ -168,30 +166,32 @@ namespace WebDev.Application.Controllers
         {
             return new User
             {
-                Id = userDto.id,
-                Email = userDto.email,
-                Name = userDto.name,
-                Username = userDto.username,
-                Password = userDto.password
+                Id = userDto.Id,
+                Email = userDto.Email,
+                Name = userDto.Name,
+                Username = userDto.Username,
+                Password = userDto.Password
             };
         }
 
         private UpdateUserDto MapperToUpdateUserDto(User user)
         {
             return UpdateUserDto.Build(
-              name: user.Name,
-              username: user.Username
+                email:user.Email,
+                name: user.Name,
+                username: user.Username,
+                password: user.Password
             );
         }
 
         private CreateUserDto MapperToCreateUserDto(User user)
         {
             return CreateUserDto.Build(
-              id: user.Id,
-              email: user.Email,
-              name: user.Name,
-              username: user.Username,
-              password: user.Password
+                id: user.Id,
+                email: user.Email,
+                name: user.Name,
+                username: user.Username,
+                password: user.Password
             );
         }
 
@@ -205,7 +205,6 @@ namespace WebDev.Application.Controllers
                     new User{Id=2, Email="Pilar.Lopez@email.com", Name="Pilar Lopez", Username="plopez", Password="Password"},
                     new User{Id=3, Email="Felipe.Daza@email.com", Name="Felipe Daza", Username="fdaza", Password="Password"},
                 };
-                //numUsers = userList.Count;
             }
         }
     }

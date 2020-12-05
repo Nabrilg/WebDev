@@ -72,8 +72,8 @@ namespace WebDev.Application.Controllers
                     {
                         HttpContext.Session.SetString("IsUserLogged", "true");
                         HttpContext.Session.SetString("Email", login.Email);
-                        HttpContext.Session.SetString("Token", token.token);
-                        HttpContext.Session.SetString("Name", token.name);
+                        HttpContext.Session.SetString("Token", token.Token);
+                        HttpContext.Session.SetString("Name", token.Name);
                         return RedirectToAction(nameof(Index));
                     }
                     else

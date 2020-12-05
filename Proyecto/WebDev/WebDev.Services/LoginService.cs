@@ -46,10 +46,10 @@ namespace WebDev.Services
             StringContent content = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
 
             // Sending request to find web api REST service resource to Add an User using HttpClient
-            HttpResponseMessage response = await httpClient.PostAsync($"login", content);
+            HttpResponseMessage response = await httpClient.PostAsync($"",content);
 
             // Checking the response is successful or not which is sent using HttpClient
-            if (response.IsSuccessStatusCode)
+           if (response.IsSuccessStatusCode)
             {
                 // Storing the content response recieved from web api
                 var responseContent = response.Content.ReadAsStringAsync().Result;

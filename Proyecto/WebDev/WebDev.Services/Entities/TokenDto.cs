@@ -1,12 +1,18 @@
-﻿
+﻿using Newtonsoft.Json;
+
 namespace WebDev.Services.Entities
 {
     public class TokenDto
     {
         #region Properties
-        public string token { get; set; }
-        public string userId { get; set; }
-        public string name { get; set; }
+        [JsonProperty("token")]
+        public string Token { get; set; }
+
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
         #endregion
 
         #region Initialize
@@ -19,9 +25,9 @@ namespace WebDev.Services.Entities
         {
             return new TokenDto
             {
-                token = token,
-                userId = userId,
-                name = name
+                Token = token,
+                UserId = userId,
+                Name = name
             };
         }
         #endregion
