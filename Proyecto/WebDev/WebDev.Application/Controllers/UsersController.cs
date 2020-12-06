@@ -42,6 +42,7 @@ namespace WebDev.Application.Controllers
         {
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
             ViewData["User"] = HttpContext.Session.GetString("User");
+            usersService.Token = HttpContext.Session.GetString("TokenData");
             IList<UserDto> users = await usersService.GetUsers();
 
 
@@ -82,7 +83,6 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    usersService.Token = HttpContext.Session.GetString("TokenData");
                     var userAdded = await usersService.AddUser(MapperToUserDto(user));
                 }
 
@@ -94,7 +94,7 @@ namespace WebDev.Application.Controllers
             }
         }
 
-        // POST: UsersController/Edit/5
+        // GET: UsersController/Edit/5
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
