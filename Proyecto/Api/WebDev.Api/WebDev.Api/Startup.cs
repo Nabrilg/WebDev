@@ -10,21 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using WebDev.api.Context;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using WebDev.api.Context;
 
-namespace WebDev.api
+namespace WebDev.Api
 {
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
+    using WebDev.Api.Context;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
+    using Microsoft.EntityFrameworkCore.SqlServer;
     using Microsoft.OpenApi.Models;
-    using WebDev.api.Context;
 
     public class Startup
     {

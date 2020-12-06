@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebDev.api.Context;
-using WebDev.api.Model;
+using WebDev.Api.Context;
+using WebDev.Api.Model;
 
-namespace WebDev.api.Controllers
+namespace WebDev.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
