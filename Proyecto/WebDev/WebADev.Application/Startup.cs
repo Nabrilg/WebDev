@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using WebDev.Application.Config;
 
-namespace WebADev.Application
+namespace WebDev.Application
 {
     public class Startup
     {
@@ -26,6 +22,14 @@ namespace WebADev.Application
         {
             services.AddControllersWithViews();
             services.Configure<ApiConfiguration>(Configuration.GetSection("ApiConfiguration"));
+
+            // Enable Session Handler
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time
+            });
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +48,10 @@ namespace WebADev.Application
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            // Configure Sessions
+            app.UseCookiePolicy();
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -51,8 +59,8 @@ namespace WebADev.Application
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                          name: "default",
+                          pattern: "{controller=Home}/{action=Index}/{id?}");
                 // Users
                 endpoints.MapControllerRoute(
                   name: "Users",

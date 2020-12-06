@@ -1,146 +1,196 @@
-﻿using System;
-
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Net;
 using System.Threading.Tasks;
 using WebDev.Services.Entities;
-using Newtonsoft.Json;
 
 namespace WebDev.Services
 {
     public class UsersService
     {
-        private string BaseUrl { get; }
-        private HttpClient _httpClient;
-        // Agregar Vble a nivel de la clase del controlador
-        private HttpClientHandler _httpClientHandler;
+        private readonly RestClient _restClient;
+        public string BaseUrl { get; }
+        public string LoginToken { get; set; }
 
         public UsersService(string baseUrl)
         {
             BaseUrl = baseUrl;
-            _httpClientHandler = new HttpClientHandler();
-            _httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-            _httpClient = new HttpClient(_httpClientHandler);
-            SetupHttpConnection(_httpClient, baseUrl);
-
-
+            _restClient = new RestClient();
         }
 
-        private void SetupHttpConnection(HttpClient httpClient, string baseUrl)
+        public async Task<UserDto> UpdateUser(UserDto user)
         {
-            //Passing service base url  
-            httpClient.BaseAddress = new Uri(baseUrl);
+            UserDto DtoResponse = null;
 
-            httpClient.DefaultRequestHeaders.Clear();
+            // Assign the URL
+            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{user.Id}");
 
-            //Define request data format  
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            // Wait until to get a response
+            _restClient.Timeout = -1;
+
+            // Assign the Method Type
+            var request = new RestRequest(Method.PUT);
+
+            // Assign the Headers
+            request.AddHeader("Authorization", LoginToken);
+            request.AddHeader("Content-Type", "application/json");
+
+            // Assign the Body
+            var content = JsonConvert.SerializeObject(user);
+            request.AddParameter("application/json", content, ParameterType.RequestBody);
+            // Execute the Call
+            IRestResponse response = await _restClient.ExecuteAsync(request);
+
+            // Checking the response is successful or not which is sent using HttpClient
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+                // Storing the content response recieved from web api 
+                var responseContent = response.Content;
+
+                //Deserializing the response recieved from web api
+                DtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
+            }
+
+            return DtoResponse;
         }
+
+
+        public async Task<UserDto> GetUserById(int id)
+        {
+            UserDto userById = null;
+
+            // Assign the URL
+            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{id}");
+            // Wait until to get a response
+            _restClient.Timeout = -1;
+            // Assign the Method Type
+            var request = new RestRequest(Method.GET);
+            // Assign the Headers
+            request.AddHeader("Authorization", LoginToken);
+            request.AddHeader("Content-Type", "application/json");
+
+            // Execute the Call
+            IRestResponse response = await _restClient.ExecuteAsync(request);
+            // Checking the response is successful or not which is sent using HttpClient
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                // Storing the content response recieved from web api
+                var responseContent = response.Content;
+
+                //Deserializing the response recieved from web api and storing into the Employee list
+                userById = JsonConvert.DeserializeObject<UserDto>(responseContent);
+            }
+
+            return userById;
+        }
+
+
+        public async Task<UserDto> DeleteUser(int id)
+        {
+            UserDto DtoResponse = null;
+
+            // Assign the URL
+            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{id}");
+
+            // Wait until to get a response
+            _restClient.Timeout = -1;
+
+            // Assign the Method Type
+            var request = new RestRequest(Method.DELETE);
+
+            // Assign the Headers
+            request.AddHeader("Authorization", LoginToken);
+            request.AddHeader("Content-Type", "application/json");
+            // Execute the Call
+            IRestResponse response = await _restClient.ExecuteAsync(request);
+
+            // Checking the response is successful or not which is sent using HttpClient
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+                // Storing the content response recieved from web api
+                var responseContent = response.Content;
+
+                // Deserializing the response recieved from web api
+                DtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
+            }
+
+            return DtoResponse;
+        }
+
 
         public async Task<List<UserDto>> GetUsers()
         {
             var usersList = new List<UserDto>();
 
-            // Sending request to find web api REST service resource to Get All Users using HttpClient
-            HttpResponseMessage response = await _httpClient.GetAsync("api/Users");
+            // Assign the URL
+            _restClient.BaseUrl = new Uri($"{BaseUrl}users");
+
+            // Wait until to get a response
+            _restClient.Timeout = -1;
+
+            // Assign the Method Type
+            var request = new RestRequest(Method.GET);
+
+            // Assign the Headers
+            request.AddHeader("Authorization", LoginToken);
+            request.AddHeader("Content-Type", "application/json");
+
+            // Execute the Call
+            IRestResponse response = await _restClient.ExecuteAsync(request);
 
             // Checking the response is successful or not which is sent using HttpClient
-            if (response.IsSuccessStatusCode)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
                 // Storing the content response recieved from web api
-                var responseContent = response.Content.ReadAsStringAsync().Result;
+                var responseContent = response.Content;
 
                 //Deserializing the response recieved from web api and storing into the Employee list
                 usersList = JsonConvert.DeserializeObject<List<UserDto>>(responseContent);
             }
-
             return usersList;
-        }
-        public async Task<UserDto> GetUserById(int id)
-        {
-            UserDto user = null;
-
-            // Sending request to find web api REST service resource to Get All Users using HttpClient
-            HttpResponseMessage response = await _httpClient.GetAsync($"api/Users/{id}");
-
-            // Checking the response is successful or not which is sent using HttpClient
-            if (response.IsSuccessStatusCode)
-            {
-                // Storing the content response recieved from web api
-                var responseContent = response.Content.ReadAsStringAsync().Result;
-
-                //Deserializing the response recieved from web api and storing into the Employee list
-                user = JsonConvert.DeserializeObject<UserDto>(responseContent);
-            }
-
-            return user;
         }
 
         public async Task<UserDto> AddUser(UserDto user)
         {
-            UserDto userDtoResponse = null;
+            UserDto DtoResponse = null;
 
-            StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+            // Assign the URL
+            _restClient.BaseUrl = new Uri($"{BaseUrl}users");
 
-            // Sending request to find web api REST service resource to Add an User using HttpClient
-            HttpResponseMessage response = await _httpClient.PostAsync($"api/Users", content);
+            // Wait until to get a response
+            _restClient.Timeout = -1;
+
+            // Assign the Method Type
+            var request = new RestRequest(Method.POST);
+
+            // Assign the Headers
+            request.AddHeader("Authorization", LoginToken);
+            request.AddHeader("Content-Type", "application/json");
+
+            // Assign the Body
+            var content = JsonConvert.SerializeObject(user);
+            request.AddParameter("application/json", content, ParameterType.RequestBody);
+
+            // Execute the Call
+            IRestResponse response = await _restClient.ExecuteAsync(request);
 
             // Checking the response is successful or not which is sent using HttpClient
-            if (response.IsSuccessStatusCode)
+            if (response.StatusCode == HttpStatusCode.Created)
             {
                 // Storing the content response recieved from web api
-                var responseContent = response.Content.ReadAsStringAsync().Result;
+                var responseContent = response.Content;
 
                 //Deserializing the response recieved from web api and storing into the Employee list
-                userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
+                DtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
             }
 
-            return userDtoResponse;
+            return DtoResponse;
         }
 
-        public async Task<UserDto> UpdateUser(UserDto user)
-        {
-            UserDto userDtoResponse = null;
-
-            StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-
-            // Sending request to find web api REST service resource to Add an User using HttpClient
-            HttpResponseMessage response = await _httpClient.PutAsync($"api/Users/{user.Id}", content);
-
-            // Checking the response is successful or not which is sent using HttpClient
-            if (response.IsSuccessStatusCode)
-            {
-                // Storing the content response recieved from web api
-                var responseContent = response.Content.ReadAsStringAsync().Result;
-
-                //Deserializing the response recieved from web api
-                userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
-            }
-
-            return userDtoResponse;
-        }
-
-        public async Task<UserDto> DeleteUser(int id)
-        {
-            UserDto userDtoResponse = null;
-
-            // Sending request to find web api REST service resource to Delete the User using HttpClient
-            HttpResponseMessage response = await _httpClient.DeleteAsync($"api/Users/{id}");
-
-            // Checking the response is successful or not which is sent using HttpClient
-            if (response.IsSuccessStatusCode)
-            {
-                // Storing the content response recieved from web api
-                var responseContent = response.Content.ReadAsStringAsync().Result;
-
-                // Deserializing the response recieved from web api
-                userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
-            }
-
-            return userDtoResponse;
-        }
+        
 
     }
+
 }

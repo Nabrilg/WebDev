@@ -26,6 +26,7 @@ namespace WebADev.Application.Controllers
         {
             _apiConfiguration = apiConfiguration.Value;
             usersService = new UsersService(_apiConfiguration.ApiUsersUrl);
+            
 
             //// Mock User List
             //if (_userList is null)
@@ -44,6 +45,9 @@ namespace WebADev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
+            ViewData["IsUserLoggerd"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["User"] = HttpContext.Session.GetString("User");
+            usersService.LoginToken = HttpContext.Session.GetString("TokenData");
             IList<UserDto> users = await usersService.GetUsers();
 
             _userList = users.Select(userDto => MapperToUser(userDto)).ToList();

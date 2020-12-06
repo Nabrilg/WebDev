@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebADev.Application", "WebADev.Application\WebADev.Application.csproj", "{A91242C1-CB49-4DC6-8710-BA86B3B30D58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDev.Application", "WebADev.Application\WebDev.Application.csproj", "{A91242C1-CB49-4DC6-8710-BA86B3B30D58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDev.Services", "WebDev.Services\WebDev.Services.csproj", "{BA1F9735-C6D2-4291-90DE-5BB10C4ED379}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDev.Services", "WebDev.Services\WebDev.Services.csproj", "{BA1F9735-C6D2-4291-90DE-5BB10C4ED379}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
