@@ -172,7 +172,7 @@ namespace WebDev.Application.Controllers
                     return View();
                 }
 
-                await usersService.DeleteUser(user.Id);
+                await usersService.DeleteUser(MapperToUserDto(user));
 
                 return RedirectToAction(nameof(Index));
             }

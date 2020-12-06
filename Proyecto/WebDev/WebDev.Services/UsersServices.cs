@@ -21,7 +21,7 @@ namespace WebDev.Services
         // Agregar Vble a nivel de la clase del controlador
         private HttpClientHandler _httpClientHandler;
 
-       
+
 
         public UsersService(string baseUrl)
 
@@ -47,10 +47,10 @@ namespace WebDev.Services
 
             //Define request data format  
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
-            
+
+
         }
-        
+
         public async Task<List<UserDto>> GetUsers()
         {
             var usersList = new List<UserDto>();
@@ -78,13 +78,13 @@ namespace WebDev.Services
                 var responseContent = response.Content;
 
                 //Deserializing the response recieved from web api and storing into the users List
-                usersList = JsonConvert.DeserializeObject<List<UserDto>> (responseContent);
+                usersList = JsonConvert.DeserializeObject<List<UserDto>>(responseContent);
             }
             return usersList;
         }
 
         public async Task<UserDto> GetUserById(int id)
-        { 
+        {
             UserDto user = null;
 
 
@@ -117,7 +117,7 @@ namespace WebDev.Services
 
             return user;
         }
-        
+
         public async Task<ResponseCreatedDto> AddUser(CreateUserDto user)
         {
             ResponseCreatedDto userCreatedDtoResponse = null;
@@ -187,7 +187,7 @@ namespace WebDev.Services
             }
 
         }
-        public async Task DeleteUser(int id)
+        public async Task DeleteUser(UserDto user)
         {
             UserDto userDtoResponse = null;
 
@@ -195,16 +195,21 @@ namespace WebDev.Services
 
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}/users/{id}");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}/users/{user.id}");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
 
-            // Assign the Method Type
-            var request = new RestRequest(Method.DELETE);
+                // Assign the Method Type
+                var request = new RestRequest(Method.DELETE);
 
             // Assign the Headers
             request.AddHeader("Authorization", TokenDto);
+            request.AddHeader("Content-Type", "application/json");
+
+           // Assign the Body
+            var content = JsonConvert.SerializeObject(user);
+            request.AddParameter("application/json", content, ParameterType.RequestBody);
 
 
             // Execute the Call
