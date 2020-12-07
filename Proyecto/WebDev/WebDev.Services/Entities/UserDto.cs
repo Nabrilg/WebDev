@@ -1,28 +1,33 @@
-﻿namespace WebDev.Services.Entities
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace WebDev.Services.Entities
 {
-  public class UserDto
-  {
-    public int id { get; set; }
-    public string email { get; set; }
-    public string name { get; set; }
-    public string username { get; set; }
-    public string password { get; set; }
-
-    private UserDto()
+    public class UserDto
     {
+        public int Id { get; set; }
+        public string Email { get; set; }
+        public string Name { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+
+        public UserDto()
+        {
+
+        }
+
+        public static UserDto Build(int id, string email, string name, string username, string password)
+        {
+            return new UserDto
+            {
+                Id = id,
+                Email = email,
+                Name = name,
+                Username = username,
+                Password = password
+            };
+        }
 
     }
-
-    public static UserDto Build(int id, string email, string name, string username, string password)
-    {
-      return new UserDto
-      {
-        id = id,
-        email = email,
-        name = name,
-        username = username,
-        password = password
-      };
-    }
-  }
 }

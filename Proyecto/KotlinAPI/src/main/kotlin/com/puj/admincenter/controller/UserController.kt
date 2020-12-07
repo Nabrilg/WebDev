@@ -31,7 +31,6 @@ class UserController(private val userService: UserService) {
     }
 
     @GetMapping(
-        consumes = ["application/json"],
         produces = ["application/json"]
     )
     fun getAllUsers(@RequestHeader(value="authorization", required=true) authorization: String): ResponseEntity<*>
@@ -39,7 +38,6 @@ class UserController(private val userService: UserService) {
 
     @GetMapping(
         value = ["/{userId}"],
-        consumes = ["application/json"],
         produces = ["application/json"]
     )
     fun getById(@PathVariable userId: Int,
@@ -68,7 +66,6 @@ class UserController(private val userService: UserService) {
 
     @DeleteMapping(
         value = ["/{userId}"],
-        consumes = ["application/json"],
         produces = ["application/json"]
     )
     fun delete(@PathVariable userId: Int,

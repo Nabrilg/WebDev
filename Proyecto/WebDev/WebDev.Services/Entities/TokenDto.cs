@@ -1,23 +1,29 @@
-﻿namespace WebDev.Services.Entities
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace WebDev.Services.Entities
 {
-  public class TokenDto
-  {
-    public string Token { get; set; }
-    public int UserId { get; set; }
-    public string Name { get; set; }
-
-    private TokenDto()
+    public class TokenDto
     {
-    }
+        public int UserId { get; set; }
+        public string Token { get; set; }
+        public string Name { get; set; }
 
-    public static TokenDto Build(string token, int userId, string name)
-    {
-      return new TokenDto
-      {
-        Token = token,
-        UserId = userId,
-        Name = name
-      };
+        private TokenDto()
+        {
+
+        }
+
+        public static TokenDto Build(int userId, string token, string name)
+        {
+            return new TokenDto
+            {
+                UserId = userId,
+                Name = name,
+                Token = token
+            };
+        }
+
     }
-  }
 }
