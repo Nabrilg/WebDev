@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -58,7 +57,7 @@ namespace WebDev.Application.Controllers
                 if (ModelState.IsValid)
                 {
                     // Llamar a la API para validar el Login
-                    if (await IsValidUser(login.Email, login.Password))
+                    if (await IsValidUser(login.Email, login.Password)!=null)
                     {
                         return RedirectToAction(nameof(Index));
                     }
@@ -78,7 +77,7 @@ namespace WebDev.Application.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> IsValidUser(string email, string password)
+        private async Task<String> IsValidUser(string email, string password)
         {
             LoginDto loginDto = new LoginDto();
             loginDto.email = email;
@@ -86,10 +85,14 @@ namespace WebDev.Application.Controllers
 
             var ansTokenDto = await usersService.ValidateUser(loginDto);
 
-            if (ansTokenDto)
+
+
+            if (ansTokenDto!= null)
             {
-                //HttpContext.Session.SetString("IsUserLogged", "true");
-                //HttpContext.Session.SetString("User", email);
+                HttpContext.Session.SetString("IsUserLogged", "true");
+                HttpContext.Session.SetString("User", email);
+                HttpContext.Session.SetString("Token", ansTokenDto);
+
                 return ansTokenDto;
             }
             else

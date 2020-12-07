@@ -31,7 +31,8 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            IList<UserDto> users = await usersService.GetUsers();
+            var token = HttpContext.Session.GetString("Token");
+            IList<UserDto> users = await usersService.GetUsers(token);
 
             _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
 
@@ -63,7 +64,8 @@ namespace WebDev.Application.Controllers
                 {
                     user.Id = ++numUsers;
                     _userList.Add(user);
-                    var ans = await usersService.AddUser(MapperToUserDto(user));
+                    var token = HttpContext.Session.GetString("Token");
+                    var ans = await usersService.AddUser(MapperToUserDto(user),token);
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -100,7 +102,8 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var ans =  await usersService.UpdateUserById(MapperToUserDto(user));
+                    var token = HttpContext.Session.GetString("Token");
+                    var ans =  await usersService.UpdateUserById(MapperToUserDto(user),token);
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -116,7 +119,9 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            var ans = await usersService.GetUserById(id);
+            var token = HttpContext.Session.GetString("Token");
+
+            var ans = await usersService.GetUserById(id,token);
             var userFound = _userList.FirstOrDefault(u => u.Id == id);
 
 
@@ -156,8 +161,8 @@ namespace WebDev.Application.Controllers
                 {
                     return View();
                 }
-
-                var ans= await usersService.DeleteUserById(user.Id);
+                var token = HttpContext.Session.GetString("Token");
+                var ans = await usersService.DeleteUserById(user.Id,token);
                 return RedirectToAction(nameof(Index));
             }
             catch

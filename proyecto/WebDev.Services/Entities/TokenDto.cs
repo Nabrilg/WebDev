@@ -13,7 +13,7 @@ namespace WebDev.Services.Entities
         #endregion
 
         #region Constructores
-        private TokenDto() { }
+        public TokenDto() { }
         #endregion
 
         #region Buildings

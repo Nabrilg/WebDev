@@ -16,7 +16,6 @@ namespace WebDev.Services
         private readonly RestClient _restClient;
  
         private string BaseUrl { get; }
-        public static TokenDto TokenDto { get; set; }
 
         public UsersService(string baseUrl)
         {
@@ -24,8 +23,10 @@ namespace WebDev.Services
             _restClient = new RestClient();
         }
 
-        public async Task<bool> ValidateUser(LoginDto login)
+        public async Task<string> ValidateUser(LoginDto login)
         {
+            var ansToken = new TokenDto();
+
             _restClient.BaseUrl = new Uri($"{BaseUrl}login");
             _restClient.Timeout = -1;
 
@@ -39,14 +40,13 @@ namespace WebDev.Services
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var responseContent = response.Content;
-                TokenDto = JsonConvert.DeserializeObject<TokenDto>(responseContent);
-                return true;
+                ansToken = JsonConvert.DeserializeObject<TokenDto>(responseContent);
             }
-            return false;
+            return ansToken.token;
         }
 
 
-        public async Task<List<UserDto>> GetUsers()
+        public async Task<List<UserDto>> GetUsers(String token)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace WebDev.Services
 
                 var request = new RestRequest(Method.GET);
 
-                request.AddHeader("Authorization", TokenDto.token);
+                request.AddHeader("Authorization", token);
                 request.AddHeader("Content-Type", "application/json");
 
                 IRestResponse response = await _restClient.ExecuteAsync(request);
@@ -81,7 +81,7 @@ namespace WebDev.Services
             }
             
         }
-        public async Task<bool> AddUser(UserDto user)
+        public async Task<bool> AddUser(UserDto user,String token)
         {
 
             try
@@ -96,7 +96,7 @@ namespace WebDev.Services
                 var content = JsonConvert.SerializeObject(user);
                 request.AddParameter("application/json", content, ParameterType.RequestBody);
 
-                request.AddHeader("Authorization", TokenDto.token);
+                request.AddHeader("Authorization", token);
                 request.AddHeader("Content-Type", "application/json");
 
                 IRestResponse response = await _restClient.ExecuteAsync(request);
@@ -121,7 +121,7 @@ namespace WebDev.Services
 
         }
 
-        public async Task<bool> DeleteUserById(int id)
+        public async Task<bool> DeleteUserById(int id, String token)
         {
 
             try
@@ -133,7 +133,7 @@ namespace WebDev.Services
                 var request = new RestRequest(Method.DELETE);
 
 
-                request.AddHeader("Authorization", TokenDto.token);
+                request.AddHeader("Authorization", token);
                 request.AddHeader("Content-Type", "application/json");
 
                 IRestResponse response = await _restClient.ExecuteAsync(request);
@@ -157,7 +157,7 @@ namespace WebDev.Services
 
         }
 
-        public async Task<UserDto> GetUserById(int id)
+        public async Task<UserDto> GetUserById(int id, String token)
         {
 
             try
@@ -170,7 +170,7 @@ namespace WebDev.Services
                 var request = new RestRequest(Method.GET);
 
 
-                request.AddHeader("Authorization", TokenDto.token);
+                request.AddHeader("Authorization", token);
                 request.AddHeader("Content-Type", "application/json");
 
                 IRestResponse response = await _restClient.ExecuteAsync(request);
@@ -195,7 +195,7 @@ namespace WebDev.Services
         }
 
 
-        public async Task<UserDto> UpdateUserById(UserDto user)
+        public async Task<UserDto> UpdateUserById(UserDto user, String token)
         {
 
             try
@@ -209,7 +209,7 @@ namespace WebDev.Services
                 var content = JsonConvert.SerializeObject(user);
                 request.AddParameter("application/json", content, ParameterType.RequestBody);
 
-                request.AddHeader("Authorization", TokenDto.token);
+                request.AddHeader("Authorization", token);
                 request.AddHeader("Content-Type", "application/json");
 
                 IRestResponse response = await _restClient.ExecuteAsync(request);
