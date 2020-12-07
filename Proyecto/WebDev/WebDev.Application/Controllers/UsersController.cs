@@ -1,153 +1,181 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using WebDev.Application.Config;
+using WebDev.Application.Mappers;
 using WebDev.Application.Models;
+using WebDev.Logins.Entities;
+using WebDev.Services;
+using WebDev.Services.Entities;
+
 
 namespace WebDev.Application.Controllers
 {
-  public class UsersController : Controller
-  {
-    private static List<User> _userList;
-    private static int numUsers;
-
-    public UsersController()
+    public class UsersController : Controller
     {
-      // Mock User List
-      if (_userList is null)
-      {
-        _userList = new List<User>()
+
+        private static List<User> _userList;
+        private static int numUsers;
+
+        private readonly ApiConfiguration _apiConfiguration;
+        private UsersService usersService;
+        private TokenDto token;
+
+        public UsersController(IOptions<ApiConfiguration> apiConfiguration)
         {
-          new User{Id=1, Email="Julio.Robles@email.com", Name="Julio Robles", Username="jrobles", Password="Password"},
-          new User{Id=2, Email="Pilar.Lopez@email.com", Name="Pilar Lopez", Username="plopez", Password="Password"},
-          new User{Id=3, Email="Felipe.Daza@email.com", Name="Felipe Daza", Username="fdaza", Password="Password"}
-        };
-        numUsers = _userList.Count;
-      }
-    }
-
-    // GET: UsersController
-    [HttpGet]
-    public ActionResult Index()
-    {
-      return View(_userList);
-    }
-
-    // GET: UsersController/Details/5
-    [HttpGet]
-    public ActionResult Details(int id)
-    {
-      var userFound = _userList.FirstOrDefault(u => u.Id == id);
-
-      if (userFound == null)
-      {
-        return NotFound();
-      }
-
-      return View(userFound);
-    }
-
-    // GET: UsersController/Create
-    [HttpGet]
-    public ActionResult Create()
-    {
-      return View();
-    }
-
-    // POST: UsersController/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Create(User user)
-    {
-      try
-      {
-        if (ModelState.IsValid)
-        {
-          user.Id = ++numUsers;
-          _userList.Add(user);
+            _apiConfiguration = apiConfiguration.Value;
+            usersService = new UsersService(_apiConfiguration.ApiUsersUrl);
         }
 
-        return RedirectToAction(nameof(Index));
-      }
-      catch
-      {
-        return View();
-      }
-    }
-
-    // GET: UsersController/Edit/5
-    [HttpGet]
-    public ActionResult Edit(int id)
-    {
-      var userFound = _userList.FirstOrDefault(u => u.Id == id);
-
-      if (userFound == null)
-      {
-        return NotFound();
-      }
-
-      return View(userFound);
-    }
-
-    // POST: UsersController/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Edit(User user)
-    {
-      try
-      {
-        if (ModelState.IsValid)
+        // GET: UsersController
+        [HttpGet]
+        public async Task<ActionResult> Index()
         {
-          var userFound = _userList.FirstOrDefault(u => u.Id == user.Id);
-          userFound.Email = user.Email;
-          userFound.Name = user.Name;
-          userFound.Username = user.Username;
-          userFound.Password = user.Password;
+            string vartoken = HttpContext.Session.GetString("Token");
 
-          return RedirectToAction(nameof(Index));
-        }
-        return View(user);
-      }
-      catch
-      {
-        return View();
-      }
-    }
+            IList <UserDto> users = await usersService.GetUsers(vartoken);
 
-    // GET: UsersController/Delete/5
-    [HttpGet]
-    public ActionResult Delete(int id)
-    {
-      var userFound = _userList.FirstOrDefault(u => u.Id == id);
+            _userList = users.Select(userDto => UserMappers.MapperToUser(userDto)).ToList();
 
-      if (userFound == null)
-      {
-        return NotFound();
-      }
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
 
-      return View(userFound);
-    }
-
-    // POST: UsersController/Delete/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Delete(User user)
-    {
-      try
-      {
-        var userFound = _userList.FirstOrDefault(u => u.Id == user.Id);
-
-        if (userFound == null)
-        {
-          return View();
+            return View(_userList);
         }
 
-        _userList.Remove(userFound);
-        return RedirectToAction(nameof(Index));
-      }
-      catch
-      {
-        return View();
-      }
+        // GET: UsersController/Details/5
+        [HttpGet]
+        public async Task<ActionResult> Details(int id)
+        {
+            string vartoken = HttpContext.Session.GetString("Token");
+
+            var userFound = await usersService.GetUserById(id, vartoken);
+
+            if (userFound == null)
+            {
+                return NotFound();
+            }
+
+            var user = UserMappers.MapperToUser(userFound);
+
+            return View(user);
+        }
+
+        // GET: UsersController/Create
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: UsersController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(User user)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    string vartoken = HttpContext.Session.GetString("Token");
+
+                    var userAdded = await usersService.AddUser(UserMappers.MapperToUserDto(user), vartoken);
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: UsersController/Edit/5
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
+        {
+            string vartoken = HttpContext.Session.GetString("Token");
+
+            var userFound = await usersService.GetUserById(id, vartoken);
+
+            if (userFound == null)
+            {
+                return NotFound();
+            }
+
+            var user = UserMappers.MapperToUser(userFound);
+
+            return View(user);
+        }
+
+        // POST: UsersController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(User user)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    string vartoken = HttpContext.Session.GetString("Token");
+
+                    var userModified = await usersService.UpdateUser(UserMappers.MapperToUserDto(user), vartoken);
+
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(user);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: UsersController/Delete/5
+        [HttpGet]
+        public async Task<ActionResult> Delete(int id)
+        {
+            string vartoken = HttpContext.Session.GetString("Token");
+
+            var userFound = await usersService.GetUserById(id, vartoken);
+
+            if (userFound == null)
+            {
+                return NotFound();
+            }
+
+            var user = UserMappers.MapperToUser(userFound);
+
+            return View(user);
+        }
+
+        // POST: UsersController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(User user)
+        {
+            try
+            {
+                string vartoken = HttpContext.Session.GetString("Token");
+
+                var userFound = await usersService.GetUserById(user.Id, vartoken);
+
+                if (userFound == null)
+                {
+                    return View();
+                }
+
+                var userDeleted = await usersService.DeleteUser(user.Id, vartoken);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
-  }
 }

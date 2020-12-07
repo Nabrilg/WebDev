@@ -2,17 +2,22 @@
 
 namespace WebDev.Application.Models
 {
-    public class User
+    public class Login
     {
-        [Key]
-        public int Id { get; set; }
         [Required(ErrorMessage = "El email es obligatorio")]
+        [EmailAddress]
         public string Email { get; set; }
-        [Required(ErrorMessage = "El nombre es obligatorio")]
-        public string Name { get; set; }
-        [Required(ErrorMessage = "El nombre de usuario es obligatorio")]
-        public string Username { get; set; }
+
         [Required(ErrorMessage = "El password es obligatorio")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [Display(Name = "Remember me?")]
+        public bool RememberMe { get; set; }
+
+        public string Token { get; set; }
+
+        public string UserId { get; set; }
+        public string Name { get; set; }
     }
 }
