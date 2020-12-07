@@ -179,25 +179,33 @@ namespace WebDev.Services
             return userDtoResponse;
         }
 
-        public async Task<UserDto> DeleteUser(int id)
-        {
-            UserDto userDtoResponse = null;
+        public async Task<UserDto> DeleteUser(int id) {
+            UserDto user = null;
+            //Rest with RestSharp
+            // Assign the URL
+            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{id}");
 
-            // Sending request to find web api REST service resource to Delete the User using HttpClient
-            //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer");
-            HttpResponseMessage response = await _httpClient.DeleteAsync($"users/{id}");
+            // Wait until to get a response
+            _restClient.Timeout = -1;
 
-            // Checking the response is successful or not which is sent using HttpClient
-            if (response.IsSuccessStatusCode)
+            // Assign the Method Type
+            var request = new RestRequest(Method.DELETE);
+
+            // Assign the Headers
+            request.AddHeader("Authorization", "");
+            request.AddHeader("Content-Type", "application/json");
+
+            // Execute the Call
+            IRestResponse response = await _restClient.ExecuteAsync(request);
+            /// End Rest with RS
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                // Storing the content response recieved from web api
-                var responseContent = response.Content.ReadAsStringAsync().Result;
-
-                // Deserializing the response recieved from web api
-                userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
-            }
-
-            return userDtoResponse;
+            // Storing the content response recieved from web api
+                var responseContent = response.Content;
+                //Deserializing the response recieved from web api and storing into the Employee list
+                user = JsonConvert.DeserializeObject<UserDto>(responseContent);
+             }
+             return user;
         }
     }
 }
