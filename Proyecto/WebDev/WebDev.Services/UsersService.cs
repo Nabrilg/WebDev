@@ -21,7 +21,7 @@ namespace WebDev.Services
             _restClient = new RestClient();
         }
 
-        public async Task<List<UserDto>> GetUsers(string CurrentToken)
+        public async Task<List<UserDto>> GetUsers(string currentToken)
         {
             var usersList = new List<UserDto>();
 
@@ -35,7 +35,7 @@ namespace WebDev.Services
             var request = new RestRequest(Method.GET);
 
             // Assign the Headers
-            request.AddHeader("Authorization", CurrentToken);
+            request.AddHeader("Authorization", currentToken);
             request.AddHeader("Content-Type", "application/json");
 
             // Execute the Call
@@ -54,7 +54,7 @@ namespace WebDev.Services
             return usersList;
         }
 
-        public async Task<UserDto> AddUser(CreateUserDto user, string CurrentToken)
+        public async Task<UserDto> AddUser(CreateUserDto user, string currentToken)
         {
             UserDto userCreatedDtoResponse = null;
 
@@ -68,7 +68,7 @@ namespace WebDev.Services
             var request = new RestRequest(Method.POST);
 
             // Assign the Headers
-            request.AddHeader("Authorization", CurrentToken);
+            request.AddHeader("Authorization", currentToken);
             request.AddHeader("Content-Type", "application/json");
 
             // Assign the Body
@@ -90,7 +90,7 @@ namespace WebDev.Services
 
             return userCreatedDtoResponse;
         }
-        public async Task<UserDto> GetUserById(int id, string CurrentToken)
+        public async Task<UserDto> GetUserById(int id, string currentToken)
         {
             UserDto user = null;
 
@@ -104,7 +104,7 @@ namespace WebDev.Services
             var request = new RestRequest(Method.GET);
 
             // Assign the Headers
-            request.AddHeader("Authorization", CurrentToken);
+            request.AddHeader("Authorization", currentToken);
             request.AddHeader("Content-Type", "application/json");
 
             // Execute the Call
@@ -121,7 +121,7 @@ namespace WebDev.Services
 
             return user;
         }
-        public async Task<UserDto> UpdateUser(UpdatedUserDto user, string CurrentToken)
+        public async Task<UserDto> UpdateUser(UpdatedUserDto user, string currentToken)
         {
             UserDto userDtoResponse = null;
             _restClient.BaseUrl = new Uri($"{BaseUrl}users/{user.id}");
@@ -130,7 +130,7 @@ namespace WebDev.Services
             // Assign the Method Type
             var request = new RestRequest(Method.PUT);
             var objectJson = JsonConvert.SerializeObject(user);
-            request.AddHeader("Authorization", CurrentToken);
+            request.AddHeader("Authorization", currentToken);
             request.AddParameter("application/json", objectJson, ParameterType.RequestBody);
             // Execute the Call
             IRestResponse response = await _restClient.ExecuteAsync(request);
@@ -147,7 +147,7 @@ namespace WebDev.Services
 
             return userDtoResponse;
         }
-        public async Task<UserDto> DeleteUser(UpdatedUserDto user, string CurrentToken)
+        public async Task<UserDto> DeleteUser(UpdatedUserDto user, string currentToken)
         {
             UserDto userDtoResponse = null;
             // Assign the URL
@@ -160,7 +160,7 @@ namespace WebDev.Services
             var request = new RestRequest(Method.DELETE);
 
             // Assign the Headers
-            request.AddHeader("Authorization", CurrentToken);
+            request.AddHeader("Authorization", currentToken);
             request.AddHeader("Content-Type", "application/json");
 
             // Execute the Call

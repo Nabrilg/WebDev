@@ -35,6 +35,7 @@ namespace WebDev.Application.Controllers
 
             _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
 
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
             return View(_userList);
         }
 

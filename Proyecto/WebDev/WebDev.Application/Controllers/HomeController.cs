@@ -19,6 +19,7 @@ namespace WebDev.Application.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApiConfiguration _apiConfiguration;
         private LoginService loginService;
+        private UsersService userService;
 
         public HomeController(ILogger<HomeController> logger, IOptions<ApiConfiguration> apiConfiguration)
         {
@@ -31,7 +32,7 @@ namespace WebDev.Application.Controllers
         public IActionResult Index()
         {
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
-            ViewData["User"] = HttpContext.Session.GetString("User");
+            ViewData["NameUser"] = HttpContext.Session.GetString("NameUser");
             return View();
         }
 
@@ -96,6 +97,7 @@ namespace WebDev.Application.Controllers
             {
                 HttpContext.Session.SetString("IsUserLogged", "true");
                 HttpContext.Session.SetString("User", login.Email);
+                HttpContext.Session.SetString("NameUser", loginAuthentication.Name);
                 HttpContext.Session.SetString("Token", loginAuthentication.Token);
                 return true;
             }
