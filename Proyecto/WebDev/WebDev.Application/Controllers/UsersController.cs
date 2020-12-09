@@ -15,7 +15,6 @@ namespace WebDev.Application.Controllers
     public class UsersController : Controller
     {
         private static List<User> _userList;
-        private static int numUsers;
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ISession _session => _httpContextAccessor.HttpContext.Session;

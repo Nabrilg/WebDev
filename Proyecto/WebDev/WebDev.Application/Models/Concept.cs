@@ -8,12 +8,12 @@ namespace WebDev.Application.Models
 {
     public class Concept
     {
-        [Key]
         public int Id { get; set; }
         public string Pxordx { get; set; }
         public string Oldpxordx { get; set; }
         public string Codetype { get; set; }
         public string Concept_class_id { get; set; }
+        [Key]
         public int Concept_id { get; set; }
         public string Vocabulary_id { get; set; }
         public string Domain_id { get; set; }

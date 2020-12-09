@@ -109,103 +109,103 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pxordx)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Oldpxordx)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Codetype)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Concept_class_id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Concept_id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vocabulary_id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Domain_id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Track)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Standard_concept)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Codewithperiods)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Codescheme)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Long_desc)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Short_desc)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code_status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code_change)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code_change_year)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code_planned_type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code_billing_status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code_cms_claim_status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sex_cd)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Anat_or_cond)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Poa_code_status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Poa_code_change)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Poa_code_change_year)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Valid_start_date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Valid_end_date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Invalid_reason)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Create_dt)
-                </td>
-                <td>
-                    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pxordx)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Oldpxordx)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Codetype)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Concept_class_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Concept_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vocabulary_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Domain_id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Track)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Standard_concept)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Codewithperiods)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Codescheme)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Long_desc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Short_desc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code_status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code_change)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code_change_year)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code_planned_type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code_billing_status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code_cms_claim_status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sex_cd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Anat_or_cond)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Poa_code_status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Poa_code_change)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Poa_code_change_year)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Valid_start_date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Valid_end_date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Invalid_reason)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Create_dt)
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Concept_id">Edit</a>
+                        <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Concept_id">Details</a>
+                        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Concept_id">Delete</a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

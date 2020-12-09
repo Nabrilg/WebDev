@@ -11,8 +11,6 @@ using Microsoft.Extensions.Options;
 using WebDev.Services.Entities;
 
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebDev.Application.Controllers
 {
     public class ConceptsController : Controller
@@ -46,6 +44,149 @@ namespace WebDev.Application.Controllers
             _conceptList = concepts.Select(conceptDto => MapperToConcept(conceptDto)).ToList();
             return View(_conceptList);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
+        {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
+            var conceptFound = await conceptsService.GetConceptById(id);
+
+            if (conceptFound == null)
+            {
+                return NotFound();
+            }
+
+            var concept = MapperToConcept(conceptFound);
+
+            return View(concept);
+        }
+
+        // POST: UsersController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(Concept concept)
+        {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var conceptModified = await conceptsService.UpdateConcept(MapperToConceptDto(concept));
+
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(concept);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        // GET: UsersController/Details/5
+        [HttpGet]
+        public async Task<ActionResult> Details(int id)
+        {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
+            var conceptFound = await conceptsService.GetConceptById(id);
+
+            if (conceptFound == null)
+            {
+                return NotFound();
+            }
+
+            var concept = MapperToConcept(conceptFound);
+
+            return View(concept);
+        }
+
+        // GET: UsersController/Create
+        [HttpGet]
+        public ActionResult Create()
+        {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
+            return View();
+        }
+
+        // POST: UsersController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(Concept concept)
+        {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var userAdded = await conceptsService.AddConcept(MapperToConceptDto(concept));
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> Delete(int id)
+        {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
+            var conceptFound = await conceptsService.GetConceptById(id);
+
+            if (conceptFound == null)
+            {
+                return NotFound();
+            }
+
+            var concept = MapperToConcept(conceptFound);
+
+            return View(concept);
+        }
+
+        // POST: UsersController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(Concept concept)
+        {
+            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
+            ViewData["User"] = _session.GetString("User");
+            ViewData["Token"] = _session.GetString("Token");
+            try
+            {
+                var conceptFound = await conceptsService.GetConceptById(concept.Id);
+
+                if (conceptFound == null)
+                {
+                    return View();
+                }
+
+                var conceptDeleted = await conceptsService.DeleteConcept(concept.Id);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
 
         private Concept MapperToConcept(ConceptDto conceptDto)
         {
@@ -83,5 +224,45 @@ namespace WebDev.Application.Controllers
                 Create_dt = conceptDto.Create_dt
             };
         }
+
+
+        private ConceptDto MapperToConceptDto(Concept concept)
+        {
+            return ConceptDto.Build
+            (
+                id: concept.Id,
+                pxordx: concept.Pxordx,
+                oldpxordx: concept.Oldpxordx,
+                codetype: concept.Codetype,
+                concept_class_id: concept.Concept_class_id,
+                concept_id: concept.Concept_id,
+                vocabulary_id: concept.Vocabulary_id,
+                domain_id: concept.Domain_id,
+                track: concept.Track,
+                standard_concept: concept.Standard_concept,
+                code: concept.Code,
+                codewithperiods: concept.Codewithperiods,
+                codescheme: concept.Codescheme,
+                long_desc: concept.Long_desc,
+                short_desc: concept.Short_desc,
+                code_status: concept.Code_status,
+                code_change: concept.Code_change,
+                code_change_year: concept.Code_change_year,
+                code_planned_type: concept.Code_planned_type,
+                code_billing_status: concept.Code_billing_status,
+                code_cms_claim_status: concept.Code_cms_claim_status,
+                sex_cd: concept.Sex_cd,
+                anat_or_cond: concept.Anat_or_cond,
+                poa_code_status: concept.Poa_code_status,
+                poa_code_change: concept.Poa_code_change,
+                poa_code_change_year: concept.Poa_code_change_year,
+                valid_start_date: concept.Valid_start_date,
+                valid_end_date: concept.Valid_end_date,
+                invalid_reason: concept.Invalid_reason,
+                create_dt: concept.Create_dt
+            );
+        }
+
+
     }
 }
