@@ -1,165 +1,114 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Threading.Tasks;
-using WebDev.Application.Config;
-using WebDev.Application.Mappers;
-using WebDev.Application.Models;
-using WebDev.Services;
-using WebDev.Services.Entities;
+using System.Security.Claims;
+using System.Text;
+using WebDev.Api.Context;
+using WebDev.Api.Model;
 
-namespace WebDev.Application.Controllers
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace WebDev.Api.Controllers
 {
-  public class UsersController : Controller
-  {
-    private readonly UsersService usersService;
-
-    public UsersController(IOptions<ApiConfiguration> apiConfiguration)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
     {
-      var _apiConfiguration = apiConfiguration.Value;
-      usersService = new UsersService(_apiConfiguration.ApiUsersUrl);
-    }
+        private readonly AppDbContext _context;
 
-    // GET: UsersController
-    [HttpGet]
-    public async Task<ActionResult> Index()
-    {
-      usersService.TokenDto = TokenMapper.ToDto(JsonConvert.DeserializeObject<TokenData>(HttpContext.Session.GetString("TokenData")));
-
-      IList<UserDto> users = await usersService.GetUsers();
-
-      List<User> _userList = users.Select(userDto => UserMapper.ToEntity(userDto)).ToList();
-
-      ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
-
-      return View(_userList);
-    }
-
-    // GET: UsersController/Details/5
-    [HttpGet]
-    public async Task<ActionResult> Details(int id)
-    {
-      usersService.TokenDto = TokenMapper.ToDto(JsonConvert.DeserializeObject<TokenData>(HttpContext.Session.GetString("TokenData")));
-      var userFound = await usersService.GetUserById(id);
-      if (userFound == null)
-      {
-        return NotFound();
-      }
-
-      var user = UserMapper.ToEntity(userFound);
-
-      return View(user);
-    }
-
-    // GET: UsersController/Create
-    [HttpGet]
-    public ActionResult Create()
-    {
-      return View();
-    }
-
-    // POST: UsersController/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Create(User user)
-    {
-      try
-      {
-        if (ModelState.IsValid)
+        public UsersController(AppDbContext context)
         {
-          usersService.TokenDto = TokenMapper.ToDto(JsonConvert.DeserializeObject<TokenData>(HttpContext.Session.GetString("TokenData")));
-          await usersService.AddUser(UserMapper.ToDto(user));
+            _context = context;
         }
 
-        return RedirectToAction(nameof(Index));
-      }
-      catch
-      {
-        return View();
-      }
-    }
-
-    // GET: UsersController/Edit/5
-    [HttpGet]
-    public async Task<ActionResult> Edit(int id)
-    {
-      usersService.TokenDto = TokenMapper.ToDto(JsonConvert.DeserializeObject<TokenData>(HttpContext.Session.GetString("TokenData")));
-      var userFound = await usersService.GetUserById(id);
-
-      if (userFound == null)
-      {
-        return NotFound();
-      }
-
-      var user = UserMapper.ToEntity(userFound);
-
-      return View(user);
-    }
-
-    // POST: UsersController/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Edit(User user)
-    {
-      try
-      {
-        if (ModelState.IsValid)
+        // GET: api/Users
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-          usersService.TokenDto = TokenMapper.ToDto(JsonConvert.DeserializeObject<TokenData>(HttpContext.Session.GetString("TokenData")));
-          await usersService.UpdateUser(UserMapper.ToDto(user));
-
-          return RedirectToAction(nameof(Index));
-        }
-        return View(user);
-      }
-      catch
-      {
-        return View();
-      }
-    }
-
-    // GET: UsersController/Delete/5
-    [HttpGet]
-    public async Task<ActionResult> Delete(int id)
-    {
-      usersService.TokenDto = TokenMapper.ToDto(JsonConvert.DeserializeObject<TokenData>(HttpContext.Session.GetString("TokenData")));
-      var userFound = await usersService.GetUserById(id);
-      if (userFound == null)
-      {
-        return NotFound();
-      }
-
-      var user = UserMapper.ToEntity(userFound);
-
-      return View(user);
-    }
-
-    // POST: UsersController/Delete/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Delete(User user)
-    {
-      try
-      {
-        usersService.TokenDto = TokenMapper.ToDto(JsonConvert.DeserializeObject<TokenData>(HttpContext.Session.GetString("TokenData")));
-        var userFound = await usersService.GetUserById(user.Id);
-
-        if (userFound == null)
-        {
-          return View();
+            return await _context.Users.ToListAsync();
         }
 
-        await usersService.DeleteUser(user.Id);
+        // GET: api/Users/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
 
-        return RedirectToAction(nameof(Index));
-      }
-      catch
-      {
-        return View();
-      }
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutUser(int id, User user)
+        {
+            if (id != user.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(user).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+       
+
+
+        [HttpPost]
+        public async Task<ActionResult<User>> PostUser(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+        }
+
+        // DELETE: api/Users/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<User>> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+        private bool UserExists(int id)
+        {
+            return _context.Users.Any(e => e.Id == id);
+        }
+
     }
-  }
 }
