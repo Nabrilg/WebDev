@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UsersService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Entities\LoginDto.cs~RF285a7c20.TMP" />
     <None Remove="Entities\TokenDto.cs~RF2853a025.TMP" />
   </ItemGroup>
