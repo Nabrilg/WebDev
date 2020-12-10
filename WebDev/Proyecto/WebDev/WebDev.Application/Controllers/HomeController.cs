@@ -15,9 +15,12 @@ namespace WebDev.Application.Controllers
   public class HomeController : Controller
   {
     private readonly LoginService loginService;
+    private readonly ILogger<HomeController> _logger;
+    private readonly ApiConfiguration _apiConfiguration;
 
     public HomeController(IOptions<ApiConfiguration> apiConfiguration)
     {
+      _logger = logger;
       var _apiConfiguration = apiConfiguration.Value;
       loginService = new LoginService(_apiConfiguration.ApiUsersUrl);
     }
@@ -94,5 +97,14 @@ namespace WebDev.Application.Controllers
 
       return true;
     }
+
+    private LoginDto MapperToLoginDto(Login login)
+        {
+            return LoginDto.Build(
+                email: login.Email,
+                password: login.Password
+                );
+        }
+        
   }
 }
