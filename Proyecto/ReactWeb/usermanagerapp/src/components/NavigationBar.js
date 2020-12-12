@@ -1,12 +1,12 @@
 import React from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon as Fas} from '@fortawesome/react-fontawesome';
-import { faGift, faSnowman, faCandyCane } from '@fortawesome/free-solid-svg-icons';
+import { faGift, faSnowman, faCandyCane, faMugHot, faGifts } from '@fortawesome/free-solid-svg-icons';
 
 export const NavigationBar = () => (
     <Container>
         <Navbar bg="dark" variant="dark" >
-          <Navbar.Brand href="/">UserManagerApp</Navbar.Brand>
+          <Navbar.Brand href="/"><Fas icon={faMugHot} /> User Manager App</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav"/>
           <Navbar.Collapse id="basic-navbar-nav">        
             <Nav className="mr-auto">
@@ -15,7 +15,7 @@ export const NavigationBar = () => (
               <Nav.Item><Nav.Link href="/Concepts"><Fas icon={faCandyCane} /> Concepts</Nav.Link></Nav.Item>
             </Nav>
             <Nav alignment="right">
-              <Nav.Item><Nav.Link href="/Login" >Login</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link href="/Login" ><Fas icon={faGifts} /> Login</Nav.Link></Nav.Item>
             </Nav>
           </Navbar.Collapse>        
         </Navbar>

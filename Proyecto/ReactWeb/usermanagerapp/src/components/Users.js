@@ -49,7 +49,7 @@ export function List()
       ...currentUser,
       [name]: value
     })
-    }
+  }
       
   // Create 
   const [showModalCreate, setShowModalCreate]= useState(false);
@@ -104,10 +104,10 @@ export function List()
           usr.password = result.password;
         }
       });
-    getUsers();
-      openCloseModalUpdate();
-    }).catch(error=>{
-      console.log(error);
+      getUsers();
+        openCloseModalUpdate();
+      }).catch(error=>{
+        console.log(error);
     })
   }
 
@@ -271,13 +271,13 @@ export function List()
         <ModalBody>
           <Form>
             <Form.Group>
-              <Form.Label><b>Id:</b></Form.Label>
+              <Form.Label><b>Id: </b></Form.Label>
               <Form.Label>{currentUser && currentUser.id}</Form.Label><br/>
-              <Form.Label><b>Email:</b></Form.Label>
+              <Form.Label><b>Email: </b></Form.Label>
               <Form.Label>{currentUser && currentUser.email}</Form.Label><br/>
-              <Form.Label><b>Name:</b></Form.Label>
+              <Form.Label><b>Name: </b></Form.Label>
               <Form.Label>{currentUser && currentUser.name}</Form.Label><br/>
-              <Form.Label><b>Username:</b></Form.Label>
+              <Form.Label><b>Username: </b></Form.Label>
               <Form.Label>{currentUser && currentUser.username}</Form.Label><br/>
             </Form.Group>
           </Form>
