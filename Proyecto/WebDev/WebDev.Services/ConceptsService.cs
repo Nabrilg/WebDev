@@ -24,12 +24,13 @@ namespace WebDev.Services
             TokenDto.Token = token;
         }
 
+
         public async Task<List<ConceptDto>> GetConcepts()
         {
             var conceptsList = new List<ConceptDto>();
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}concepts");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/concepts");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -63,7 +64,7 @@ namespace WebDev.Services
             List<ConceptDto> concept = null;
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}concepts");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/concepts");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -93,12 +94,13 @@ namespace WebDev.Services
 
         }
 
+
         public async Task<ConceptDto> AddConcept(ConceptDto concept)
         {
             ConceptDto conceptDtoResponse = null;
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}concepts");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/concepts");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -137,7 +139,7 @@ namespace WebDev.Services
             ConceptDto conceptDtoResponse = null;
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}concepts");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/concepts/{concept.Id}");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -157,7 +159,7 @@ namespace WebDev.Services
             IRestResponse response = await _restClient.ExecuteAsync(request);
 
             // Checking the response is successful or not which is sent using RestSharp
-            if (response.StatusCode == HttpStatusCode.Created)
+            if (response.StatusCode == HttpStatusCode.NoContent)
             {
                 // Storing the content response recieved from web api
                 var responseContent = response.Content;
@@ -175,7 +177,7 @@ namespace WebDev.Services
 
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}concepts/{id}");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/concepts/{id}");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -191,7 +193,7 @@ namespace WebDev.Services
             IRestResponse response = await _restClient.ExecuteAsync(request);
 
             // Checking the response is successful or not which is sent using RestSharp
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.NoContent)
             {
                 // Storing the content response recieved from web api
                 var responseContent = response.Content;

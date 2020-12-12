@@ -44,9 +44,9 @@ namespace WebDev.Application.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(int concept_id)
         {
-            var conceptFound = await conceptsService.GetConceptById(id);
+            var conceptFound = await conceptsService.GetConceptById(concept_id);
 
             if (conceptFound == null)
             {
@@ -125,9 +125,9 @@ namespace WebDev.Application.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int concept_id)
         {
-            var conceptFound = await conceptsService.GetConceptById(id);
+            var conceptFound = await conceptsService.GetConceptById(concept_id);
 
             if (conceptFound == null)
             {
@@ -146,13 +146,6 @@ namespace WebDev.Application.Controllers
         {
             try
             {
-                var conceptFound = await conceptsService.GetConceptById(concept.Id);
-
-                if (conceptFound == null)
-                {
-                    return View();
-                }
-
                 var conceptDeleted = await conceptsService.DeleteConcept(concept.Id);
 
                 return RedirectToAction(nameof(Index));

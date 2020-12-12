@@ -23,9 +23,9 @@ namespace WebDev.Services
         {
             TokenDto tokenDtoResponse = null;
 
-            _restClient.BaseUrl = new Uri($"{BaseUrl}login");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/login");
 
-            _restClient.Timeout = -1;
+            _restClient.Timeout = -1;    
 
             var request = new RestRequest(Method.POST);
 

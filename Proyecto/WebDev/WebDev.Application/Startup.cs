@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,9 +24,9 @@ namespace WebDev.Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.Configure<ApiConfiguration>(Configuration.GetSection("ApiConfiguration"));
-            
+
             // Enable Session Handler
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
@@ -35,6 +36,8 @@ namespace WebDev.Application
             services.AddMvc();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            ServicePointManager.ServerCertificateValidationCallback +=
+            (sender, certificate, chain, sslPolicyErrors) => true;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

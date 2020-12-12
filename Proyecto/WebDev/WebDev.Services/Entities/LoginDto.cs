@@ -13,9 +13,6 @@ namespace WebDev.Services.Entities
         [JsonProperty("password")]
         public string Password { get; set; }
 
-        [JsonProperty("userId")]
-        public string UserId { get; set; }
-
         private LoginDto()
         {
 

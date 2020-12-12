@@ -15,10 +15,6 @@ namespace WebDev.Services
         private string BaseUrl { get; }
         public TokenDto TokenDto { get; set; }
 
-        private HttpClient _httpClient;
-
-        private HttpClientHandler _httpClientHandler;
-
         public UsersService(string baseUrl, string token)
         {
             BaseUrl = baseUrl;
@@ -32,7 +28,7 @@ namespace WebDev.Services
             var usersList = new List<UserDto>();
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}users");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/users");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -66,7 +62,7 @@ namespace WebDev.Services
             UserDto user = null;
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{id}");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/users/{id}");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -100,7 +96,7 @@ namespace WebDev.Services
             UserDto userDtoResponse = null;
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}users");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/users");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -138,7 +134,7 @@ namespace WebDev.Services
             UserDto userDtoResponse = null;
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{user.Id}");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/users/{user.Id}");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -178,7 +174,7 @@ namespace WebDev.Services
 
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{id}");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}api/users/{id}");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
