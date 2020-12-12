@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Button, Container, Form } from 'react-bootstrap';
 import { FontAwesomeIcon as Fas} from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { useHistory } from "react-router-dom";
 
 const baseUrl = "http://localhost:64499/api/Login";
