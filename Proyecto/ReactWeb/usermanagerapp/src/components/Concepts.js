@@ -254,15 +254,15 @@ return (
         <Form>
             <Form.Group>
                 <Form.Label>Pxordx:</Form.Label>
-                <Form.Control type="text" id="txtPxordx" name="pxordx" placeholder="A" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtPxordx" name="pxordx" placeholder="A"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>OldPxordx:</Form.Label>
-                <Form.Control type="text" id="txtOldPxordx" name="oldpxordx" placeholder="A" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtOldPxordx" name="oldpxordx" placeholder="A"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Codetype:</Form.Label>
-                <Form.Control type="text" id="txtCodetype" name="codeType" placeholder="username" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodetype" name="codeType" placeholder="username"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ConceptClassId:</Form.Label>
@@ -270,11 +270,11 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>VocabularyId:</Form.Label>
-                <Form.Control type="text" id="txtName" name="vocabulary_Id" placeholder="Julio Robles" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtName" name="vocabulary_Id" placeholder="abcd"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>DomainId:</Form.Label>
-                <Form.Control type="text" id="txtDomainId" name="domain_Id" placeholder="username" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtDomainId" name="domain_Id" placeholder="username"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Track:</Form.Label>
@@ -282,7 +282,7 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>StandardConcept:</Form.Label>
-                <Form.Control type="text" id="txtStandardConcept" name="standard_Concept" placeholder="A" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtStandardConcept" name="standard_Concept" placeholder="A"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Code:</Form.Label>
@@ -294,15 +294,15 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>Codescheme:</Form.Label>
-                <Form.Control type="email" id="txtCodescheme" name="codeScheme" placeholder="username@domain.com" required onChange={handleChange}/>
+                <Form.Control type="email" id="txtCodescheme" name="codeScheme" placeholder="abcd"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>LongDesc:</Form.Label>
-                <Form.Control type="text" id="txtLongDesc" name="long_Desc" placeholder="Julio Robles" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtLongDesc" name="long_Desc" placeholder="abcd"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ShortDesc:</Form.Label>
-                <Form.Control type="text" id="txtShortDesc" name="short_Desc" placeholder="username" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtShortDesc" name="short_Desc" placeholder="username"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeStatus:</Form.Label>
@@ -310,15 +310,15 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeChange:</Form.Label>
-                <Form.Control type="text" id="txtCodeChange" name="code_Change" placeholder="A" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodeChange" name="code_Change" placeholder="A"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeChangeYear:</Form.Label>
-                <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" placeholder="A" required onChange={handleChange}/>
+                <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" placeholder="A"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodePlannedType:</Form.Label>
-                <Form.Control type="text" id="txtCodePlannedType" name="code_Planned_Type" placeholder="username" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodePlannedType" name="code_Planned_Type" placeholder="username"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeBillingStatus:</Form.Label>
@@ -326,15 +326,15 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeCmsClaimStatus:</Form.Label>
-                <Form.Control type="text" id="txtCodeCmsClaimStatus" name="code_Cms_Claim_Status" placeholder="username@domain.com" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodeCmsClaimStatus" name="code_Cms_Claim_Status" placeholder="abcd"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>SexCd:</Form.Label>
-                <Form.Control type="text" id="txtSexCd" name="sex_Cd" placeholder="Julio Robles" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtSexCd" name="sex_Cd" placeholder="abcd"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>AnatOrCond:</Form.Label>
-                <Form.Control type="text" id="txtAnatOrCond" name="anat_Or_Cond" placeholder="username" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtAnatOrCond" name="anat_Or_Cond" placeholder="username"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>PoaCodeStatus:</Form.Label>
@@ -342,11 +342,11 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>PoaCodeChange:</Form.Label>
-                <Form.Control type="text" id="txtPoaCodeChange" name="poa_Code_Change" placeholder="A" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtPoaCodeChange" name="poa_Code_Change" placeholder="A"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>PoaCodeChangeYear:</Form.Label>
-                <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year" placeholder="username" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year" placeholder="username"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ValidStartDate:</Form.Label>
@@ -354,15 +354,15 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>ValidEndDate:</Form.Label>
-                <Form.Control type="text" id="txtValidEndDate" name="valid_End_Date" placeholder="username@domain.com" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtValidEndDate" name="valid_End_Date" placeholder="abcd"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>InvalidReason:</Form.Label>
-                <Form.Control type="text" id="txtInvalidReason" name="invalid_Reason" placeholder="Julio Robles" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtInvalidReason" name="invalid_Reason" placeholder="abcd"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CreateDt:</Form.Label>
-                <Form.Control type="text" id="txtCreateDt" name="create_Dt" placeholder="username" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtCreateDt" name="create_Dt" placeholder="username"  onChange={handleChange}/>
             </Form.Group>
         </Form>
     </ModalBody>
@@ -379,15 +379,15 @@ return (
           <Form>
           <Form.Group>
                 <Form.Label>Pxordx:</Form.Label>
-                <Form.Control type="text" id="txtPxordx" name="pxordx" placeholder="A" required  readOnly value={currentConcept && currentConcept.pxordx}/>
+                <Form.Control type="text" id="txtPxordx" name="pxordx" placeholder="A"   readOnly value={currentConcept && currentConcept.pxordx}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>OldPxordx:</Form.Label>
-                <Form.Control type="text" id="txtOldPxordx" name="oldpxordx" placeholder="A" required  readOnly value={currentConcept && currentConcept.oldpxordx}/>
+                <Form.Control type="text" id="txtOldPxordx" name="oldpxordx" placeholder="A"   readOnly value={currentConcept && currentConcept.oldpxordx}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Codetype:</Form.Label>
-                <Form.Control type="text" id="txtCodetype" name="codeType" placeholder="username" required  readOnly value={currentConcept && currentConcept.codeType}/>
+                <Form.Control type="text" id="txtCodetype" name="codeType" placeholder="username"   readOnly value={currentConcept && currentConcept.codeType}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ConceptClassId:</Form.Label>
@@ -395,11 +395,11 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>VocabularyId:</Form.Label>
-                <Form.Control type="text" id="txtName" name="vocabulary_Id" placeholder="B" required  readOnly value={currentConcept && currentConcept.vocabulary_Id}/>
+                <Form.Control type="text" id="txtName" name="vocabulary_Id" placeholder="B"   readOnly value={currentConcept && currentConcept.vocabulary_Id}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>DomainId:</Form.Label>
-                <Form.Control type="text" id="txtDomainId" name="domain_Id" placeholder="username" required  readOnly value={currentConcept && currentConcept.domain_Id}/>
+                <Form.Control type="text" id="txtDomainId" name="domain_Id" placeholder="username"   readOnly value={currentConcept && currentConcept.domain_Id}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Track:</Form.Label>
@@ -407,11 +407,11 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>StandardConcept:</Form.Label>
-                <Form.Control type="text" id="txtStandardConcept" name="standard_Concept" placeholder="A" required  readOnly value={currentConcept && currentConcept.standard_Concept}/>
+                <Form.Control type="text" id="txtStandardConcept" name="standard_Concept" placeholder="A"   readOnly value={currentConcept && currentConcept.standard_Concept}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Code:</Form.Label>
-                <Form.Control type="text" id="txtCode" name="code" placeholder="username" required  readOnly value={currentConcept && currentConcept.code}/>
+                <Form.Control type="text" id="txtCode" name="code" placeholder="username"   readOnly value={currentConcept && currentConcept.code}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeWithPeriods:</Form.Label>
@@ -419,15 +419,15 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>Codescheme:</Form.Label>
-                <Form.Control type="email" id="txtCodescheme" name="codeScheme" placeholder="abcd" required  readOnly value={currentConcept && currentConcept.codeScheme}/>
+                <Form.Control type="email" id="txtCodescheme" name="codeScheme" placeholder="abcd"   readOnly value={currentConcept && currentConcept.codeScheme}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>LongDesc:</Form.Label>
-                <Form.Control type="text" id="txtLongDesc" name="long_Desc" placeholder="B" required  readOnly value={currentConcept && currentConcept.long_Desc}/>
+                <Form.Control type="text" id="txtLongDesc" name="long_Desc" placeholder="B"   readOnly value={currentConcept && currentConcept.long_Desc}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ShortDesc:</Form.Label>
-                <Form.Control type="text" id="txtShortDesc" name="short_Desc" placeholder="username" required  readOnly value={currentConcept && currentConcept.short_Desc}/>
+                <Form.Control type="text" id="txtShortDesc" name="short_Desc" placeholder="username"   readOnly value={currentConcept && currentConcept.short_Desc}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeStatus:</Form.Label>
@@ -435,15 +435,15 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeChange:</Form.Label>
-                <Form.Control type="text" id="txtCodeChange" name="code_Change" placeholder="A" required  readOnly value={currentConcept && currentConcept.code_Change}/>
+                <Form.Control type="text" id="txtCodeChange" name="code_Change" placeholder="A"   readOnly value={currentConcept && currentConcept.code_Change}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeChangeYear:</Form.Label>
-                <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" placeholder="A" required  readOnly value={currentConcept && currentConcept.code_Change_Year}/>
+                <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" placeholder="A"   readOnly value={currentConcept && currentConcept.code_Change_Year}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodePlannedType:</Form.Label>
-                <Form.Control type="text" id="txtCodePlannedType" name="code_Planned_Type" placeholder="username" required  readOnly value={currentConcept && currentConcept.code_Planned_Type}/>
+                <Form.Control type="text" id="txtCodePlannedType" name="code_Planned_Type" placeholder="username"   readOnly value={currentConcept && currentConcept.code_Planned_Type}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeBillingStatus:</Form.Label>
@@ -451,15 +451,15 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeCmsClaimStatus:</Form.Label>
-                <Form.Control type="text" id="txtCodeCmsClaimStatus" name="code_Cms_Claim_Status" placeholder="abcd" required  readOnly value={currentConcept && currentConcept.code_Cms_Claim_Status}/>
+                <Form.Control type="text" id="txtCodeCmsClaimStatus" name="code_Cms_Claim_Status" placeholder="abcd"   readOnly value={currentConcept && currentConcept.code_Cms_Claim_Status}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>SexCd:</Form.Label>
-                <Form.Control type="text" id="txtSexCd" name="sex_Cd" placeholder="B" required  readOnly value={currentConcept && currentConcept.sex_Cd}/>
+                <Form.Control type="text" id="txtSexCd" name="sex_Cd" placeholder="B"   readOnly value={currentConcept && currentConcept.sex_Cd}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>AnatOrCond:</Form.Label>
-                <Form.Control type="text" id="txtAnatOrCond" name="anat_Or_Cond" placeholder="username" required  readOnly value={currentConcept && currentConcept.anat_Or_Cond}/>
+                <Form.Control type="text" id="txtAnatOrCond" name="anat_Or_Cond" placeholder="username"   readOnly value={currentConcept && currentConcept.anat_Or_Cond}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>PoaCodeStatus:</Form.Label>
@@ -467,11 +467,11 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>PoaCodeChange:</Form.Label>
-                <Form.Control type="text" id="txtPoaCodeChange" name="poa_Code_Change" placeholder="A" required  readOnly value={currentConcept && currentConcept.poa_Code_Change}/>
+                <Form.Control type="text" id="txtPoaCodeChange" name="poa_Code_Change" placeholder="A"   readOnly value={currentConcept && currentConcept.poa_Code_Change}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>PoaCodeChangeYear:</Form.Label>
-                <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year" placeholder="username" required  readOnly value={currentConcept && currentConcept.poa_Code_Change_Year}/>
+                <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year" placeholder="username"   readOnly value={currentConcept && currentConcept.poa_Code_Change_Year}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ValidStartDate:</Form.Label>
@@ -479,7 +479,7 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>ValidEndDate:</Form.Label>
-                <Form.Control type="text" id="txtValidEndDate" name="valid_End_Date" placeholder="abcd" required  readOnly value={currentConcept && currentConcept.valid_End_Date}/>
+                <Form.Control type="text" id="txtValidEndDate" name="valid_End_Date" placeholder="abcd"   readOnly value={currentConcept && currentConcept.valid_End_Date}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>InvalidReason:</Form.Label>
