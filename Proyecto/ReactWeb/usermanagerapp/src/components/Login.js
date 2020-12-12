@@ -9,14 +9,7 @@ const baseUrl = "http://localhost:64499/api/Login";
 
 export function Login(){
 
-  const [ data, setData]=useState([]); 
   const history = useHistory();
-
-  const config = {
-    headers: {
-      accept: 'application/json'},
-    data: {},
-  };
 
   const configLogged = {
     headers: {
