@@ -10,20 +10,11 @@
 
 
 <div class="container">
-    <table class="table table-bordered" id="usersTable" width="100%" cellspacing="0">
+    <table class="table table-bordered" id="conceptsTable" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Pxordx)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Oldpxordx)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Codetype)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Concept_class_id)
@@ -35,73 +26,16 @@
                     @Html.DisplayNameFor(model => model.Vocabulary_id)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Domain_id)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Track)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Standard_concept)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Code)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Codewithperiods)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Codescheme)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Long_desc)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Short_desc)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Code_status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Code_change)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Code_change_year)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Code_planned_type)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Code_billing_status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Code_cms_claim_status)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Sex_cd)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Anat_or_cond)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Poa_code_status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Poa_code_change)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Poa_code_change_year)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Valid_start_date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Valid_end_date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Invalid_reason)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Create_dt)
                 </th>
                 <th>Actions</th>
             </tr>
@@ -114,15 +48,6 @@
                         @Html.DisplayFor(modelItem => item.Id)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Pxordx)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Oldpxordx)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Codetype)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Concept_class_id)
                     </td>
                     <td>
@@ -132,73 +57,16 @@
                         @Html.DisplayFor(modelItem => item.Vocabulary_id)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Domain_id)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Track)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Standard_concept)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Code)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Codewithperiods)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Codescheme)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Long_desc)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Short_desc)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Code_status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Code_change)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Code_change_year)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Code_planned_type)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Code_billing_status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Code_cms_claim_status)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Sex_cd)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Anat_or_cond)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Poa_code_status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Poa_code_change)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Poa_code_change_year)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Valid_start_date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Valid_end_date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Invalid_reason)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Create_dt)
                     </td>
                     <td>
                         <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Concept_id">Edit</a>
@@ -214,7 +82,7 @@
 @section Scripts{
     <script>
 		$(document).ready( function () {
-		    $('#usersTable').DataTable();
+		    $('#conceptsTable').DataTable();
 		} );
     </script>
 }

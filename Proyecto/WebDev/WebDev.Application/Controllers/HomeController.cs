@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +12,8 @@ using Microsoft.Extensions.Options;
 
 namespace WebDev.Application.Controllers
 {
+
+    [GlobalDataInjector]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -30,9 +31,6 @@ namespace WebDev.Application.Controllers
 
         public IActionResult Index()
         {
-            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
-            ViewData["User"] = HttpContext.Session.GetString("User");
-            ViewData["Token"] = HttpContext.Session.GetString("Token");
             return View();
         }
 
@@ -62,7 +60,6 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // Llamar a la API para validar el Login
                     var loginChecked = await loginService.ValidUser(MapperToLoginDto(login));                 
                     if (IsValidUser(loginChecked))
                     {

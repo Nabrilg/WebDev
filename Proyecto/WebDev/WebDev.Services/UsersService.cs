@@ -1,9 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using WebDev.Services.Entities;
 using System.Net;
@@ -24,28 +22,9 @@ namespace WebDev.Services
         public UsersService(string baseUrl, string token)
         {
             BaseUrl = baseUrl;
-
-            _httpClientHandler = new HttpClientHandler();
-            _httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-            _httpClient = new HttpClient(_httpClientHandler);
-
-            SetupHttpConnection(_httpClient, baseUrl);
-
             _restClient = new RestClient();
             TokenDto = new TokenDto();
             TokenDto.Token = token;
-        }
-
-        private void SetupHttpConnection(HttpClient httpClient, string baseUrl)
-        {
-            //Passing service base url  
-            httpClient.BaseAddress = new Uri(baseUrl);
-
-            httpClient.DefaultRequestHeaders.Clear();
-
-            //Define request data format  
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
         }
 
         public async Task<List<UserDto>> GetUsers()
@@ -61,20 +40,20 @@ namespace WebDev.Services
             // Assign the Method Type
             var request = new RestRequest(Method.GET);
 
-            // Assign the Headers
+            // Assign the Headers and Parameters
             request.AddHeader("Authorization", TokenDto.Token);
             request.AddHeader("Content-Type", "application/json");
 
             // Execute the Call
             IRestResponse response = await _restClient.ExecuteAsync(request);
 
-            // Checking the response is successful or not which is sent using HttpClient
+            // Checking the response is successful or not which is sent using RestSharp
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 // Storing the content response recieved from web api
                 var responseContent = response.Content;
 
-                //Deserializing the response recieved from web api and storing into the Employee list
+                //Deserializing the response recieved from web api
                 usersList = JsonConvert.DeserializeObject<List<UserDto>>(responseContent);
             }
 
@@ -95,20 +74,20 @@ namespace WebDev.Services
             // Assign the Method Type
             var request = new RestRequest(Method.GET);
 
-            // Assign the Headers
+            // Assign the Header0s and Parameters
             request.AddHeader("Authorization", TokenDto.Token);
             request.AddHeader("Content-Type", "application/json");
 
             // Execute the Call
             IRestResponse response = await _restClient.ExecuteAsync(request);
 
-            // Checking the response is successful or not which is sent using HttpClient
+            // Checking the response is successful or not which is sent using RestSharp
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 // Storing the content response recieved from web api
                 var responseContent = response.Content;
 
-                //Deserializing the response recieved from web api and storing into the Employee list
+                //Deserializing the response recieved from web api
                 user = JsonConvert.DeserializeObject<UserDto>(responseContent);
             }
 
@@ -129,7 +108,7 @@ namespace WebDev.Services
             // Assign the Method Type
             var request = new RestRequest(Method.POST);
 
-            // Assign the Headers
+            // Assign the Headers and Parameters
             request.AddHeader("Authorization", TokenDto.Token);
             request.AddHeader("Content-Type", "application/json");
 
@@ -140,13 +119,13 @@ namespace WebDev.Services
             // Execute the Call
             IRestResponse response = await _restClient.ExecuteAsync(request);
 
-            // Checking the response is successful or not which is sent using HttpClient
+            // Checking the response is successful or not which is sent using RestSharp
             if (response.StatusCode == HttpStatusCode.Created)
             {
                 // Storing the content response recieved from web api
                 var responseContent = response.Content;
 
-                //Deserializing the response recieved from web api and storing into the Employee list
+                //Deserializing the response recieved from web api
                 userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
             }
 
@@ -167,7 +146,7 @@ namespace WebDev.Services
             // Assign the Method Type
             var request = new RestRequest(Method.PUT);
 
-            // Assign the Headers
+            // Assign the Headers and Parameters
             request.AddHeader("Authorization", TokenDto.Token);
             request.AddHeader("Content-Type", "application/json");
 
@@ -178,13 +157,13 @@ namespace WebDev.Services
             // Execute the Call
             IRestResponse response = await _restClient.ExecuteAsync(request);
 
-            // Checking the response is successful or not which is sent using HttpClient
+            // Checking the response is successful or not which is sent using RestSharp
             if (response.StatusCode == HttpStatusCode.Created)
             {
                 // Storing the content response recieved from web api
                 var responseContent = response.Content;
 
-                //Deserializing the response recieved from web api and storing into the Employee list
+                //Deserializing the response recieved from web api
                 userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
             }
 
@@ -207,14 +186,14 @@ namespace WebDev.Services
             // Assign the Method Type
             var request = new RestRequest(Method.DELETE);
 
-            // Assign the Headers
+            // Assign the Headers and Parameters
             request.AddHeader("Authorization", TokenDto.Token);
             request.AddHeader("Content-Type", "application/json");
 
             // Execute the Call
             IRestResponse response = await _restClient.ExecuteAsync(request);
 
-            // Checking the response is successful or not which is sent using HttpClient
+            // Checking the response is successful or not which is sent using RestSharp
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 // Storing the content response recieved from web api

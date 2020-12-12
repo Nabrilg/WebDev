@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -10,18 +9,19 @@ using WebDev.Services;
 using Microsoft.Extensions.Options;
 using WebDev.Services.Entities;
 
-
 namespace WebDev.Application.Controllers
 {
+    
+    [GlobalDataInjector]
     public class ConceptsController : Controller
     {
-
         private static List<Concept> _conceptList;
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ISession _session => _httpContextAccessor.HttpContext.Session;
 
         private readonly ApiConfiguration _apiConfiguration;
+
         private ConceptsService conceptsService;
 
         // Inject the context in order to access the JWToken got in HomeController
@@ -31,15 +31,13 @@ namespace WebDev.Application.Controllers
             _apiConfiguration = apiConfiguration.Value;
             _httpContextAccessor = httpContextAccessor;
             conceptsService = new ConceptsService(_apiConfiguration.ApiConceptsUrl, _session.GetString("Token"));
+
         }
 
         // GET: ConceptsController
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
-            ViewData["User"] = _session.GetString("User");
-            ViewData["Token"] = _session.GetString("Token");
             IList<ConceptDto> concepts = await conceptsService.GetConcepts();
             _conceptList = concepts.Select(conceptDto => MapperToConcept(conceptDto)).ToList();
             return View(_conceptList);
@@ -48,9 +46,6 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
-            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
-            ViewData["User"] = _session.GetString("User");
-            ViewData["Token"] = _session.GetString("Token");
             var conceptFound = await conceptsService.GetConceptById(id);
 
             if (conceptFound == null)
@@ -63,14 +58,11 @@ namespace WebDev.Application.Controllers
             return View(concept);
         }
 
-        // POST: UsersController/Edit/5
+        // POST: ConceptsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Concept concept)
         {
-            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
-            ViewData["User"] = _session.GetString("User");
-            ViewData["Token"] = _session.GetString("Token");
             try
             {
                 if (ModelState.IsValid)
@@ -88,13 +80,10 @@ namespace WebDev.Application.Controllers
         }
 
 
-        // GET: UsersController/Details/5
+        // GET: ConceptsController/Details/5
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
-            ViewData["User"] = _session.GetString("User");
-            ViewData["Token"] = _session.GetString("Token");
             var conceptFound = await conceptsService.GetConceptById(id);
 
             if (conceptFound == null)
@@ -107,24 +96,18 @@ namespace WebDev.Application.Controllers
             return View(concept);
         }
 
-        // GET: UsersController/Create
+        // GET: ConceptsController/Create
         [HttpGet]
         public ActionResult Create()
         {
-            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
-            ViewData["User"] = _session.GetString("User");
-            ViewData["Token"] = _session.GetString("Token");
             return View();
         }
 
-        // POST: UsersController/Create
+        // POST: ConceptsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Concept concept)
         {
-            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
-            ViewData["User"] = _session.GetString("User");
-            ViewData["Token"] = _session.GetString("Token");
             try
             {
                 if (ModelState.IsValid)
@@ -144,9 +127,6 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
-            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
-            ViewData["User"] = _session.GetString("User");
-            ViewData["Token"] = _session.GetString("Token");
             var conceptFound = await conceptsService.GetConceptById(id);
 
             if (conceptFound == null)
@@ -159,14 +139,11 @@ namespace WebDev.Application.Controllers
             return View(concept);
         }
 
-        // POST: UsersController/Delete/5
+        // POST: ConceptsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Concept concept)
         {
-            ViewData["IsUserLogged"] = _session.GetString("IsUserLogged");
-            ViewData["User"] = _session.GetString("User");
-            ViewData["Token"] = _session.GetString("Token");
             try
             {
                 var conceptFound = await conceptsService.GetConceptById(concept.Id);
@@ -185,8 +162,6 @@ namespace WebDev.Application.Controllers
                 return View();
             }
         }
-
-
 
         private Concept MapperToConcept(ConceptDto conceptDto)
         {
@@ -262,7 +237,5 @@ namespace WebDev.Application.Controllers
                 create_dt: concept.Create_dt
             );
         }
-
-
     }
 }
