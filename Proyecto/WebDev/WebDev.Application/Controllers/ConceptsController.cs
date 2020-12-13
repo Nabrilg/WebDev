@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using WebDev.Services.Entities;
 using Microsoft.Extensions.Caching.Memory;
 using WebDev.Application.Utils;
+using System;
 
 namespace WebDev.Application.Controllers
 {
@@ -25,7 +26,7 @@ namespace WebDev.Application.Controllers
 
         private ConceptsService conceptsService;
 
-        private IMemoryCache _cache;
+        private CacheManagement memManage;
 
         // Inject the context in order to access the JWToken got in HomeController
         public ConceptsController(IOptions<ApiConfiguration> apiConfiguration, IHttpContextAccessor httpContextAccessor, IMemoryCache memoryCache)
@@ -33,25 +34,26 @@ namespace WebDev.Application.Controllers
 
             _apiConfiguration = apiConfiguration.Value;
             _httpContextAccessor = httpContextAccessor;
-            _cache = memoryCache;
+            memManage = new CacheManagement(memoryCache);
             conceptsService = new ConceptsService(_apiConfiguration.ApiConceptsUrl, _session.GetString("Token"));
 
         }
+
 
         // GET: ConceptsController
         // After first call get data from Cache Memory instead API 
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            if (!_cache.TryGetValue(CacheKeys.Concepts, out object _conceptList))
+            if (!memManage._cache.TryGetValue(CacheKeys.Concepts, out List<Concept> _conceptList))
             {
                 IList<ConceptDto> concepts = await conceptsService.GetConcepts();
                 _conceptList = concepts.Select(conceptDto => MapperToConcept(conceptDto)).ToList();
-                var cacheEntryOptions = new MemoryCacheEntryOptions();
-                _cache.Set(CacheKeys.Concepts, _conceptList, cacheEntryOptions);
+                memManage.FillConcepts(CacheKeys.Concepts, _conceptList);
             }
             return View(_conceptList);
         }
+
 
         [HttpGet]
         public async Task<ActionResult> Edit(int concept_id)
@@ -68,6 +70,7 @@ namespace WebDev.Application.Controllers
             return View(concept);
         }
 
+
         // POST: ConceptsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -78,7 +81,7 @@ namespace WebDev.Application.Controllers
                 if (ModelState.IsValid)
                 {
                     var conceptModified = await conceptsService.UpdateConcept(MapperToConceptDto(concept));
-
+                    memManage.UpdateCacheConcept(CacheKeys.Concepts, concept);
                     return RedirectToAction(nameof(Index));
                 }
                 return View(concept);
@@ -106,12 +109,14 @@ namespace WebDev.Application.Controllers
             return View(concept);
         }
 
+
         // GET: ConceptsController/Create
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
+
 
         // POST: ConceptsController/Create
         [HttpPost]
@@ -122,9 +127,9 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var userAdded = await conceptsService.AddConcept(MapperToConceptDto(concept));
+                    var conceptAdded = await conceptsService.AddConcept(MapperToConceptDto(concept));
+                    memManage.CreateCacheConcept(CacheKeys.Concepts, concept);
                 }
-
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -149,6 +154,7 @@ namespace WebDev.Application.Controllers
             return View(concept);
         }
 
+
         // POST: ConceptsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -157,7 +163,7 @@ namespace WebDev.Application.Controllers
             try
             {
                 var conceptDeleted = await conceptsService.DeleteConcept(concept.Id);
-
+                memManage.DeleteCacheConcept(CacheKeys.Concepts, concept);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -165,6 +171,7 @@ namespace WebDev.Application.Controllers
                 return View();
             }
         }
+
 
         private Concept MapperToConcept(ConceptDto conceptDto)
         {

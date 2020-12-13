@@ -31,7 +31,7 @@ namespace WebDev.Application
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time
+                options.IdleTimeout = TimeSpan.FromMinutes(5);//You can set Time
             });
             services.AddMvc();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

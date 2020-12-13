@@ -5,16 +5,19 @@
         <div class="text-right">
             <ul class="navbar-nav flex-grow-1 text-right">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Concepts" asp-action="Index">Concepts</a>
+                    <button type="button" class="btn btn-outline-success ml-2 mr-2" onclick="location.href='@Url.Action("Index", "Concepts")'" data-toggle="modal" data-target="#modalConcepts">Concepts</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Users" asp-action="Index">Users</a>
+                    <button type="button" class="btn btn-outline-info  ml-2 mr-2" onclick="location.href='@Url.Action("Index", "Users")'" data-toggle="modal" data-target="#modalUsers">Users</button>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark">@ViewData["User"]</a>
                 </li>
+                <li class="nav-item align-self-center">
+                    <i class="fas fa-user fa-lg mr-2"></i>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Logout">Logout</a>
+                    <button type="button" class="btn btn-outline-danger  ml-2" onclick="location.href='@Url.Action("Logout", "Home")'">Logout</button>
                 </li>
             </ul>
         </div>
@@ -24,9 +27,41 @@
         <div class="text-right">
             <ul class="navbar-nav flex-grow-1 text-right">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Login">Login</a>
+                    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Login">Login</a>
                 </li>
             </ul>
         </div>
     }
+
+    <!-- Modal Concept -->
+    <div class="modal fade" id="modalConcepts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Loading concepts, please wait...</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <div class="spinner-border text-success" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal User -->
+    <div class="modal fade" id="modalUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Loading users, please wait..</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <div class="spinner-border text-info" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }

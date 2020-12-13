@@ -9,5 +9,8 @@ namespace WebDev.Application.Utils
     {
         public static string Users { get { return "users";  } }
         public static string Concepts { get { return "concepts"; } }
+
+        public CacheKeys()
+        {}
     }
 }

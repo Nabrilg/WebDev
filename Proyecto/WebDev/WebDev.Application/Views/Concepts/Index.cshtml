@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<WebDev.Application.Models.Concept>
-
+@{
+    ViewData["Title"] = "ConceptListView";
+}
 
 <div class="container">
     <h1>Concept List</h1>
@@ -81,8 +83,8 @@
 
 @section Scripts{
     <script>
-		$(document).ready( function () {
-		    $('#conceptsTable').DataTable();
-		} );
+        $(document).ready(function () {
+            $('#conceptsTable').DataTable();
+        });
     </script>
 }

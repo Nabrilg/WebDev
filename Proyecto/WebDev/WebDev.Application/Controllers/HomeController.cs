@@ -9,6 +9,8 @@ using WebDev.Application.Config;
 using WebDev.Services.Entities;
 using WebDev.Services;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Caching.Memory;
+using WebDev.Application.Utils;
 
 namespace WebDev.Application.Controllers
 {
@@ -19,12 +21,16 @@ namespace WebDev.Application.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private readonly ApiConfiguration _apiConfiguration;
+
         private LoginService loginService;
 
-        public HomeController(ILogger<HomeController> logger, IOptions<ApiConfiguration> apiConfiguration)
+        private CacheManagement memManage;
+
+        public HomeController(ILogger<HomeController> logger, IOptions<ApiConfiguration> apiConfiguration, IMemoryCache memoryCache)
         {
             _apiConfiguration = apiConfiguration.Value;
             loginService = new LoginService(_apiConfiguration.ApiLoginUrl);
+            memManage = new CacheManagement(memoryCache);
             _logger = logger;
         }
 
@@ -77,6 +83,7 @@ namespace WebDev.Application.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.SetString("IsUserLogged", "false");
+            memManage.EmptyCache();
             return RedirectToAction(nameof(Index));
         }
 

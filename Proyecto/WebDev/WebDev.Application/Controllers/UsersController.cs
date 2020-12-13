@@ -23,14 +23,15 @@ namespace WebDev.Application.Controllers
 
         private UsersService usersService;
 
-        private IMemoryCache _cache;
+        private CacheManagement memManage;
+
         // Inject the context in order to access the JWToken got in HomeController
         public UsersController(IOptions<ApiConfiguration> apiConfiguration, IHttpContextAccessor httpContextAccessor, IMemoryCache memoryCache)
         {
 
             _apiConfiguration = apiConfiguration.Value;
             _httpContextAccessor = httpContextAccessor;
-            _cache = memoryCache;
+            memManage = new CacheManagement(memoryCache);
             usersService = new UsersService(_apiConfiguration.ApiUsersUrl, _session.GetString("Token"));
         }
 
@@ -39,12 +40,11 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            if (!_cache.TryGetValue(CacheKeys.Users, out object _userList))
+            if (!memManage._cache.TryGetValue(CacheKeys.Users, out List<User> _userList))
             {
                 IList<UserDto> users = await usersService.GetUsers();
                 _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
-                var cacheEntryOptions = new MemoryCacheEntryOptions();
-                _cache.Set(CacheKeys.Users, _userList, cacheEntryOptions);
+                memManage.FillUsers(CacheKeys.Users, _userList);
             }
             return View(_userList);
         }
@@ -83,6 +83,8 @@ namespace WebDev.Application.Controllers
                 if (ModelState.IsValid)
                 {
                     var userAdded = await usersService.AddUser(MapperToUserDto(user));
+                    memManage.CreateCacheUser(CacheKeys.Users, user);
+
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -119,6 +121,7 @@ namespace WebDev.Application.Controllers
                 if (ModelState.IsValid)
                 {
                     var userModified = await usersService.UpdateUser(MapperToUserDto(user));
+                    memManage.UpdateCacheUser(CacheKeys.Users, user);
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -160,6 +163,7 @@ namespace WebDev.Application.Controllers
                 }
 
                 var userDeleted = await usersService.DeleteUser(user.Id);
+                memManage.DeleteCacheUser(CacheKeys.Users, user);
 
                 return RedirectToAction(nameof(Index));
             }
