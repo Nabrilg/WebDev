@@ -154,7 +154,7 @@ namespace WebDev.Services
             IRestResponse response = await _restClient.ExecuteAsync(request);
 
             // Checking the response is successful or not which is sent using RestSharp
-            if (response.StatusCode == HttpStatusCode.Created)
+            if (response.StatusCode == HttpStatusCode.NoContent)
             {
                 // Storing the content response recieved from web api
                 var responseContent = response.Content;
@@ -190,7 +190,7 @@ namespace WebDev.Services
             IRestResponse response = await _restClient.ExecuteAsync(request);
 
             // Checking the response is successful or not which is sent using RestSharp
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.NoContent)
             {
                 // Storing the content response recieved from web api
                 var responseContent = response.Content;

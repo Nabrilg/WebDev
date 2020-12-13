@@ -35,7 +35,7 @@ namespace WebDev.Application.Controllers
         }
 
         // GET: UsersController
-        // Get data from Cache Memory instead API each call
+        // After first call get data from Cache Memory instead API
         [HttpGet]
         public async Task<ActionResult> Index()
         {
