@@ -6,14 +6,12 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import _ from 'lodash';
 
-/* export const Concepts = () => (
-  <h1>Concepts</h1>
-) */
+
 const baseUrl = "http://localhost:64499/api/Concepts";
 
 export function Concepts()
 {
-  
+  const Header = ["Id", "ConceptId", "VocabularyId", "DomainId", "ShortDesc" ];
   const [ data, setData]=useState([]);  
 
   const config = {

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Container, Form } from 'react-bootstrap';
 import { FontAwesomeIcon as Fas} from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faSleigh } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from "react-router-dom";
 
 const baseUrl = "http://localhost:64499/api/Login";
@@ -57,8 +57,8 @@ export function Login(){
           <Form.Label>Password:</Form.Label>
           <Form.Control type="password" id="txtPassword" name="password"  onChange={handleChange}/>
         </Form.Group>
+        <Button variant="success" onClick={()=>postUser()}><Fas icon={faSleigh} /> Log In</Button>
       </Form>
-      <Button variant="primary" onClick={()=>postUser()}>Log In</Button>
   </Container>
   );
 }

@@ -15,7 +15,7 @@ export const NavigationBar = () => (
               <Nav.Item><Nav.Link href="/Concepts"><Fas icon={faCandyCane} /> Concepts</Nav.Link></Nav.Item>
             </Nav>
             <Nav alignment="right">
-              <Nav.Item><Nav.Link href="/Login" ><Fas icon={faGifts} /> Login</Nav.Link></Nav.Item>
+            <Nav.Item><Nav.Link href="/Login" ><Fas icon={faGifts} /> Login</Nav.Link></Nav.Item>
             </Nav>
           </Navbar.Collapse>        
         </Navbar>
