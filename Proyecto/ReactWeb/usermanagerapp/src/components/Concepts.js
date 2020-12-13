@@ -275,15 +275,15 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>OldPxordx:</Form.Label>
-                <Form.Control type="text" id="txtOldPxordx" name="oldpxordx" placeholder="A"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtOldPxordx" name="oldpxordx" placeholder="B"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Codetype:</Form.Label>
-                <Form.Control type="text" id="txtCodetype" name="codeType" placeholder="username"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodetype" name="codeType" placeholder="I09"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ConceptClassId:</Form.Label>
-                <Form.Control type="text" id="txtConceptClassId" name="concept_Class_Id"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtConceptClassId" name="concept_Class_Id" placeholder="" onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ConceptId:</Form.Label>
@@ -291,27 +291,27 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>VocabularyId:</Form.Label>
-                <Form.Control type="text" id="txtName" name="vocabulary_Id" placeholder="abcd"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtName" name="vocabulary_Id" placeholder="ICD9CM"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>DomainId:</Form.Label>
-                <Form.Control type="text" id="txtDomainId" name="domain_Id" placeholder="username"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtDomainId" name="domain_Id" placeholder="Condition"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Track:</Form.Label>
-                <Form.Control type="text" id="txtTrack" name="track"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtTrack" name="track"placeholder="Medical"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>StandardConcept:</Form.Label>
-                <Form.Control type="text" id="txtStandardConcept" name="standard_Concept" placeholder="A"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtStandardConcept" name="standard_Concept" placeholder="Normal"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Code:</Form.Label>
-                <Form.Control type="text" id="txtCode" name="code" placeholder="username" required onChange={handleChange}/>
+                <Form.Control type="text" id="txtCode" name="code" placeholder="1234" required onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeWithPeriods:</Form.Label>
-                <Form.Control type="text" id="txtCodeWithPeriods" name="codeWithPeriods"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodeWithPeriods" name="codeWithPeriods" placeholder="1.234"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Codescheme:</Form.Label>
@@ -319,39 +319,39 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>LongDesc:</Form.Label>
-                <Form.Control type="text" id="txtLongDesc" name="long_Desc" placeholder="abcd"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtLongDesc" name="long_Desc"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ShortDesc:</Form.Label>
-                <Form.Control type="text" id="txtShortDesc" name="short_Desc" placeholder="username"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtShortDesc" name="short_Desc"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeStatus:</Form.Label>
-                <Form.Control type="text" id="txtCodeStatus" name="code_Status"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodeStatus" name="code_Status"  placeholder="A" onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeChange:</Form.Label>
-                <Form.Control type="text" id="txtCodeChange" name="code_Change" placeholder="A"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodeChange" name="code_Change" placeholder="Change"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeChangeYear:</Form.Label>
-                <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" placeholder="A"  onChange={handleChange}/>
+                <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" placeholder="2020"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodePlannedType:</Form.Label>
-                <Form.Control type="text" id="txtCodePlannedType" name="code_Planned_Type" placeholder="username"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodePlannedType" name="code_Planned_Type"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeBillingStatus:</Form.Label>
-                <Form.Control type="text" id="txtCodeBillingStatus" name="code_Billing_Status"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodeBillingStatus" name="code_Billing_Status"  placeholder="A"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CodeCmsClaimStatus:</Form.Label>
-                <Form.Control type="text" id="txtCodeCmsClaimStatus" name="code_Cms_Claim_Status" placeholder="abcd"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtCodeCmsClaimStatus" name="code_Cms_Claim_Status" placeholder="A"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>SexCd:</Form.Label>
-                <Form.Control type="text" id="txtSexCd" name="sex_Cd" placeholder="abcd"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtSexCd" name="sex_Cd" placeholder="F"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>AnatOrCond:</Form.Label>
@@ -359,7 +359,7 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>PoaCodeStatus:</Form.Label>
-                <Form.Control type="text" id="txtPoaCodeStatus" name="poa_Code_Status"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtPoaCodeStatus" name="poa_Code_Status" placeholder="A" onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>PoaCodeChange:</Form.Label>
@@ -367,23 +367,23 @@ return (
             </Form.Group>
             <Form.Group>
                 <Form.Label>PoaCodeChangeYear:</Form.Label>
-                <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year" placeholder="username"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year" placeholder="2020"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ValidStartDate:</Form.Label>
-                <Form.Control type="text" id="txtValidStartDate" name="valid_Start_Date"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtValidStartDate" name="valid_Start_Date" placeholder="19990101" onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>ValidEndDate:</Form.Label>
-                <Form.Control type="text" id="txtValidEndDate" name="valid_End_Date" placeholder="abcd"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtValidEndDate" name="valid_End_Date" placeholder="20201231"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>InvalidReason:</Form.Label>
-                <Form.Control type="text" id="txtInvalidReason" name="invalid_Reason" placeholder="abcd"  onChange={handleChange}/>
+                <Form.Control type="text" id="txtInvalidReason" name="invalid_Reason" placeholder="None"  onChange={handleChange}/>
             </Form.Group>
             <Form.Group>
                 <Form.Label>CreateDt:</Form.Label>
-                <Form.Control type="number" id="txtCreateDt" name="create_Dt" placeholder="username"  onChange={handleChange}/>
+                <Form.Control type="number" id="txtCreateDt" name="create_Dt" placeholder="12345"  onChange={handleChange}/>
             </Form.Group>
         </Form>
     </ModalBody>
@@ -653,62 +653,127 @@ return (
         <ModalBody>
           <Form>
             <Form.Group>
-            <Form.Label><b>Pxordx:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.pxordx}</Form.Label><br/>
-                <Form.Label><b>OldPxordx:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.oldpxordx}</Form.Label><br/>
-                <Form.Label><b>Codetype:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.codeType}</Form.Label><br/> 
-                <Form.Label><b>ConceptClassId:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.concept_Class_Id}</Form.Label><br/>
-                <Form.Label><b>VocabularyId:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.vocabulary_Id}</Form.Label><br/>
-                <Form.Label><b>DomainId:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.domain_Id}</Form.Label><br/>
-                <Form.Label><b>Track:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.track}</Form.Label><br/>
-                <Form.Label><b>StandardConcept:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.standard_Concept}</Form.Label><br/>
-                <Form.Label><b>Code:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.code}</Form.Label><br/>
-                <Form.Label><b>CodeWithPeriods:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.codeWithPeriods}</Form.Label><br/>
-                <Form.Label><b>Codescheme:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.codeScheme}</Form.Label><br/>
-                <Form.Label><b>LongDesc:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.long_Desc}</Form.Label><br/>
-                <Form.Label><b>ShortDesc:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.short_Desc}</Form.Label><br/>
-                <Form.Label><b>CodeStatus:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.code_Status}</Form.Label><br/>
-                <Form.Label><b>CodeChange:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.code_Change}</Form.Label><br/>
-                <Form.Label><b>CodeChangeYear:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.code_Change_Year}</Form.Label><br/>
-                <Form.Label><b>CodePlannedType:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.code_Planned_Type}</Form.Label><br/>
-                <Form.Label><b>CodeBillingStatus:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.code_Billing_Status}</Form.Label><br/>
-                <Form.Label><b>CodeCmsClaimStatus:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.code_Cms_Claim_Status}</Form.Label><br/>
-                <Form.Label><b>SexCd:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.sex_Cd}</Form.Label><br/>
-                <Form.Label><b>AnatOrCond:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.anat_Or_Cond}</Form.Label><br/>
-                <Form.Label><b>PoaCodeStatus:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.poa_Code_Status}</Form.Label><br/>
-                <Form.Label><b>PoaCodeChange:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.poa_Code_Change}</Form.Label><br/>
-                <Form.Label><b>PoaCodeChangeYear:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.poa_Code_Change_Year}</Form.Label><br/>
-                <Form.Label><b>ValidStartDate:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.valid_Start_Date}</Form.Label><br/>
-                <Form.Label><b>ValidEndDate:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.valid_End_Date}</Form.Label><br/>
-                <Form.Label><b>InvalidReason:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.invalid_Reason}</Form.Label><br/>
-                <Form.Label><b>CreateDt:</b></Form.Label>
-                <Form.Label>{currentConcept && currentConcept.create_Dt}</Form.Label><br/>
+            <Table id="ConceptsTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+
+                </tr>
+              </thead>
+            <tbody>
+            <tr><td><b>Pxordx:</b></td>
+                <td>{currentConcept && currentConcept.pxordx}</td></tr>
+                <tr>
+                  <td><b>OldPxordx:</b></td>
+                  <td>{currentConcept && currentConcept.oldpxordx}</td>
+                  </tr>
+                <tr>
+                  <td><b>Codetype:</b></td>
+                  <td>{currentConcept && currentConcept.codeType}</td>
+                </tr> 
+                <tr>
+                  <td><b>ConceptClassId:</b></td>
+                  <td>{currentConcept && currentConcept.concept_Class_Id}</td>
+                </tr>
+                <tr>
+                  <td><b>VocabularyId:</b></td>
+                  <td>{currentConcept && currentConcept.vocabulary_Id}</td>
+                </tr>
+                <tr>
+                  <td><b>DomainId:</b></td>
+                  <td>{currentConcept && currentConcept.domain_Id}</td>
+                </tr>
+                <tr>
+                  <td><b>Track:</b></td>
+                  <td>{currentConcept && currentConcept.track}</td>
+                </tr>
+                <tr>
+                  <td><b>StandardConcept:</b></td>
+                  <td>{currentConcept && currentConcept.standard_Concept}</td>
+                </tr>
+                <tr>
+                  <td><b>Code:</b></td>
+                  <td>{currentConcept && currentConcept.code}</td>
+                </tr>
+                <tr>
+                  <td><b>CodeWithPeriods:</b></td>
+                  <td>{currentConcept && currentConcept.codeWithPeriods}</td>
+                  </tr>
+                <tr>
+                  <td><b>Codescheme:</b></td>
+                  <td>{currentConcept && currentConcept.codeScheme}</td>
+                  </tr>
+                <tr>
+                  <td><b>LongDesc:</b></td>
+                  <td>{currentConcept && currentConcept.long_Desc}</td>
+                </tr>
+                <tr>
+                  <td><b>ShortDesc:</b></td>
+                 <td>{currentConcept && currentConcept.short_Desc}</td>
+                </tr>
+                <tr>
+                  <td><b>CodeStatus:</b></td>
+                  <td>{currentConcept && currentConcept.code_Status}</td>
+                </tr>
+                <tr>
+                  <td><b>CodeChange:</b></td>
+                  <td>{currentConcept && currentConcept.code_Change}</td>
+                </tr>
+                <tr>
+                  <td><b>CodeChangeYear:</b></td>
+                  <td>{currentConcept && currentConcept.code_Change_Year}</td>
+                </tr>
+                <tr>
+                  <td><b>CodePlannedType:</b></td>
+                  <td>{currentConcept && currentConcept.code_Planned_Type}</td>
+                </tr>
+                <tr>
+                  <td><b>CodeBillingStatus:</b></td>
+                  <td>{currentConcept && currentConcept.code_Billing_Status}</td>
+                </tr>
+                <tr>
+                  <td><b>CodeCmsClaimStatus:</b></td>
+                  <td>{currentConcept && currentConcept.code_Cms_Claim_Status}</td>
+                </tr>
+                <tr>
+                  <td><b>SexCd:</b></td>
+                  <td>{currentConcept && currentConcept.sex_Cd}</td>
+                </tr>
+                <tr>
+                  <td><b>AnatOrCond:</b></td>
+                  <td>{currentConcept && currentConcept.anat_Or_Cond}</td>
+                </tr>
+                <tr>
+                  <td><b>PoaCodeStatus:</b></td>
+                  <td>{currentConcept && currentConcept.poa_Code_Status}</td>
+                </tr>
+                <tr>
+                  <td><b>PoaCodeChange:</b></td>
+                  <td>{currentConcept && currentConcept.poa_Code_Change}</td>
+                </tr>
+                <tr>
+                  <td><b>PoaCodeChangeYear:</b></td>
+                  <td>{currentConcept && currentConcept.poa_Code_Change_Year}</td>
+                </tr>
+                <tr>
+                  <td><b>ValidStartDate:</b></td>
+                  <td>{currentConcept && currentConcept.valid_Start_Date}</td>
+                </tr>
+                <tr>
+                  <td><b>ValidEndDate:</b></td>
+                  <td>{currentConcept && currentConcept.valid_End_Date}</td>
+                </tr>
+                <tr>
+                  <td><b>InvalidReason:</b></td>
+                  <td>{currentConcept && currentConcept.invalid_Reason}</td>
+                </tr>
+                <tr>
+                  <td><b>CreateDt:</b></td>
+                  <td>{currentConcept && currentConcept.create_Dt}</td>
+                </tr>
+            </tbody>
+            </Table>
             </Form.Group>
           </Form>
         </ModalBody>
