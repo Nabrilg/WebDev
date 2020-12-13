@@ -35,7 +35,7 @@ namespace WebDev.Application
             });
             services.AddMvc();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            services.AddMemoryCache();
             ServicePointManager.ServerCertificateValidationCallback +=
             (sender, certificate, chain, sslPolicyErrors) => true;
         }

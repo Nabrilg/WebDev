@@ -28,7 +28,6 @@ namespace WebDev.Application.Controllers
             _logger = logger;
         }
 
-
         public IActionResult Index()
         {
             return View();

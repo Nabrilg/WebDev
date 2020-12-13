@@ -8,14 +8,14 @@ using WebDev.Application.Config;
 using WebDev.Services;
 using Microsoft.Extensions.Options;
 using WebDev.Services.Entities;
+using Microsoft.Extensions.Caching.Memory;
+using WebDev.Application.Utils;
 
 namespace WebDev.Application.Controllers
 {
     [GlobalDataInjector]
     public class UsersController : Controller
-    {
-        private static List<User> _userList;
-
+    { 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ISession _session => _httpContextAccessor.HttpContext.Session;
 
@@ -23,23 +23,32 @@ namespace WebDev.Application.Controllers
 
         private UsersService usersService;
 
+        private IMemoryCache _cache;
         // Inject the context in order to access the JWToken got in HomeController
-        public UsersController(IOptions<ApiConfiguration> apiConfiguration, IHttpContextAccessor httpContextAccessor)
+        public UsersController(IOptions<ApiConfiguration> apiConfiguration, IHttpContextAccessor httpContextAccessor, IMemoryCache memoryCache)
         {
 
             _apiConfiguration = apiConfiguration.Value;
             _httpContextAccessor = httpContextAccessor;
+            _cache = memoryCache;
             usersService = new UsersService(_apiConfiguration.ApiUsersUrl, _session.GetString("Token"));
         }
 
         // GET: UsersController
+        // Get data from Cache Memory instead API each call
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            IList<UserDto> users = await usersService.GetUsers();
-            _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
+            if (!_cache.TryGetValue(CacheKeys.Users, out object _userList))
+            {
+                IList<UserDto> users = await usersService.GetUsers();
+                _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
+                var cacheEntryOptions = new MemoryCacheEntryOptions();
+                _cache.Set(CacheKeys.Users, _userList, cacheEntryOptions);
+            }
             return View(_userList);
         }
+
 
         // GET: UsersController/Details/5
         [HttpGet]

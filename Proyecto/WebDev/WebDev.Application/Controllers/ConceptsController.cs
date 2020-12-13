@@ -8,6 +8,8 @@ using WebDev.Application.Config;
 using WebDev.Services;
 using Microsoft.Extensions.Options;
 using WebDev.Services.Entities;
+using Microsoft.Extensions.Caching.Memory;
+using WebDev.Application.Utils;
 
 namespace WebDev.Application.Controllers
 {
@@ -15,7 +17,6 @@ namespace WebDev.Application.Controllers
     [GlobalDataInjector]
     public class ConceptsController : Controller
     {
-        private static List<Concept> _conceptList;
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ISession _session => _httpContextAccessor.HttpContext.Session;
@@ -24,22 +25,31 @@ namespace WebDev.Application.Controllers
 
         private ConceptsService conceptsService;
 
+        private IMemoryCache _cache;
+
         // Inject the context in order to access the JWToken got in HomeController
-        public ConceptsController(IOptions<ApiConfiguration> apiConfiguration, IHttpContextAccessor httpContextAccessor)
+        public ConceptsController(IOptions<ApiConfiguration> apiConfiguration, IHttpContextAccessor httpContextAccessor, IMemoryCache memoryCache)
         {
 
             _apiConfiguration = apiConfiguration.Value;
             _httpContextAccessor = httpContextAccessor;
+            _cache = memoryCache;
             conceptsService = new ConceptsService(_apiConfiguration.ApiConceptsUrl, _session.GetString("Token"));
 
         }
 
         // GET: ConceptsController
+        // Get data from Cache Memory instead API after first call
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            IList<ConceptDto> concepts = await conceptsService.GetConcepts();
-            _conceptList = concepts.Select(conceptDto => MapperToConcept(conceptDto)).ToList();
+            if (!_cache.TryGetValue(CacheKeys.Concepts, out object _conceptList))
+            {
+                IList<ConceptDto> concepts = await conceptsService.GetConcepts();
+                _conceptList = concepts.Select(conceptDto => MapperToConcept(conceptDto)).ToList();
+                var cacheEntryOptions = new MemoryCacheEntryOptions();
+                _cache.Set(CacheKeys.Concepts, _conceptList, cacheEntryOptions);
+            }
             return View(_conceptList);
         }
 
