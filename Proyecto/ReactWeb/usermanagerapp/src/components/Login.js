@@ -13,9 +13,8 @@ export function Login(){
 
   const configLogged = {
     headers: {
-      accept: 'application/json'},
-      authorization: sessionStorage.getItem('jwtToken'),
-    data: {},
+      accept: 'application/json'
+    }
   };
 
 
@@ -38,6 +37,7 @@ export function Login(){
     await axios.post(baseUrl, currentUser, configLogged)
     .then (response=>{
       sessionStorage.setItem('jwtToken', response.data.token);
+      sessionStorage.setItem('userName', response.data.name);
       history.push("/Users");
     }).catch(error=>{
       console.log(error);

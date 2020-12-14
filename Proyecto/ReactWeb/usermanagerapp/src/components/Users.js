@@ -16,8 +16,7 @@ export function List()
     headers: {
       accept: 'application/json',
       authorization: sessionStorage.getItem('jwtToken'),
-    },
-    data: {},
+    }
   };
 
   const getUsers=async()=>{
