@@ -129,25 +129,21 @@ export function Concepts()
     setCurrentConcept(conceptCreate);
     setShowModalCreate(!showModalCreate);
   }  
-
+  
   const postConcept=async() => {
-    debugger
-    if(currentConcept.code != "" && currentConcept.concept_Id != ""){
+    if(currentConcept.code !== "" && currentConcept.concept_Id !== "" && currentConcept.concept_Id < 999999999){
       delete currentConcept.id;
       currentConcept.concept_Id = parseInt(currentConcept.concept_Id);
       currentConcept.code_Change_Year = parseInt(currentConcept.code_Change_Year);
       currentConcept.create_Dt = parseInt(currentConcept.create_Dt);
-      debugger
       await axios.post(baseUrl, currentConcept, configCreate)
       .then (response=>{
-        debugger
         getConcepts();
         openCloseModalCreate();
       }).catch(error=>{
         console.log(error);
       })
     }
-    
   }
 
   // Update
@@ -324,7 +320,7 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>ConceptId: *</Form.Label>
-                  <Form.Control type="number" id="txtConceptId" name="concept_Id" placeholder="123456" required onChange={handleChange}/>
+                  <Form.Control type="number" id="txtConceptId" name="concept_Id" placeholder="123456" required onChange={handleChange} maxLength={9}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>VocabularyId:</Form.Label>
@@ -344,7 +340,7 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>Code: *</Form.Label>
-                  <Form.Control type="text" id="txtCode" name="code" placeholder="1234" required onChange={handleChange}/>
+                  <Form.Control type="text" id="txtCode" name="code" placeholder="1234" required onChange={handleChange} maxLength="10"/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodeWithPeriods:</Form.Label>
@@ -372,7 +368,7 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodeChangeYear:</Form.Label>
-                  <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" placeholder="2020"  onChange={handleChange}/>
+                  <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" placeholder="2020"  onChange={handleChange} maxLength="4"/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodePlannedType:</Form.Label>
@@ -404,7 +400,7 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>PoaCodeChangeYear:</Form.Label>
-                  <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year" placeholder="2020"  onChange={handleChange}/>
+                  <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year" placeholder="2020"  onChange={handleChange} maxLength="4"/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>ValidStartDate:</Form.Label>
@@ -420,7 +416,7 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>CreateDt:</Form.Label>
-                  <Form.Control type="number" id="txtCreateDt" name="create_Dt" placeholder="12345"  onChange={handleChange}/>
+                  <Form.Control type="number" id="txtCreateDt" name="create_Dt" placeholder="12345"  onChange={handleChange} maxLength="9"/>
               </Form.Group>
           </Form>
       </ModalBody>
@@ -429,7 +425,6 @@ export function Concepts()
           <Button variant="outline-info" onClick={()=>openCloseModalCreate()}>Back</Button>
       </ModalFooter>
       </Modal>
-
 
       {/* Update */}
       <Modal isOpen={showModalUpdate}>
@@ -550,7 +545,7 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>CreateDt:</Form.Label>
-                  <Form.Control type="number" id="txtCreateDt" name="create_Dt" placeholder="username" onChange={handleChange} value={currentConcept && currentConcept.create_Dt}/>
+                  <Form.Control type="number" id="txtCreateDt" name="create_Dt" placeholder="username" onChange={handleChange} maxLength="9" value={currentConcept && currentConcept.create_Dt}/>
               </Form.Group>
           </Form>
         </ModalBody>
