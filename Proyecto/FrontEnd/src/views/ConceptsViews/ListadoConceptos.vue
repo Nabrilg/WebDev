@@ -7,7 +7,7 @@
 			</div>
 		</vx-card>
 
-		<!-- Componente de la Tabla de Listado de Usuarias -->
+		<!-- Componente de la Tabla de Listado de Conceptos -->
 		<div class="vx-row">
 			<div class="vx-col w-full">
 				<tabla-listado></tabla-listado>				

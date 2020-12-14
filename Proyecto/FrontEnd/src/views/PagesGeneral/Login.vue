@@ -40,7 +40,6 @@
 
 <script>
 import axios from 'axios'
-/* const url = 'https://javerianawebdevapi.azurewebsites.net/api/login'; */
 
 export default{
 	data() {

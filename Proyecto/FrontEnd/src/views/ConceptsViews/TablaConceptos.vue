@@ -44,11 +44,11 @@
 					<vs-td style="padding-left:0px; padding-right:0px;" :data="data[i].id">
 						<center>
 						<span class="inline-flex relative">
-							<span class="p-1 inline-flex rounded-full feather-icon select-none relative text-primary mb-4" style="background: rgba(var(--vs-success),0.15);" @click="editarUsuario(data[i].id); modalDetalles=false">
+							<span class="p-1 inline-flex rounded-full feather-icon select-none relative text-primary mb-4" style="background: rgba(var(--vs-success),0.15);" @click="editarConcepto(data[i].id); modalDetalles=false">
 								<vs-icon icon="mood" size="25px" color="success"></vs-icon>
 								<p style="color:rgba(var(--vs-success)); font-size:10px;">Editar</p>
 							</span>
-							<span class="p-1 inline-flex rounded-full feather-icon select-none relative text-primary mb-4" style="background: rgba(var(--vs-danger),0.15);" @click="borrarUsuario(data[i].id); modelDetalles=false">
+							<span class="p-1 inline-flex rounded-full feather-icon select-none relative text-primary mb-4" style="background: rgba(var(--vs-danger),0.15);" @click="borrarConcepto(data[i].id); modelDetalles=false">
 								<vs-icon icon="check_circle" size="25px" color="danger"></vs-icon>
 								<p style="color:rgba(var(--vs-danger)); font-size:10px">Eliminar</p>
 							</span>
@@ -305,9 +305,9 @@
             </vs-row>
         </vs-popup>
 
-        <!-- Modal para Borrar de un Usuario -->
+        <!-- Modal para Borrar de un Concepto -->
         <vs-prompt
-			title="¿Borrar Usuario?"
+			title="¿Borrar Concepto?"
 			accept-text="Borrar"
 			cancel-text="Cancelar"
 			@cancel="cancelarCambios"
@@ -404,7 +404,7 @@ export default {
 		}
 	},
 	methods: {
-		editarUsuario(i){
+		editarConcepto(i){
             for(var j=0; j < this.concepts.length; j++){
 				if( i == this.concepts[j].id ){
                     this.modalCambios = true;
@@ -558,7 +558,7 @@ export default {
                 iconPack: 'feather', icon:'icon-alert-circle'
 			});
         },
-        borrarUsuario(i){
+        borrarConcepto(i){
             for(var j=0; j < this.concepts.length; j++){
 				if( i == this.concepts[j].id ){
                     this.modalBorrar = true;
@@ -579,7 +579,7 @@ export default {
                 }).then((res) => {
                     this.$vs.notify({
                         color:'success',
-                        title:'Usuario Borrado Correctamente',
+                        title:'Concepto Borrado Correctamente',
                         iconPack: 'feather', icon:'icon-check'
                     });
                     delete this.concepts.splice(parseInt(this.tmpI), 1);
@@ -588,12 +588,12 @@ export default {
                     this.$vs.notify({
                         color:'danger',
                         title:'Error al Borrar',
-                        text: `No se pudo borrar el usuario ${this.tmpA.short_Desc}. Error en la API`,
+                        text: `No se pudo borrar el concepto ${this.tmpA.short_Desc}. Error en la API`,
                         iconPack: 'feather', icon:'icon-alert-circle'
                     });
             })
         },
-        cargarUsuarios(){
+        cargarConceptos(){
             axios.get(this.url.concepts, {
                 headers: {
                     'Authorization': this.infoUser.token
@@ -620,7 +620,7 @@ export default {
 		}
     },
     mounted() {
-        this.cargarUsuarios();
+        this.cargarConceptos();
     },
 }
 </script>
