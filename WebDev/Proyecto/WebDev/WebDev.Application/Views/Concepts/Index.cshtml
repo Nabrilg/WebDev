@@ -6,9 +6,9 @@
 
 
 <div class="container">
-    <h1>Concept List</h1>
+    <h2>List Concept</h2>
     <p>
-        <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Create New</a>
+        <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> New</a>
     </p>
 </div>
 
@@ -57,7 +57,7 @@
                     <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id" asp-route-conceptid="@item.ConceptId">Edit</a>
                     <a class="btn btn-outline-info" asp-action="Details" asp-route-conceptid="@item.ConceptId">Details</a>
                     <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id" asp-route-conceptid="@item.ConceptId">Delete</a>
-                    <!--asp-route-conceptid="@item.ConceptId"-->
+                    
                 </td>
             </tr>
             }
