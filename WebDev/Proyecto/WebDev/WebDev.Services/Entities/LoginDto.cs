@@ -1,4 +1,5 @@
-﻿namespace WebDev.Services.Entities
+﻿
+namespace WebDev.Services.Entities
 {
   public class LoginDto
   {
