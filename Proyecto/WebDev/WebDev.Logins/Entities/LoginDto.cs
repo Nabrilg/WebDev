@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WebDev.Logins.Entities
+﻿namespace WebDev.Logins.Entities
 {
     public class LoginDto
     {
         public string email { get; set; }
-        public string password { get; set; }
+        public string Password { get; set; }
 
         private LoginDto()
         {
         }
 
-        public static LoginDto Build(string email, string password)
+        public static LoginDto Build(string email, string Password)
         {
             return new LoginDto
             {
                 email = email,
-                password = password
+                Password = Password
             };
         }
     }

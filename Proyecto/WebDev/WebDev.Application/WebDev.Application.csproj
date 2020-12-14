@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebDev.Concepts\WebDev.Concepts.csproj" />
     <ProjectReference Include="..\WebDev.Logins\WebDev.Logins.csproj" />
     <ProjectReference Include="..\WebDev.Services\WebDev.Services\WebDev.Services.csproj" />
   </ItemGroup>

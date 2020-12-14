@@ -1,86 +1,89 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebDev.Application.Config;
 using WebDev.Application.Mappers;
 using WebDev.Application.Models;
-using WebDev.Services;
-using WebDev.Services.Entities;
+using WebDev.Concepts;
+using WebDev.Concepts.Entities;
 
 namespace WebDev.Application.Controllers
 {
-    public class UsersController : Controller
+    public class ConceptsController : Controller
     {
-        private readonly UsersService usersService;
+        private readonly ConceptsService conceptsService;
 
-        public UsersController(IOptions<ApiConfiguration> apiConfiguration)
+        public ConceptsController(IOptions<ApiConfiguration> apiConfiguration)
         {
             var _apiConfiguration = apiConfiguration.Value;
-            usersService = new UsersService(_apiConfiguration.ApiUsersUrl);
-            //Segunda Opcion:
-            //usersService.TokenDto = LoginMappers.MapperToTokenDto(JsonConvert.DeserializeObject<Login>(HttpContext.Session.GetString("Token")));
+            conceptsService = new ConceptsService(_apiConfiguration.ApiConceptUrl);
         }
 
-        // GET: UsersController
+        // GET: ConceptsController
         [HttpGet]
         public async Task<ActionResult> Index()
         {
             string vartoken = HttpContext.Session.GetString("Token");
 
-            IList<UserDto> users = await usersService.GetUsers(vartoken);
+            IList<ConceptDto> concepts = await conceptsService.GetConcepts(vartoken);
 
-            var _userList = users.Select(userDto => UserMappers.MapperToUser(userDto)).ToList();
+            var _conceptList = concepts.Select(conceptDto => ConceptMappers.MapperToConcept(conceptDto)).ToList();
 
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
 
-            return View(_userList);
+            return View(_conceptList);
         }
 
-        // GET: UsersController/Details/5
+        // GET: ConceptsController/Details/5
         [HttpGet]
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int concept_Id)
         {
             string vartoken = HttpContext.Session.GetString("Token");
 
-            var userFound = await usersService.GetUserById(id, vartoken);
+            var conceptsFound = await conceptsService.GetConceptsByParams($"concept_Id={concept_Id}", vartoken);
 
-            if (userFound == null)
+            if (conceptsFound == null)
             {
                 return NotFound();
             }
 
-            var user = UserMappers.MapperToUser(userFound);
+            var concept = ConceptMappers.MapperToConcept(conceptsFound);
 
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
 
-            return View(user);
+            return View(concept);
         }
 
-        // GET: UsersController/Create
+        // GET: ConceptsController/Create
         [HttpGet]
         public ActionResult Create()
         {
+            string vartoken = HttpContext.Session.GetString("Token");
+            HttpContext.Session.SetString("Token2",vartoken);
+
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
 
             return View();
         }
 
-        // POST: UsersController/Create
+        // POST: ConceptsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(User user)
+        public async Task<ActionResult> Create(Concept concept)
         {
+            string vartoken = HttpContext.Session.GetString("Token2");
+
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
             try
             {
                 if (ModelState.IsValid)
                 {
-                    string vartoken = HttpContext.Session.GetString("Token");
 
-                    await usersService.AddUser(UserMappers.MapperToUserDto(user), vartoken);
+                    await conceptsService.AddConcept(ConceptMappers.MapperToConceptDto(concept), vartoken);
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -91,30 +94,30 @@ namespace WebDev.Application.Controllers
             }
         }
 
-        // GET: UsersController/Edit/5
+        // GET: ConceptsController/Edit/5
         [HttpGet]
-        public async Task<ActionResult> Edit(int id)
+        public async Task<ActionResult> Edit(int concept_Id)
         {
             string vartoken = HttpContext.Session.GetString("Token");
 
-            var userFound = await usersService.GetUserById(id, vartoken);
+            var conceptFound = await conceptsService.GetConceptsByParams($"concept_Id={concept_Id}", vartoken);
 
-            if (userFound == null)
+            if (conceptFound == null)
             {
                 return NotFound();
             }
 
-            var user = UserMappers.MapperToUser(userFound);
+            var concept = ConceptMappers.MapperToConcept(conceptFound);
 
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
 
-            return View(user);
+            return View(concept);
         }
 
-        // POST: UsersController/Edit/5
+        // POST: ConceptsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(User user)
+        public async Task<ActionResult> Edit(Concept concept)
         {
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
 
@@ -124,11 +127,11 @@ namespace WebDev.Application.Controllers
                 {
                     string vartoken = HttpContext.Session.GetString("Token");
 
-                    await usersService.UpdateUser(UserMappers.MapperToUserDto(user), vartoken);
+                    await conceptsService.UpdateConcept(ConceptMappers.MapperToConceptDto(concept), vartoken);
 
                     return RedirectToAction(nameof(Index));
                 }
-                return View(user);
+                return View(concept);
             }
             catch
             {
@@ -136,45 +139,49 @@ namespace WebDev.Application.Controllers
             }
         }
 
-        // GET: UsersController/Delete/5
+        // GET: ConceptsController/Delete/5
         [HttpGet]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int concept_Id)
         {
             string vartoken = HttpContext.Session.GetString("Token");
 
-            var userFound = await usersService.GetUserById(id, vartoken);
 
-            if (userFound == null)
+            var conceptFound = await conceptsService.GetConceptsByParams($"concept_Id={concept_Id}", vartoken);
+
+            if (conceptFound == null)
             {
                 return NotFound();
             }
 
-            var user = UserMappers.MapperToUser(userFound);
+            var concept = ConceptMappers.MapperToConcept(conceptFound);
+
+            HttpContext.Session.SetString("DELETE", JsonConvert.SerializeObject(conceptFound));
 
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
 
-            return View(user);
+            return View(concept);
         }
 
-        // POST: UsersController/Delete/5
+        // POST: ConceptsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(User user)
+        public async Task<ActionResult> Delete(Concept concept)
         {
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
 
+             ConceptDto concepts = ConceptMappers.MapperToConceptDto(JsonConvert.DeserializeObject<Concept>(HttpContext.Session.GetString("DELETE")));
             try
             {
                 string vartoken = HttpContext.Session.GetString("Token");
 
-                var userFound = await usersService.GetUserById(user.Id, vartoken);
+                var conceptFound = await conceptsService.GetConceptsByParams($"concept_Id={concepts.concept_Id}", vartoken);
 
-                if (userFound == null)
+                if (conceptFound == null)
                 {
                     return View();
                 }
 
-                await usersService.DeleteUser(user.Id, vartoken);
+                await conceptsService.DeleteConcept(conceptFound.id, vartoken);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -183,5 +190,6 @@ namespace WebDev.Application.Controllers
                 return View();
             }
         }
+
     }
 }

@@ -4,5 +4,6 @@
     {
         public string ApiUsersUrl { get; set; }
         public string ApiLoginUrl { get; set; }
+        public string ApiConceptUrl { get; set; }
     }
 }

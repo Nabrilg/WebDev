@@ -1,30 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using WebDev.Application.Config;
-using WebDev.Logins;
-using WebDev.Logins.Entities;
-using WebDev.Application.Models;
 using Microsoft.Extensions.Options;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using WebDev.Application.Config;
 using WebDev.Application.Mappers;
+using WebDev.Application.Models;
+using WebDev.Logins;
 
 namespace WebDev.Application.Controllers
 {
     public class HomeController : Controller
     {
-
-        private readonly ApiConfiguration _apiConfiguration;
-        private LoginsService loginsService;
+        private readonly LoginsService loginsService;
 
         public HomeController(IOptions<ApiConfiguration> apiConfiguration)
         {
-            _apiConfiguration = apiConfiguration.Value;
+            var _apiConfiguration = apiConfiguration.Value;
             loginsService = new LoginsService(_apiConfiguration.ApiLoginUrl);
         }
 
@@ -63,9 +56,11 @@ namespace WebDev.Application.Controllers
                 {
                     var ValidUser = await loginsService.ValidUser(LoginMappers.MapperToLoginDto(login));
                     if (ValidUser != null)
-                        {
+                    {
                         HttpContext.Session.SetString("IsUserLogged", "true");
                         HttpContext.Session.SetString("User", ValidUser.name);
+                        //Segunda Opcion:
+                        //HttpContext.Session.SetString("Token", JsonConvert.SerializeObject(ValidUser));
                         HttpContext.Session.SetString("Token", ValidUser.token);
                         return RedirectToAction(nameof(Index));
                     }

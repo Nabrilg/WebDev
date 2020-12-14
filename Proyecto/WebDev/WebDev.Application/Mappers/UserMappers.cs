@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using WebDev.Application.Models;
 using WebDev.Services.Entities;
-using WebDev.Application.Models;
 
 namespace WebDev.Application.Mappers
 {
-    public class UserMappers
+    public static class UserMappers
     {
         public static User MapperToUser(UserDto userDto)
         {

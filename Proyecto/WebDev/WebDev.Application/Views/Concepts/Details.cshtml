@@ -1,0 +1,212 @@
+﻿@model WebDev.Application.Models.Concept
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<body style="background-color:lightgrey;">
+<div>
+    <h4>Concept</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.pxordx)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.pxordx)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.oldpxordx)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.oldpxordx)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.oldpxordx)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.oldpxordx)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.codeType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.codeType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.concept_Class_Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.concept_Class_Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.concept_Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.concept_Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.vocabulary_Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.vocabulary_Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.domain_Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.domain_Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.track)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.track)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.standard_Concept)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.standard_Concept)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.code)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.code)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.codeWithPeriods)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.codeWithPeriods)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.codeScheme)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.codeScheme)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.long_Desc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.long_Desc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.short_Desc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.short_Desc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.code_Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.code_Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.code_Change)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.code_Change)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.code_Change_Year)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.code_Change_Year)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.code_Planned_Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.code_Planned_Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.code_Billing_Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.code_Billing_Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.code_Cms_Claim_Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.code_Cms_Claim_Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.sex_Cd)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.sex_Cd)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.sex_Cd)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.sex_Cd)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.anat_Or_Cond)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.anat_Or_Cond)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.poa_Code_Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.poa_Code_Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.poa_Code_Change)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.poa_Code_Change)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.poa_Code_Change_Year)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.poa_Code_Change_Year)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.valid_Start_Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.valid_Start_Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.valid_End_Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.valid_End_Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.invalid_Reason)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.invalid_Reason)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.create_Dt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.create_Dt)
+        </dd>
+    </dl>
+</div>
+<div class="form-group">
+    <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+</div>
+
+</body>

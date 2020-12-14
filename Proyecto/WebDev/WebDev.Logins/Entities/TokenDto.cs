@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WebDev.Logins.Entities
+﻿namespace WebDev.Logins.Entities
 {
     public class TokenDto
     {
@@ -21,7 +17,6 @@ namespace WebDev.Logins.Entities
                 token = token,
                 userId = userId,
                 name = name
-
             };
         }
     }

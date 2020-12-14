@@ -4,28 +4,28 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using WebDev.Concepts.Entities;
 using WebDev.Logins.Entities;
-using WebDev.Services.Entities;
 
-namespace WebDev.Services
+namespace WebDev.Concepts
 {
-    public class UsersService
+    public class ConceptsService
     {
         private readonly RestClient _restClient;
         public string BaseUrl { get; }
         public TokenDto TokenDto { get; set; }
 
-        public UsersService(string baseUrl)
+        public ConceptsService(string baseUrl)
         {
             BaseUrl = baseUrl;
             _restClient = new RestClient();
         }
 
-        public async Task<List<UserDto>> GetUsers(string vartoken)
+        public async Task<List<ConceptDto>> GetConcepts(string vartoken)
         {
-            var usersList = new List<UserDto>();
+            var conceptsList = new List<ConceptDto>();
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}users");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}concepts");
             // Wait until to get a response
             _restClient.Timeout = -1;
             // Assign the Method Type
@@ -44,18 +44,18 @@ namespace WebDev.Services
                 var responseContent = response.Content;
 
                 //Deserializing the response recieved from web api and storing into the Employee list
-                usersList = JsonConvert.DeserializeObject<List<UserDto>>(responseContent);
+                conceptsList = JsonConvert.DeserializeObject<List<ConceptDto>>(responseContent);
             }
 
-            return usersList;
+            return conceptsList;
         }
 
-        public async Task<UserDto> GetUserById(int id, String vartoken)
+        public async Task<ConceptDto> GetConceptsByParams(string param, String vartoken)
         {
-            UserDto user = null;
+            ConceptDto concept = null;
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{id}");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}concepts?{param}");
             // Wait until to get a response
             _restClient.Timeout = -1;
             // Assign the Method Type
@@ -72,20 +72,21 @@ namespace WebDev.Services
             {
                 // Storing the content response recieved from web api
                 var responseContent = response.Content;
+                responseContent = responseContent.Trim(new Char[] { '[', ']' });
 
                 //Deserializing the response recieved from web api and storing into the Employee list
-                user = JsonConvert.DeserializeObject<UserDto>(responseContent);
+                concept = JsonConvert.DeserializeObject<ConceptDto>(responseContent);
             }
 
-            return user;
+            return concept;
         }
 
-        public async Task<LoginDto> AddUser(UserDto user, String vartoken)
+        public async Task<ConceptDto> AddConcept(ConceptDto concept, String vartoken)
         {
-            LoginDto userCreatedDtoResponse = null;
+            ConceptDto conceptCreatedDtoResponse = null;
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}users");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}concepts");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -98,7 +99,7 @@ namespace WebDev.Services
             request.AddHeader("Content-Type", "application/json");
 
             // Assign the Body
-            var content = JsonConvert.SerializeObject(user);
+            var content = JsonConvert.SerializeObject(concept);
             request.AddParameter("application/json", content, ParameterType.RequestBody);
 
             // Execute the Call
@@ -111,17 +112,17 @@ namespace WebDev.Services
                 var responseContent = response.Content;
 
                 //Deserializing the response recieved from web api and storing into the Employee list
-                userCreatedDtoResponse = JsonConvert.DeserializeObject<LoginDto>(responseContent);
+                conceptCreatedDtoResponse = JsonConvert.DeserializeObject<ConceptDto>(responseContent);
             }
-            return userCreatedDtoResponse;
+            return conceptCreatedDtoResponse;
         }
 
-        public async Task<UserDto> UpdateUser(UserDto user, String vartoken)
+        public async Task<ConceptDto> UpdateConcept(ConceptDto concept, String vartoken)
         {
-            UserDto userDtoResponse = null;
+            ConceptDto conceptDtoResponse = null;
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{user.id}");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}concepts/{concept.id}");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -134,7 +135,7 @@ namespace WebDev.Services
             request.AddHeader("Content-Type", "application/json");
 
             // Assign the Body
-            var content = JsonConvert.SerializeObject(user);
+            var content = JsonConvert.SerializeObject(concept);
             request.AddParameter("application/json", content, ParameterType.RequestBody);
 
             // Execute the Call
@@ -147,17 +148,17 @@ namespace WebDev.Services
                 var responseContent = response.Content;
 
                 //Deserializing the response recieved from web api and storing into the Employee list
-                userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
+                conceptDtoResponse = JsonConvert.DeserializeObject<ConceptDto>(responseContent);
             }
-            return userDtoResponse;
+            return conceptDtoResponse;
         }
 
-        public async Task<UserDto> DeleteUser(int id, String vartoken)
+        public async Task<ConceptDto> DeleteConcept(int id, String vartoken)
         {
-            UserDto userDtoResponse = null;
+            ConceptDto conceptDtoResponse = null;
 
             // Assign the URL
-            _restClient.BaseUrl = new Uri($"{BaseUrl}users/{id}");
+            _restClient.BaseUrl = new Uri($"{BaseUrl}concepts/{id}");
 
             // Wait until to get a response
             _restClient.Timeout = -1;
@@ -179,9 +180,9 @@ namespace WebDev.Services
                 var responseContent = response.Content;
 
                 //Deserializing the response recieved from web api and storing into the Employee list
-                userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
+                conceptDtoResponse = JsonConvert.DeserializeObject<ConceptDto>(responseContent);
             }
-            return userDtoResponse;
+            return conceptDtoResponse;
         }
     }
 }
