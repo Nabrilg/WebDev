@@ -1,0 +1,314 @@
+﻿@model WebDev.Application.Models.Concept
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <link type="text/css" href="./css/style.css" rel="stylesheet" />
+
+<style type="text/css">
+
+body { 
+    width: 100%;
+    height:100%;
+    font-family: 'Open Sans', sans-serif;
+    background-image: url("https://okdiario.com/img/2018/08/03/hacer-el-color-turquesa-655x368.jpg");
+
+
+}
+    .login { 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -150px 0 0 -150px;
+    width:300px;
+    height:300px;
+}
+.login h1 { color: #fff; letter-spacing:1px; text-align:center; }
+
+input { 
+    width: 50%; 
+    margin-bottom: 10px; 
+    
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 13px;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 4px;
+    box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
+    -webkit-transition: box-shadow .5s ease;
+    -moz-transition: box-shadow .5s ease;
+    -o-transition: box-shadow .5s ease;
+    -ms-transition: box-shadow .5s ease;
+    transition: box-shadow .5s ease;
+}
+input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
+</style>
+
+
+</head>
+
+<div  align="center">
+
+    <div align="center"> 
+
+        <TABLE BORDER=3>
+        <TR><TD>
+        <MARQUEE> <h1>Details Concept</h1> </MARQUEE>
+        </TD></TR>
+        </TABLE>
+    
+    
+    </div>
+    
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+        
+    
+<TABLE BORDER=3>
+    <TR><TD>
+<div className="App Delete" asp-action="Delete"  align="center" >
+      
+      <p>
+        Detail a concept id: &emsp; <input type="text" name="Detail" class=" center5 "></input>
+      </p>
+      <div>
+      <nav>
+          <ul class="no-lista">
+              &emsp;
+              <button type="button"  class="button">Detail </button>
+          </ul>
+      </nav>  
+  </div>
+  <div className="row">
+  </div>
+    </header>
+  </div>
+</TD></TR>
+</TABLE>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<div>
+
+
+    <table BORDER=3 style="width:50%" >
+        <TD>
+            <br>
+            <br>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Pxordx)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Pxordx)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Oldpxordx)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Oldpxordx)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodeType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodeType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ConceptClassId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ConceptClassId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ConceptId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ConceptId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VocbularyId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VocbularyId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DomainId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DomainId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Track)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Track)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StandardConcept)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StandardConcept)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodeWithPeriods)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodeWithPeriods)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodeScheme)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodeScheme)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LongDesc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LongDesc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ShortDesc)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ShortDesc)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodeStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodeStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodeChange)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodeChange)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodeChangeYear)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodeChangeYear)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodePlannedType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodePlannedType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodeBillingStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodeBillingStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CodeCmsClaimStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CodeCmsClaimStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SexCd)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SexCd)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AnatOrCond)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AnatOrCond)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PoaCodeStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PoaCodeStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PoaCodeChange)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PoaCodeChange)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PoaCodeChangeYear)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PoaCodeChangeYear)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValidStartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValidStartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ValidEndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ValidEndDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InvalidReason)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InvalidReason)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreateDt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreateDt)
+        </dd>
+    </dl>
+
+</TD>
+</table>
+</div>
+
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-danger" /> 
+
+
+    </form>
+
+
+
+</div>
