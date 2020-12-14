@@ -101,14 +101,11 @@ export function Concepts()
     currentConcept.concept_Id = parseInt(currentConcept.concept_Id);
     currentConcept.code_Change_Year = parseInt(currentConcept.code_Change_Year);
     currentConcept.create_Dt = parseInt(currentConcept.create_Dt);
-    debugger
     await axios.post(baseUrl, currentConcept, configCreate)
     .then (response=>{
       getConcepts();
-      debugger
       openCloseModalCreate();
     }).catch(error=>{
-      debugger
       console.log(error);
     })
 }
