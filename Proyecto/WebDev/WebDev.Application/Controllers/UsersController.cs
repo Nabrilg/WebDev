@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebDev.Application.Config;
+using WebDev.Application.Mappers;
 using WebDev.Application.Models;
 using WebDev.Services;
 using WebDev.Services.Entities;
@@ -15,27 +16,33 @@ namespace WebDev.Application.Controllers
     {
         #region Properties
         private List<User> userList;
-        private readonly ApiConfiguration apiConfiguration;
-        private UsersService usersService;
+        private readonly UsersService usersService;
+        private readonly UserMapper userMapper;
         #endregion
 
+        #region Intialize
         public UsersController(IOptions<ApiConfiguration> apiConfig)
         {
-            apiConfiguration = apiConfig.Value;
+            ApiConfiguration apiConfiguration = apiConfig.Value;
             usersService = new UsersService(apiConfiguration.ApiUsersUrl);
+            userMapper = new UserMapper();
         }
+        #endregion
 
+        #region Http Methods
         // GET: UsersController
         public async Task<ActionResult> Index()
         {
+            LoadSessionProperties();
+            string token = HttpContext.Session.GetString("Token");
+
             // Set Object Model
-            IList<UserDto> users = await usersService.GetUsers(HttpContext.Session.GetString("Token"));
+            IList<UserDto> users = await usersService.GetUsers(token);
             if (users != null)
             {
-                userList = users.Select(userDto => MapperToUser(userDto)).ToList();
+                userList = users.Select(userDto => userMapper.MapUserDtoToUser(userDto)).ToList();
             }
-            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
-            ViewData["Name"] = HttpContext.Session.GetString("Name");
+
             return View(userList);
         }
 
@@ -43,14 +50,17 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            var userFound = await usersService.GetUserById(id, HttpContext.Session.GetString("Token"));
+            LoadSessionProperties();
+            string token = HttpContext.Session.GetString("Token");
+
+            var userFound = await usersService.GetUserById(id, token);
 
             if (userFound == null)
             {
                 return NotFound();
             }
 
-            var user = MapperToUser(userFound);
+            var user = userMapper.MapUserDtoToUser(userFound);
 
             return View(user);
         }
@@ -59,6 +69,8 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            LoadSessionProperties();
+
             return View();
         }
 
@@ -69,9 +81,10 @@ namespace WebDev.Application.Controllers
         {
             try
             {
+                string token = HttpContext.Session.GetString("Token");
                 if (ModelState.IsValid)
                 {
-                    var userIdAdded = await usersService.AddUser(MapperToCreateUserDto(user), HttpContext.Session.GetString("Token"));
+                    await usersService.AddUser(userMapper.MapUserToCreateUserDto(user), token);
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -86,16 +99,19 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
-            var userFound = await usersService.GetUserById(id, HttpContext.Session.GetString("Token"));
+            LoadSessionProperties();
+            string token = HttpContext.Session.GetString("Token");
+
+            var userFound = await usersService.GetUserById(id, token);
 
             if (userFound == null)
             {
                 return NotFound();
             }
 
-            var user = MapperToUser(userFound);
+            var userToEdit = userMapper.MapUserDtoToUser(userFound);
 
-            return View(user);
+            return View(userToEdit);
         }
 
         // POST: UsersController/Edit/5
@@ -105,14 +121,15 @@ namespace WebDev.Application.Controllers
         {
             try
             {
-                var userFound = await usersService.GetUserById(user.Id, HttpContext.Session.GetString("Token"));
+                string token = HttpContext.Session.GetString("Token");
+                var userFound = await usersService.GetUserById(user.Id, token);
 
                 if (userFound == null)
                 {
                     return NotFound();
                 }
 
-                var isSuccessUserModified = await usersService.UpdateUser(MapperToUpdateUserDto(user), user.Id, HttpContext.Session.GetString("Token"));
+                await usersService.UpdateUser(userMapper.MapUserToUpdateUserDto(user), user.Id, HttpContext.Session.GetString("Token"));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -126,16 +143,19 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
-            var userFound = await usersService.GetUserById(id, HttpContext.Session.GetString("Token"));
+            LoadSessionProperties();
+            string token = HttpContext.Session.GetString("Token"); 
+
+            var userFound = await usersService.GetUserById(id, token);
 
             if (userFound == null)
             {
                 return NotFound();
             }
 
-            var user = MapperToUser(userFound);
+            var userToDelete = userMapper.MapUserDtoToUser(userFound);
 
-            return View(user);
+            return View(userToDelete);
         }
 
         // POST: UsersController/Delete/5
@@ -145,14 +165,15 @@ namespace WebDev.Application.Controllers
         {
             try
             {
-                var userFound = await usersService.GetUserById(user.Id, HttpContext.Session.GetString("Token"));
+                string token = HttpContext.Session.GetString("Token");
+                var userFound = await usersService.GetUserById(user.Id, token);
 
                 if (userFound == null)
                 {
                     return View();
                 }
 
-                var isSuccessUserDeleted = await usersService.DeleteUser(user.Id, HttpContext.Session.GetString("Token"));
+                await usersService.DeleteUser(user.Id, token);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -161,51 +182,13 @@ namespace WebDev.Application.Controllers
                 return View();
             }
         }
-
-        private User MapperToUser(UserDto userDto)
+        #endregion
+        
+        // Loads to view data properties the session attributes that have been passed from previews controllers
+        private void LoadSessionProperties()
         {
-            return new User
-            {
-                Id = userDto.Id,
-                Email = userDto.Email,
-                Name = userDto.Name,
-                Username = userDto.Username,
-                Password = userDto.Password
-            };
-        }
-
-        private UpdateUserDto MapperToUpdateUserDto(User user)
-        {
-            return UpdateUserDto.Build(
-                email:user.Email,
-                name: user.Name,
-                username: user.Username,
-                password: user.Password
-            );
-        }
-
-        private CreateUserDto MapperToCreateUserDto(User user)
-        {
-            return CreateUserDto.Build(
-                id: user.Id,
-                email: user.Email,
-                name: user.Name,
-                username: user.Username,
-                password: user.Password
-            );
-        }
-
-        private void MockUserList()
-        {
-            if (userList is null)
-            {
-                userList = new List<User>()
-                {
-                    new User{Id=1, Email="Julio.Robles@email.com", Name="Julio Robles", Username="jrobles", Password="Password"},
-                    new User{Id=2, Email="Pilar.Lopez@email.com", Name="Pilar Lopez", Username="plopez", Password="Password"},
-                    new User{Id=3, Email="Felipe.Daza@email.com", Name="Felipe Daza", Username="fdaza", Password="Password"},
-                };
-            }
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["Name"] = HttpContext.Session.GetString("Name");
         }
     }
 }

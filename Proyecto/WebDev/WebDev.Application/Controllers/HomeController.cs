@@ -16,14 +16,13 @@ namespace WebDev.Application.Controllers
     {
         #region Properties
         private readonly ILogger<HomeController> _logger;
-        private readonly ApiConfiguration apiConfiguration;
-        private LoginService loginService;
+        private readonly LoginService loginService;
         #endregion
 
         #region Initialize
         public HomeController(ILogger<HomeController> logger, IOptions<ApiConfiguration> apiConfig)
         {
-            apiConfiguration = apiConfig.Value;
+            ApiConfiguration apiConfiguration = apiConfig.Value;
             loginService = new LoginService(apiConfiguration.ApiLoginUrl);
             _logger = logger;
         }
@@ -55,12 +54,12 @@ namespace WebDev.Application.Controllers
         // [Route("[action]")]
         public IActionResult Login()
         {
-            // La relación del método con la vista para cargarla.
+            // Relation to it's view
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] // Validación por tokens
+        [ValidateAntiForgeryToken] // Token validation
         public async Task<IActionResult> Login(Login login)
         {
             try
@@ -95,18 +94,6 @@ namespace WebDev.Application.Controllers
             HttpContext.Session.Remove("User");
             HttpContext.Session.Remove("Token");
             return RedirectToAction(nameof(Index));
-        }
-
-        private async Task<bool> IsValidUser(string email, string password)
-        {
-            if (email.Equals("demouser@email.com") && password.Equals("Password*01"))
-            {
-                HttpContext.Session.SetString("IsUserLogged", "true");
-                HttpContext.Session.SetString("User", email);
-                return true;
-            }
-            HttpContext.Session.SetString("IsUserLogged", "false");
-            return false;
         }
 
         private LoginDto MapperToLoginDto(Login login)

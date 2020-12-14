@@ -5,6 +5,9 @@ namespace WebDev.Services.Entities
     public class UpdateUserDto
     {
         #region Properties
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
         [JsonProperty("email")]
         public string Email { get; set; }
 
@@ -21,10 +24,11 @@ namespace WebDev.Services.Entities
         #region Initialize
         public UpdateUserDto() { }
 
-        public static UpdateUserDto Build(string email, string name, string username, string password)
+        public static UpdateUserDto Build(int id, string email, string name, string username, string password)
         {
             return new UpdateUserDto()
             {
+                Id = id,
                 Email = email,
                 Name = name,
                 Username = username,

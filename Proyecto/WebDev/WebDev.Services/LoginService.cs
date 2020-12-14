@@ -12,15 +12,14 @@ namespace WebDev.Services
     {
         #region Properties
         private string BaseUrl { get; }
-        private HttpClient httpClient;
-        private HttpClientHandler httpClientHandler;
+        private readonly HttpClient httpClient;
         #endregion
 
         #region Initialize
         public LoginService(string baseUrl)
         {
             BaseUrl = baseUrl;
-            httpClientHandler = new HttpClientHandler();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
             httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
             httpClient = new HttpClient(httpClientHandler);
             SetupHttpConnection(httpClient, baseUrl);
@@ -35,7 +34,7 @@ namespace WebDev.Services
 
             httpClient.DefaultRequestHeaders.Clear();
 
-            //Define request data format  
+            //Define request data format
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 

@@ -65,6 +65,11 @@ namespace WebDev.Application
                 endpoints.MapControllerRoute(
                   name: "Users",
                   pattern: "{controller=Users}/{action=Index}/{id?}");
+                // Concepts
+                endpoints.MapControllerRoute(
+                  name: "Concepts",
+                  pattern: "{controller=Concepts}/{action=Index}/{id?}");
+
             });
         }
     }
