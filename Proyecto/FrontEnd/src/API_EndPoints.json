@@ -1,0 +1,5 @@
+{
+    "users": "https://javerianawebdevapi.azurewebsites.net/api/users",
+    "concepts": "https://javerianawebdevapi.azurewebsites.net/api/concepts",
+    "login": "https://javerianawebdevapi.azurewebsites.net/api/login"
+}
