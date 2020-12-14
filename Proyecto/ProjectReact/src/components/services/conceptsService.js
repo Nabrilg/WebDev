@@ -17,6 +17,10 @@ class ConceptService{
     return fetch(URL + PATH, requestOptions);
   }
   post(concept){
+    concept.id = 0;
+    concept.concept_Id = parseInt(concept.concept_Id);
+    concept.code_Change_Year = parseInt(concept.code_Change_Year);
+    concept.create_Dt = parseInt(concept.create_Dt);
     var raw = JSON.stringify(concept);
     var requestOptions = {
       method: 'POST',

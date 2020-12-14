@@ -8,9 +8,11 @@ import ConceptService from "./services/conceptsService"
 
 function ConceptMenu({AuthState}) {
   const [concepts, setConcepts] = useState([]);
+  const [index, setIndex] = useState(-1);
   const [concept, setConcept] = useState(new Concept());
   const [state, setState] = useState(0);
   var conceptService = new ConceptService(AuthState);
+  const [isData,setIsData] = useState(false);
   function getConcepts(){
     conceptService.get()
     .then(response => {
@@ -19,7 +21,6 @@ function ConceptMenu({AuthState}) {
     })
     .then(response => {
       setConcepts(response);
-      console.log(response);
     })
     .catch(err => {
       console.log(err);
@@ -27,7 +28,7 @@ function ConceptMenu({AuthState}) {
   }
 
   const handleChangeConcept = con => {
-    conceptService.post()
+    conceptService.post(con)
     .then(response => {
       if(!response.ok) throw new Error("Server connection error");
       return response.json();
@@ -35,37 +36,32 @@ function ConceptMenu({AuthState}) {
     .then(response => {
       setConcepts([...concepts, con]);
       console.log("Concept has added");
-      console.log(response);
     })
     .catch(err => {
       console.log(err);
     })
   };
-  const handleEditConcept = (con,index) => {
-    conceptService.put()
+  const handleEditConcept = (con) => {
+    conceptService.put(con)
     .then(response => {
       if(!response.ok) throw new Error("Server connection error");
-      return response.json();
+      return response;
     })
     .then(response => {
-      var newConcepts = concepts;
-      newConcepts[index]=con;
-      setConcepts(newConcepts);
-      console.log(response);
+      setConcepts(concepts.map((c,i)=> i===index ? con : c));
     })
     .catch(err => {
       console.log(err);
     })
   };
   const handleDeleteConcept = (con,index) => {
-    conceptService.delete()
+    conceptService.delete(con)
     .then(response => {
       if(!response.ok) throw new Error("Server connection error");
-      return response.json();
+      return response;
     })
     .then(response => {
       setConcepts(concepts.filter((concept,i) => i!==index));
-      console.log(response);
     })
     .catch(err => {
       console.log(err);
@@ -74,12 +70,15 @@ function ConceptMenu({AuthState}) {
   const handleChangeState = (newState) => {
     setState(newState);
   };
-  const handleChangeEditableState = (newState,selectConcept,index) => {
+  const handleChangeEditableState = (newState,selectConcept,i) => {
+    setIndex(i);
     setConcept(selectConcept);
     setState(newState);
   };
-
-  getConcepts();
+  if(!isData){
+    getConcepts();
+    setIsData(true);
+  }
   return (
     <div className="container justify-content-center">
       <div className="row">

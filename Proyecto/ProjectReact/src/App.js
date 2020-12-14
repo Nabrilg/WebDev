@@ -13,7 +13,7 @@ function App() {
 
   const [AuthState, setAuthState] = useState(initAuthState);
   return (
-    <>
+    <div>
     {AuthState.token !== undefined ? (
       <Layout username={AuthState.user.name}>
         <ConceptMenu AuthState={AuthState} />
@@ -26,7 +26,7 @@ function App() {
         <div/>
       </div>
     )}
-    </>
+    </div>
   );
 }
 

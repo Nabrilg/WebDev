@@ -2,7 +2,7 @@ import URL from "./config";
 
 const LOGIN_PATH = "/api/Login";
 
-export function login(username, password) {
+function loginService(username, password) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -11,9 +11,9 @@ export function login(username, password) {
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
-    //body: JSON.stringify({email: username, password})
     body: raw
   };
 
   return fetch(URL + LOGIN_PATH, requestOptions);
 }
+export default loginService;

@@ -4,7 +4,6 @@ function EditForm({ handleChangeConcepts, initInputsText, backBtn }) {
   const [inputsText, setInputs] = useState(initInputsText);
 
   const onSubmit = () => {
-    console.log(inputsText);
     handleChangeConcepts(inputsText);
     setInputs(initInputsText);
     backBtn(0);

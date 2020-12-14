@@ -5,7 +5,7 @@ function List({ concepts, backSelectBtn, DeleteBtn,backBtn }) {
   const startState = {
     offset: 0,
     perPage: 10,
-    currentPage: undefined
+    currentPage: 0
   };
   const [state,setState] = useState(startState);
   const handlePageClick = concept => {
@@ -23,8 +23,8 @@ function List({ concepts, backSelectBtn, DeleteBtn,backBtn }) {
             <thead>
               <tr className="text-left text-uppercase">
                 <th style={{minWidth: "100px"}}>concept Id</th>
-                <th style={{minWidth: "100px"}}>Descripción</th>
-                <th style={{minWidth: "100px"}}>Codigo</th>
+                <th style={{minWidth: "100px"}}>Description</th>
+                <th style={{minWidth: "100px"}}>Code</th>
               </tr>
             </thead>
             <tbody>

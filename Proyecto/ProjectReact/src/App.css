@@ -1,3 +1,11 @@
+.bar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #a6a9b6;
+}
+
 .App {
   text-align: center;
 }
