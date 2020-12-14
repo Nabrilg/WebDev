@@ -50,6 +50,17 @@ namespace WebDev.Api
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]))
               };
             });
+
+            services.AddControllersWithViews();
+             services.Configure<ApiConfiguration>(Configuration.GetSection("ApiConfiguration"));
+
+            // Enable Session Handler
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(3);//You can set Time
+            });
+            services.AddMvc();
             
             services.AddControllers();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CnnStr")));
@@ -72,15 +83,38 @@ namespace WebDev.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default.
+                app.UseHsts();
+            }
+         
+            app.UseCookiePolicy();
+
+            app.UseSession();
+
             app.UseHttpsRedirection();
 
-            app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                          name: "default",
+                          pattern: "{controller=Home}/{action=Index}/{id?}");
+                // Users
+                endpoints.MapControllerRoute(
+                  name: "Users",
+                  pattern: "{controller=Users}/{action=Index}/{id?}");
+
+                // Concepts
+                endpoints.MapControllerRoute(
+                  name: "Concepts",
+                  pattern: "{controller=Concepts}/{action=Index}/{id?}");
+            });
             });
 
             app.UseSwagger();
