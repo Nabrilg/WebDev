@@ -78,6 +78,39 @@ export function Concepts()
     create_Dt: 0,
   }); 
 
+  const conceptCreate = {
+    id: '',
+    pxordx: '',
+    oldpxordx: '',
+    codeType: '',
+    concept_Class_Id: '',
+    concept_Id: 0,
+    vocabulary_Id: '',
+    domain_Id: '',
+    track: '',
+    standard_Concept: '',
+    code: '',
+    codeWithPeriods: '',
+    codeScheme: '',
+    long_Desc: '',
+    short_Desc: '',
+    code_Status: '',
+    code_Change: '',
+    code_Change_Year: 0,
+    code_Planned_Type: '',
+    code_Billing_Status: '',
+    code_Cms_Claim_Status: '',
+    sex_Cd: '',
+    anat_Or_Cond: '',
+    poa_Code_Status: '',
+    poa_Code_Change: '',
+    poa_Code_Change_Year: '',
+    valid_Start_Date: '',
+    valid_End_Date: '',
+    invalid_Reason: '',
+    create_Dt: 0,
+  }
+
   const handleChange=e=>{
     const {name, value}= e.target;
     setCurrentConcept({
@@ -93,7 +126,8 @@ export function Concepts()
     // Create 
   const [showModalCreate, setShowModalCreate]= useState(false);
    const openCloseModalCreate=()=>{
-   setShowModalCreate(!showModalCreate);
+    setCurrentConcept(conceptCreate);
+    setShowModalCreate(!showModalCreate);
   }  
 
   const postConcept=async() => {
@@ -101,14 +135,16 @@ export function Concepts()
     currentConcept.concept_Id = parseInt(currentConcept.concept_Id);
     currentConcept.code_Change_Year = parseInt(currentConcept.code_Change_Year);
     currentConcept.create_Dt = parseInt(currentConcept.create_Dt);
+    debugger
     await axios.post(baseUrl, currentConcept, configCreate)
     .then (response=>{
+      debugger
       getConcepts();
       openCloseModalCreate();
     }).catch(error=>{
       console.log(error);
     })
-}
+  }
 
   // Update
   const [showModalUpdate, setShowModalUpdate]= useState(false);
@@ -527,27 +563,31 @@ export function Concepts()
             <Form>
             <Form.Group>
                   <Form.Label>Pxordx:</Form.Label>
-                  <Form.Control type="text" id="txtPxordx" name="pxordx" placeholder="A"   readOnly value={currentConcept && currentConcept.pxordx}/>
+                  <Form.Control type="text" id="txtPxordx" name="pxordx"  readOnly value={currentConcept && currentConcept.pxordx}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>OldPxordx:</Form.Label>
-                  <Form.Control type="text" id="txtOldPxordx" name="oldpxordx" placeholder="A"   readOnly value={currentConcept && currentConcept.oldpxordx}/>
+                  <Form.Control type="text" id="txtOldPxordx" name="oldpxordx"  readOnly value={currentConcept && currentConcept.oldpxordx}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>Codetype:</Form.Label>
-                  <Form.Control type="text" id="txtCodetype" name="codeType" placeholder="username"   readOnly value={currentConcept && currentConcept.codeType}/>
+                  <Form.Control type="text" id="txtCodetype" name="codeType"  readOnly value={currentConcept && currentConcept.codeType}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>ConceptClassId:</Form.Label>
                   <Form.Control type="text" id="txtConceptClassId" name="concept_Class_Id"   readOnly value={currentConcept && currentConcept.concept_Class_Id}/>
               </Form.Group>
               <Form.Group>
+                  <Form.Label>ConceptId:</Form.Label>
+                  <Form.Control type="text" id="txtConceptId" name="concept_Id"   readOnly value={currentConcept && currentConcept.concept_Id}/>
+              </Form.Group>
+              <Form.Group>
                   <Form.Label>VocabularyId:</Form.Label>
-                  <Form.Control type="text" id="txtName" name="vocabulary_Id" placeholder="B"   readOnly value={currentConcept && currentConcept.vocabulary_Id}/>
+                  <Form.Control type="text" id="txtName" name="vocabulary_Id"  readOnly value={currentConcept && currentConcept.vocabulary_Id}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>DomainId:</Form.Label>
-                  <Form.Control type="text" id="txtDomainId" name="domain_Id" placeholder="username"   readOnly value={currentConcept && currentConcept.domain_Id}/>
+                  <Form.Control type="text" id="txtDomainId" name="domain_Id"  readOnly value={currentConcept && currentConcept.domain_Id}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>Track:</Form.Label>
@@ -555,11 +595,11 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>StandardConcept:</Form.Label>
-                  <Form.Control type="text" id="txtStandardConcept" name="standard_Concept" placeholder="A"   readOnly value={currentConcept && currentConcept.standard_Concept}/>
+                  <Form.Control type="text" id="txtStandardConcept" name="standard_Concept"   readOnly value={currentConcept && currentConcept.standard_Concept}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>Code:</Form.Label>
-                  <Form.Control type="text" id="txtCode" name="code" placeholder="username"   readOnly value={currentConcept && currentConcept.code}/>
+                  <Form.Control type="text" id="txtCode" name="code"  readOnly value={currentConcept && currentConcept.code}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodeWithPeriods:</Form.Label>
@@ -567,15 +607,15 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>Codescheme:</Form.Label>
-                  <Form.Control type="email" id="txtCodescheme" name="codeScheme" placeholder="abcd"   readOnly value={currentConcept && currentConcept.codeScheme}/>
+                  <Form.Control type="email" id="txtCodescheme" name="codeScheme"   readOnly value={currentConcept && currentConcept.codeScheme}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>LongDesc:</Form.Label>
-                  <Form.Control type="text" id="txtLongDesc" name="long_Desc" placeholder="B"   readOnly value={currentConcept && currentConcept.long_Desc}/>
+                  <Form.Control type="text" id="txtLongDesc" name="long_Desc"  readOnly value={currentConcept && currentConcept.long_Desc}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>ShortDesc:</Form.Label>
-                  <Form.Control type="text" id="txtShortDesc" name="short_Desc" placeholder="username"   readOnly value={currentConcept && currentConcept.short_Desc}/>
+                  <Form.Control type="text" id="txtShortDesc" name="short_Desc"  readOnly value={currentConcept && currentConcept.short_Desc}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodeStatus:</Form.Label>
@@ -583,15 +623,15 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodeChange:</Form.Label>
-                  <Form.Control type="text" id="txtCodeChange" name="code_Change" placeholder="A"   readOnly value={currentConcept && currentConcept.code_Change}/>
+                  <Form.Control type="text" id="txtCodeChange" name="code_Change" readOnly value={currentConcept && currentConcept.code_Change}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodeChangeYear:</Form.Label>
-                  <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" placeholder="A"   readOnly value={currentConcept && currentConcept.code_Change_Year}/>
+                  <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" readOnly value={currentConcept && currentConcept.code_Change_Year}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodePlannedType:</Form.Label>
-                  <Form.Control type="text" id="txtCodePlannedType" name="code_Planned_Type" placeholder="username"   readOnly value={currentConcept && currentConcept.code_Planned_Type}/>
+                  <Form.Control type="text" id="txtCodePlannedType" name="code_Planned_Type" readOnly value={currentConcept && currentConcept.code_Planned_Type}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodeBillingStatus:</Form.Label>
@@ -599,15 +639,15 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodeCmsClaimStatus:</Form.Label>
-                  <Form.Control type="text" id="txtCodeCmsClaimStatus" name="code_Cms_Claim_Status" placeholder="abcd"   readOnly value={currentConcept && currentConcept.code_Cms_Claim_Status}/>
+                  <Form.Control type="text" id="txtCodeCmsClaimStatus" name="code_Cms_Claim_Status"  readOnly value={currentConcept && currentConcept.code_Cms_Claim_Status}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>SexCd:</Form.Label>
-                  <Form.Control type="text" id="txtSexCd" name="sex_Cd" placeholder="B"   readOnly value={currentConcept && currentConcept.sex_Cd}/>
+                  <Form.Control type="text" id="txtSexCd" name="sex_Cd"  readOnly value={currentConcept && currentConcept.sex_Cd}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>AnatOrCond:</Form.Label>
-                  <Form.Control type="text" id="txtAnatOrCond" name="anat_Or_Cond" placeholder="username"   readOnly value={currentConcept && currentConcept.anat_Or_Cond}/>
+                  <Form.Control type="text" id="txtAnatOrCond" name="anat_Or_Cond" readOnly value={currentConcept && currentConcept.anat_Or_Cond}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>PoaCodeStatus:</Form.Label>
@@ -615,11 +655,11 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>PoaCodeChange:</Form.Label>
-                  <Form.Control type="text" id="txtPoaCodeChange" name="poa_Code_Change" placeholder="A"   readOnly value={currentConcept && currentConcept.poa_Code_Change}/>
+                  <Form.Control type="text" id="txtPoaCodeChange" name="poa_Code_Change"  readOnly value={currentConcept && currentConcept.poa_Code_Change}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>PoaCodeChangeYear:</Form.Label>
-                  <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year" placeholder="username"   readOnly value={currentConcept && currentConcept.poa_Code_Change_Year}/>
+                  <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year"  readOnly value={currentConcept && currentConcept.poa_Code_Change_Year}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>ValidStartDate:</Form.Label>
@@ -627,15 +667,15 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>ValidEndDate:</Form.Label>
-                  <Form.Control type="text" id="txtValidEndDate" name="valid_End_Date" placeholder="abcd"   readOnly value={currentConcept && currentConcept.valid_End_Date}/>
+                  <Form.Control type="text" id="txtValidEndDate" name="valid_End_Date" readOnly value={currentConcept && currentConcept.valid_End_Date}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>InvalidReason:</Form.Label>
-                  <Form.Control type="text" id="txtInvalidReason" name="invalid_Reason" placeholder="B" readOnly value={currentConcept && currentConcept.invalid_Reason}/>
+                  <Form.Control type="text" id="txtInvalidReason" name="invalid_Reason" readOnly value={currentConcept && currentConcept.invalid_Reason}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>CreateDt:</Form.Label>
-                  <Form.Control type="number" id="txtCreateDt" name="create_Dt" placeholder="username" readOnly value={currentConcept && currentConcept.create_Dt}/>
+                  <Form.Control type="number" id="txtCreateDt" name="create_Dt" readOnly value={currentConcept && currentConcept.create_Dt}/>
               </Form.Group>
             </Form>
           </ModalBody>
