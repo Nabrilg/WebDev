@@ -1,7 +1,7 @@
 <!-- Componente de la Tabla de Listado de Conceptos -->
 <template>
 	<vx-card>
-		<vs-table v-model="selected" @selected="mostrarDetalles" :data="concepts" max-items="8" pagination search noDataText="No hay usuarios en tu búsqueda" stripe>
+		<vs-table v-model="selected" @selected="mostrarDetalles" :data="concepts" max-items="8" pagination search noDataText="No hay conceptos en tu búsqueda" stripe>
 			<!-- Cabecera de la Tabla -->
             <template slot="thead">
 				<vs-th sort-key="id">Id</vs-th>
