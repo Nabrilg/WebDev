@@ -131,7 +131,7 @@ export function Concepts()
   }  
   
   const postConcept=async() => {
-    if(currentConcept.code !== "" && currentConcept.concept_Id !== "" && currentConcept.concept_Id < 999999999){
+    if(currentConcept.code !== "" && currentConcept.concept_Id !== "" && currentConcept.concept_Id <= 999999999){
       delete currentConcept.id;
       currentConcept.concept_Id = parseInt(currentConcept.concept_Id);
       currentConcept.code_Change_Year = parseInt(currentConcept.code_Change_Year);
