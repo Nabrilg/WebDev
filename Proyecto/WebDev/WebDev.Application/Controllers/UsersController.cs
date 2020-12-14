@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebDev.Application.Config;
@@ -14,7 +15,7 @@ namespace WebDev.Application.Controllers
     public class UsersController : Controller
     {
         private static List<User> _userList;
-        private static int numUsers;
+        
         private readonly ApiConfiguration _apiConfiguration;
         private UsersService usersService;
 
@@ -22,39 +23,35 @@ namespace WebDev.Application.Controllers
         {
             _apiConfiguration = apiConfiguration.Value;
             usersService = new UsersService(_apiConfiguration.ApiUsersUrl);
-            
-            // Mock User List
-            ///if (_userList is null)
-            //{
-            //    _userList = new List<User>()
-            //    {
-            //      new User{Id=1, Email="Julio.Robles@email.com", Name="Julio Robles", Username="jrobles", Password="Password"},
-            //      new User{Id=2, Email="Pilar.Lopez@email.com", Name="Pilar Lopez", Username="plopez", Password="Password"},
-            //      new User{Id=3, Email="Felipe.Daza@email.com", Name="Felipe Daza", Username="fdaza", Password="Password"},
-            //    };
-            //    numUsers = _userList.Count;
-            //}
         }
 
         // GET: UsersController
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
-            ViewData["User"] = HttpContext.Session.GetString("User");
-            usersService.Token = HttpContext.Session.GetString("TokenData");
-            IList<UserDto> users = await usersService.GetUsers();
+            if (HttpContext.Session.GetString("IsUserLogged") != "false")
+            {
+                ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+                ViewData["User"] = HttpContext.Session.GetString("User");
+                usersService.Token = HttpContext.Session.GetString("TokenData");
+                IList<UserDto> users = await usersService.GetUsers();
 
 
-            _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
+                _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
 
-            return View(_userList);
+                return View(_userList);
+            }
+
+            return View();
         }
 
         // GET: UsersController/Details/5
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["User"] = HttpContext.Session.GetString("User");
+            usersService.Token = HttpContext.Session.GetString("TokenData");
             var userFound = await usersService.GetUserById(id);
 
             if (userFound == null)
@@ -79,6 +76,9 @@ namespace WebDev.Application.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(User user)
         {
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["User"] = HttpContext.Session.GetString("User");
+            usersService.Token = HttpContext.Session.GetString("TokenData");
             try
             {
                 if (ModelState.IsValid)
@@ -98,15 +98,15 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["User"] = HttpContext.Session.GetString("User");
+            usersService.Token = HttpContext.Session.GetString("TokenData");
             var userFound = await usersService.GetUserById(id);
-
             if (userFound == null)
             {
                 return NotFound();
             }
-
             var user = MapperToUser(userFound);
-
             return View(user);
         }
 
@@ -115,6 +115,9 @@ namespace WebDev.Application.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(User user)
         {
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["User"] = HttpContext.Session.GetString("User");
+            usersService.Token = HttpContext.Session.GetString("TokenData");
             try
             {
                 if (ModelState.IsValid)
@@ -135,6 +138,9 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["User"] = HttpContext.Session.GetString("User");
+            usersService.Token = HttpContext.Session.GetString("TokenData");
             var userFound = await usersService.GetUserById(id);
 
             if (userFound == null)
@@ -152,6 +158,9 @@ namespace WebDev.Application.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(User user)
         {
+            ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
+            ViewData["User"] = HttpContext.Session.GetString("User");
+            usersService.Token = HttpContext.Session.GetString("TokenData");
             try
             {
                 var userFound = await usersService.GetUserById(user.Id);
