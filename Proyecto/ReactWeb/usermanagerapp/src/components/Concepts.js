@@ -108,6 +108,7 @@ export function Concepts()
       debugger
       openCloseModalCreate();
     }).catch(error=>{
+      debugger
       console.log(error);
     })
 }
