@@ -123,19 +123,20 @@ export function Concepts()
    setSearchWord(e.target.value)
   }
 
-    // Create 
+  // Create 
   const [showModalCreate, setShowModalCreate]= useState(false);
-   const openCloseModalCreate=()=>{
+    const openCloseModalCreate=()=>{
     setCurrentConcept(conceptCreate);
     setShowModalCreate(!showModalCreate);
   }  
   
   const postConcept=async() => {
-    if(currentConcept.code !== "" && currentConcept.concept_Id !== "" && currentConcept.concept_Id <= 999999999){
+    if(currentConcept.code !== "" && currentConcept.concept_Id !== "" && currentConcept.concept_Id >= 0 && currentConcept.concept_Id <= 999999999){
       delete currentConcept.id;
       currentConcept.concept_Id = parseInt(currentConcept.concept_Id);
       currentConcept.code_Change_Year = parseInt(currentConcept.code_Change_Year);
       currentConcept.create_Dt = parseInt(currentConcept.create_Dt);
+      debugger
       await axios.post(baseUrl, currentConcept, configCreate)
       .then (response=>{
         getConcepts();
@@ -557,125 +558,134 @@ export function Concepts()
 
       {/* Details */}
       <Modal isOpen={showModalDetails}>
-          <ModalHeader>Details Concept</ModalHeader>
+          <ModalHeader>Concept Details</ModalHeader>
           <ModalBody>
             <Form>
-            <Form.Group>
-                  <Form.Label>Pxordx:</Form.Label>
-                  <Form.Control type="text" id="txtPxordx" name="pxordx"  readOnly value={currentConcept && currentConcept.pxordx}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>OldPxordx:</Form.Label>
-                  <Form.Control type="text" id="txtOldPxordx" name="oldpxordx"  readOnly value={currentConcept && currentConcept.oldpxordx}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>Codetype:</Form.Label>
-                  <Form.Control type="text" id="txtCodetype" name="codeType"  readOnly value={currentConcept && currentConcept.codeType}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>ConceptClassId:</Form.Label>
-                  <Form.Control type="text" id="txtConceptClassId" name="concept_Class_Id"   readOnly value={currentConcept && currentConcept.concept_Class_Id}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>ConceptId:</Form.Label>
-                  <Form.Control type="text" id="txtConceptId" name="concept_Id"   readOnly value={currentConcept && currentConcept.concept_Id}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>VocabularyId:</Form.Label>
-                  <Form.Control type="text" id="txtName" name="vocabulary_Id"  readOnly value={currentConcept && currentConcept.vocabulary_Id}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>DomainId:</Form.Label>
-                  <Form.Control type="text" id="txtDomainId" name="domain_Id"  readOnly value={currentConcept && currentConcept.domain_Id}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>Track:</Form.Label>
-                  <Form.Control type="text" id="txtTrack" name="track"   readOnly value={currentConcept && currentConcept.track}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>StandardConcept:</Form.Label>
-                  <Form.Control type="text" id="txtStandardConcept" name="standard_Concept"   readOnly value={currentConcept && currentConcept.standard_Concept}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>Code:</Form.Label>
-                  <Form.Control type="text" id="txtCode" name="code"  readOnly value={currentConcept && currentConcept.code}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>CodeWithPeriods:</Form.Label>
-                  <Form.Control type="text" id="txtCodeWithPeriods" name="codeWithPeriods"   readOnly value={currentConcept && currentConcept.codeWithPeriods}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>Codescheme:</Form.Label>
-                  <Form.Control type="email" id="txtCodescheme" name="codeScheme"   readOnly value={currentConcept && currentConcept.codeScheme}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>LongDesc:</Form.Label>
-                  <Form.Control type="text" id="txtLongDesc" name="long_Desc"  readOnly value={currentConcept && currentConcept.long_Desc}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>ShortDesc:</Form.Label>
-                  <Form.Control type="text" id="txtShortDesc" name="short_Desc"  readOnly value={currentConcept && currentConcept.short_Desc}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>CodeStatus:</Form.Label>
-                  <Form.Control type="text" id="txtCodeStatus" name="code_Status"   readOnly value={currentConcept && currentConcept.code_Status}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>CodeChange:</Form.Label>
-                  <Form.Control type="text" id="txtCodeChange" name="code_Change" readOnly value={currentConcept && currentConcept.code_Change}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>CodeChangeYear:</Form.Label>
-                  <Form.Control type="number" id="txtCodeChangeYear" name="code_Change_Year" readOnly value={currentConcept && currentConcept.code_Change_Year}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>CodePlannedType:</Form.Label>
-                  <Form.Control type="text" id="txtCodePlannedType" name="code_Planned_Type" readOnly value={currentConcept && currentConcept.code_Planned_Type}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>CodeBillingStatus:</Form.Label>
-                  <Form.Control type="text" id="txtCodeBillingStatus" name="code_Billing_Status"   readOnly value={currentConcept && currentConcept.code_Billing_Status}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>CodeCmsClaimStatus:</Form.Label>
-                  <Form.Control type="text" id="txtCodeCmsClaimStatus" name="code_Cms_Claim_Status"  readOnly value={currentConcept && currentConcept.code_Cms_Claim_Status}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>SexCd:</Form.Label>
-                  <Form.Control type="text" id="txtSexCd" name="sex_Cd"  readOnly value={currentConcept && currentConcept.sex_Cd}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>AnatOrCond:</Form.Label>
-                  <Form.Control type="text" id="txtAnatOrCond" name="anat_Or_Cond" readOnly value={currentConcept && currentConcept.anat_Or_Cond}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>PoaCodeStatus:</Form.Label>
-                  <Form.Control type="text" id="txtPoaCodeStatus" name="poa_Code_Status"   readOnly value={currentConcept && currentConcept.poa_Code_Status}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>PoaCodeChange:</Form.Label>
-                  <Form.Control type="text" id="txtPoaCodeChange" name="poa_Code_Change"  readOnly value={currentConcept && currentConcept.poa_Code_Change}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>PoaCodeChangeYear:</Form.Label>
-                  <Form.Control type="text" id="txtPoaCodeChangeYear" name="poa_Code_Change_Year"  readOnly value={currentConcept && currentConcept.poa_Code_Change_Year}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>ValidStartDate:</Form.Label>
-                  <Form.Control type="text" id="txtValidStartDate" name="valid_Start_Date"   readOnly value={currentConcept && currentConcept.valid_Start_Date}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>ValidEndDate:</Form.Label>
-                  <Form.Control type="text" id="txtValidEndDate" name="valid_End_Date" readOnly value={currentConcept && currentConcept.valid_End_Date}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>InvalidReason:</Form.Label>
-                  <Form.Control type="text" id="txtInvalidReason" name="invalid_Reason" readOnly value={currentConcept && currentConcept.invalid_Reason}/>
-              </Form.Group>
-              <Form.Group>
-                  <Form.Label>CreateDt:</Form.Label>
-                  <Form.Control type="number" id="txtCreateDt" name="create_Dt" readOnly value={currentConcept && currentConcept.create_Dt}/>
-              </Form.Group>
+              <Table id="ConceptsTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+
+                    </tr>
+                  </thead>
+                <tbody>
+                <tr><td><b>Pxordx:</b></td>
+                    <td>{currentConcept && currentConcept.pxordx}</td></tr>
+                    <tr>
+                      <td><b>OldPxordx:</b></td>
+                      <td>{currentConcept && currentConcept.oldpxordx}</td>
+                      </tr>
+                    <tr>
+                      <td><b>Codetype:</b></td>
+                      <td>{currentConcept && currentConcept.codeType}</td>
+                    </tr> 
+                    <tr>
+                      <td><b>ConceptClassId:</b></td>
+                      <td>{currentConcept && currentConcept.concept_Class_Id}</td>
+                    </tr>
+                    <tr>
+                    <td><b>ConceptId:</b></td>
+                    <td>{currentConcept && currentConcept.concept_Id}</td>
+                  </tr>
+                    <tr>
+                      <td><b>VocabularyId:</b></td>
+                      <td>{currentConcept && currentConcept.vocabulary_Id}</td>
+                    </tr>
+                    <tr>
+                      <td><b>DomainId:</b></td>
+                      <td>{currentConcept && currentConcept.domain_Id}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Track:</b></td>
+                      <td>{currentConcept && currentConcept.track}</td>
+                    </tr>
+                    <tr>
+                      <td><b>StandardConcept:</b></td>
+                      <td>{currentConcept && currentConcept.standard_Concept}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Code:</b></td>
+                      <td>{currentConcept && currentConcept.code}</td>
+                    </tr>
+                    <tr>
+                      <td><b>CodeWithPeriods:</b></td>
+                      <td>{currentConcept && currentConcept.codeWithPeriods}</td>
+                      </tr>
+                    <tr>
+                      <td><b>Codescheme:</b></td>
+                      <td>{currentConcept && currentConcept.codeScheme}</td>
+                      </tr>
+                    <tr>
+                      <td><b>LongDesc:</b></td>
+                      <td>{currentConcept && currentConcept.long_Desc}</td>
+                    </tr>
+                    <tr>
+                      <td><b>ShortDesc:</b></td>
+                    <td>{currentConcept && currentConcept.short_Desc}</td>
+                    </tr>
+                    <tr>
+                      <td><b>CodeStatus:</b></td>
+                      <td>{currentConcept && currentConcept.code_Status}</td>
+                    </tr>
+                    <tr>
+                      <td><b>CodeChange:</b></td>
+                      <td>{currentConcept && currentConcept.code_Change}</td>
+                    </tr>
+                    <tr>
+                      <td><b>CodeChangeYear:</b></td>
+                      <td>{currentConcept && currentConcept.code_Change_Year}</td>
+                    </tr>
+                    <tr>
+                      <td><b>CodePlannedType:</b></td>
+                      <td>{currentConcept && currentConcept.code_Planned_Type}</td>
+                    </tr>
+                    <tr>
+                      <td><b>CodeBillingStatus:</b></td>
+                      <td>{currentConcept && currentConcept.code_Billing_Status}</td>
+                    </tr>
+                    <tr>
+                      <td><b>CodeCmsClaimStatus:</b></td>
+                      <td>{currentConcept && currentConcept.code_Cms_Claim_Status}</td>
+                    </tr>
+                    <tr>
+                      <td><b>SexCd:</b></td>
+                      <td>{currentConcept && currentConcept.sex_Cd}</td>
+                    </tr>
+                    <tr>
+                      <td><b>AnatOrCond:</b></td>
+                      <td>{currentConcept && currentConcept.anat_Or_Cond}</td>
+                    </tr>
+                    <tr>
+                      <td><b>PoaCodeStatus:</b></td>
+                      <td>{currentConcept && currentConcept.poa_Code_Status}</td>
+                    </tr>
+                    <tr>
+                      <td><b>PoaCodeChange:</b></td>
+                      <td>{currentConcept && currentConcept.poa_Code_Change}</td>
+                    </tr>
+                    <tr>
+                      <td><b>PoaCodeChangeYear:</b></td>
+                      <td>{currentConcept && currentConcept.poa_Code_Change_Year}</td>
+                    </tr>
+                    <tr>
+                      <td><b>ValidStartDate:</b></td>
+                      <td>{currentConcept && currentConcept.valid_Start_Date}</td>
+                    </tr>
+                    <tr>
+                      <td><b>ValidEndDate:</b></td>
+                      <td>{currentConcept && currentConcept.valid_End_Date}</td>
+                    </tr>
+                    <tr>
+                      <td><b>InvalidReason:</b></td>
+                      <td>{currentConcept && currentConcept.invalid_Reason}</td>
+                    </tr>
+                    <tr>
+                      <td><b>CreateDt:</b></td>
+                      <td>{currentConcept && currentConcept.create_Dt}</td>
+                    </tr>
+                </tbody>
+              </Table>
             </Form>
           </ModalBody>
           <ModalFooter>
@@ -711,6 +721,10 @@ export function Concepts()
                   <tr>
                     <td><b>ConceptClassId:</b></td>
                     <td>{currentConcept && currentConcept.concept_Class_Id}</td>
+                  </tr>
+                  <tr>
+                    <td><b>ConceptId:</b></td>
+                    <td>{currentConcept && currentConcept.concept_Id}</td>
                   </tr>
                   <tr>
                     <td><b>VocabularyId:</b></td>

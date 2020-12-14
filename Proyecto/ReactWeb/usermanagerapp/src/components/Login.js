@@ -33,11 +33,9 @@ export function Login(){
   }
       
   const postUser=async() => {
-    //delete currentUser.id;
     await axios.post(baseUrl, currentUser, configLogged)
     .then (response=>{
       sessionStorage.setItem('jwtToken', response.data.token);
-      sessionStorage.setItem('userName', response.data.name);
       history.push("/Users");
     }).catch(error=>{
       console.log(error);
