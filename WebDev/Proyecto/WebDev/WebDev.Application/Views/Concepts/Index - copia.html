@@ -1,0 +1,152 @@
+﻿@model IEnumerable<WebDev.Application.Models.Concept>
+
+@{
+    ViewData["Title"] = "ConceptListView";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <link type="text/css" href="./css/style.css" rel="stylesheet" />
+
+<style type="text/css">
+
+body { 
+    width: 100%;
+    height:100%;
+    font-family: 'Open Sans', sans-serif;
+    background-image: url("https://okdiario.com/img/2018/08/03/hacer-el-color-turquesa-655x368.jpg");
+
+
+}
+    .login { 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -150px 0 0 -150px;
+    width:300px;
+    height:300px;
+}
+.login h1 { color: #fff; letter-spacing:1px; text-align:center; }
+
+input { 
+    width: 50%; 
+    margin-bottom: 10px; 
+    
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 13px;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 4px;
+    box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
+    -webkit-transition: box-shadow .5s ease;
+    -moz-transition: box-shadow .5s ease;
+    -o-transition: box-shadow .5s ease;
+    -ms-transition: box-shadow .5s ease;
+    transition: box-shadow .5s ease;
+}
+input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
+</style>
+
+
+</head>
+ 
+<div align="center"> 
+
+    <br>
+    <br>
+
+
+
+    <div align="center"> 
+
+        <TABLE BORDER=3>
+        <TR><TD>
+        <MARQUEE> <h1>INDEX</h1> </MARQUEE>
+        </TD></TR>
+        </TABLE>
+
+
+    </div>
+
+    <br>
+    <br>
+
+<div class="container">
+    <h1>Concept List</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> New</a>
+    </p>
+</div>
+
+
+
+
+
+
+<div class="container">
+    <table class="table table-bordered" id="conceptsTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConceptId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VocbularyId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DomainId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShortDesc)
+                </th>            
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConceptId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VocbularyId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DomainId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortDesc)
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id" asp-route-conceptid="@item.ConceptId">Edit</a>
+                    <a class="btn btn-outline-info" asp-action="Details" asp-route-conceptid="@item.ConceptId">Details</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id" asp-route-conceptid="@item.ConceptId">Delete</a>
+                    <!--asp-route-conceptid="@item.ConceptId"-->
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+		$(document).ready( function () {
+		    $('#conceptsTable').DataTable();
+		} );
+    </script>
+}
