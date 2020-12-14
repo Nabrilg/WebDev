@@ -158,12 +158,31 @@
                 <span asp-validation-for="Create_dt" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" /> |
+                <input data-toggle="modal" data-target="#modalCreate" type="submit" value="Create" class="btn btn-primary" /> |
                 <a onclick="window.history.go(-1);" class="btn btn-outline-info">Back to List</a>
             </div>
         </form>
     </div>
 </div>
+
+
+
+<!-- Modal create concept -->
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Creating concept, please wait...</h5>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="spinner-border text-success" role="status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 @section Scripts {
