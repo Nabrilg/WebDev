@@ -131,19 +131,23 @@ export function Concepts()
   }  
 
   const postConcept=async() => {
-    delete currentConcept.id;
-    currentConcept.concept_Id = parseInt(currentConcept.concept_Id);
-    currentConcept.code_Change_Year = parseInt(currentConcept.code_Change_Year);
-    currentConcept.create_Dt = parseInt(currentConcept.create_Dt);
     debugger
-    await axios.post(baseUrl, currentConcept, configCreate)
-    .then (response=>{
+    if(currentConcept.code != "" && currentConcept.concept_Id != ""){
+      delete currentConcept.id;
+      currentConcept.concept_Id = parseInt(currentConcept.concept_Id);
+      currentConcept.code_Change_Year = parseInt(currentConcept.code_Change_Year);
+      currentConcept.create_Dt = parseInt(currentConcept.create_Dt);
       debugger
-      getConcepts();
-      openCloseModalCreate();
-    }).catch(error=>{
-      console.log(error);
-    })
+      await axios.post(baseUrl, currentConcept, configCreate)
+      .then (response=>{
+        debugger
+        getConcepts();
+        openCloseModalCreate();
+      }).catch(error=>{
+        console.log(error);
+      })
+    }
+    
   }
 
   // Update
@@ -319,7 +323,7 @@ export function Concepts()
                   <Form.Control type="text" id="txtConceptClassId" name="concept_Class_Id" placeholder="" onChange={handleChange}/>
               </Form.Group>
               <Form.Group>
-                  <Form.Label>ConceptId:</Form.Label>
+                  <Form.Label>ConceptId: *</Form.Label>
                   <Form.Control type="number" id="txtConceptId" name="concept_Id" placeholder="123456" required onChange={handleChange}/>
               </Form.Group>
               <Form.Group>
@@ -339,7 +343,7 @@ export function Concepts()
                   <Form.Control type="text" id="txtStandardConcept" name="standard_Concept" placeholder="Normal"  onChange={handleChange}/>
               </Form.Group>
               <Form.Group>
-                  <Form.Label>Code:</Form.Label>
+                  <Form.Label>Code: *</Form.Label>
                   <Form.Control type="text" id="txtCode" name="code" placeholder="1234" required onChange={handleChange}/>
               </Form.Group>
               <Form.Group>
@@ -450,7 +454,7 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>ConceptId:</Form.Label>
-                  <Form.Control type="number" id="txtConceptId" name="concept_Id" onChange={handleChange} value={currentConcept && currentConcept.concept_Id}/>
+                  <Form.Control type="number" id="txtConceptId" name="concept_Id" readOnly value={currentConcept && currentConcept.concept_Id}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>VocabularyId:</Form.Label>
@@ -470,11 +474,11 @@ export function Concepts()
               </Form.Group>
               <Form.Group>
                   <Form.Label>Code:</Form.Label>
-                  <Form.Control type="text" id="txtCode" name="code" placeholder="username"   onChange={handleChange} value={currentConcept && currentConcept.code}/>
+                  <Form.Control type="text" id="txtCode" name="code" placeholder="username"  readOnly value={currentConcept && currentConcept.code}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>CodeWithPeriods:</Form.Label>
-                  <Form.Control type="text" id="txtCodeWithPeriods" name="codeWithPeriods"   onChange={handleChange} value={currentConcept && currentConcept.codeWithPeriods}/>
+                  <Form.Control type="text" id="txtCodeWithPeriods" name="codeWithPeriods" readOnly value={currentConcept && currentConcept.codeWithPeriods}/>
               </Form.Group>
               <Form.Group>
                   <Form.Label>Codescheme:</Form.Label>
