@@ -9,13 +9,13 @@ using WebDev.Services.Entities;
 
 namespace WebDev.Services
 {
-    public class UsersService
+    public class ConceptsService
     {
         private HttpClient _httpClient;
         private HttpClientHandler _httpClientHandler;
         public String TokenUser { get; set; }
         private string BaseUrl { get; }
-        public UsersService(string baseUrl)
+        public ConceptsService(string baseUrl)
         {
             BaseUrl = baseUrl;
             _httpClientHandler = new HttpClientHandler();
@@ -23,6 +23,7 @@ namespace WebDev.Services
             _httpClient = new HttpClient(_httpClientHandler);
 
             SetupHttpConnection(_httpClient, baseUrl);
+
         }
 
         private void SetupHttpConnection(HttpClient httpClient, string baseUrl)
@@ -35,12 +36,12 @@ namespace WebDev.Services
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<List<UserDto>> GetUsers()
+        public async Task<List<ConceptDto>> GetConcepts()
         {
-            var usersList = new List<UserDto>();
+            var conceptsList = new List<ConceptDto>();
             _httpClient.DefaultRequestHeaders.Add("Authorization", this.TokenUser);
-            // Sending request to find web api REST service resource to Get All Users using HttpClient
-            HttpResponseMessage response = await _httpClient.GetAsync($"users");
+            // Sending request to find web api REST service resource to Get All Concepts using HttpClient
+            HttpResponseMessage response = await _httpClient.GetAsync($"concepts");
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)
@@ -48,19 +49,20 @@ namespace WebDev.Services
                 // Storing the content response recieved from web api
                 var responseContent = response.Content.ReadAsStringAsync().Result;
 
-                //Deserializing the response recieved from web api and storing into the Employee list
-                usersList = JsonConvert.DeserializeObject<List<UserDto>>(responseContent);
+                //Deserializing the response recieved from web api and storing into the concepts list
+                conceptsList = JsonConvert.DeserializeObject<List<ConceptDto>>(responseContent);
             }
 
-            return usersList;
+            return conceptsList;
         }
 
-        public async Task<UserDto> GetUserById(int id)
+        public async Task<ConceptDto> FindConcept(int concept_id)
         {
-            UserDto user = null;
+            var conceptsList = new List<ConceptDto>();
+            ConceptDto concept = null;
             _httpClient.DefaultRequestHeaders.Add("Authorization", this.TokenUser);
-            // Sending request to find web api REST service resource to Get All Users using HttpClient
-            HttpResponseMessage response = await _httpClient.GetAsync($"users/{id}");
+            // Sending request to find web api REST service resource to Get the concept with a certain concept_id using HttpClient
+            HttpResponseMessage response = await _httpClient.GetAsync($"concepts?concept_id={concept_id}");
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)
@@ -68,21 +70,22 @@ namespace WebDev.Services
                 // Storing the content response recieved from web api
                 var responseContent = response.Content.ReadAsStringAsync().Result;
 
-                //Deserializing the response recieved from web api and storing into the Employee list
-                user = JsonConvert.DeserializeObject<UserDto>(responseContent);
+                //Deserializing the response recieved from web api and storing into the concept list
+                conceptsList = JsonConvert.DeserializeObject<List<ConceptDto>>(responseContent);
+                concept = conceptsList[0];
             }
 
-            return user;
+            return concept;
         }
-
-        public async Task<UserDto> AddUser(UserDto user)
+          
+        public async Task<ConceptDto> AddConcept(ConceptDto concept)
         {
-            UserDto userDtoResponse = null;
+            ConceptDto conceptDtoResponse = null;
             _httpClient.DefaultRequestHeaders.Add("Authorization", this.TokenUser);
-            StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+            StringContent content = new StringContent(JsonConvert.SerializeObject(concept), Encoding.UTF8, "application/json");
 
-            // Sending request to find web api REST service resource to Add an User using HttpClient
-            HttpResponseMessage response = await _httpClient.PostAsync($"users", content);
+            // Sending request to find web api REST service resource to Add an concept using HttpClient
+            HttpResponseMessage response = await _httpClient.PostAsync($"concepts", content);
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)
@@ -90,21 +93,21 @@ namespace WebDev.Services
                 // Storing the content response recieved from web api
                 var responseContent = response.Content.ReadAsStringAsync().Result;
 
-                //Deserializing the response recieved from web api and storing into the Employee list
-                userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
+                //Deserializing the response recieved from web api and storing into the concept list
+                conceptDtoResponse = JsonConvert.DeserializeObject<ConceptDto>(responseContent);
             }
 
-            return userDtoResponse;
+            return conceptDtoResponse;
         }
 
-        public async Task<UserDto> UpdateUser(UserDto user)
+        public async Task<ConceptDto> UpdateConcept(ConceptDto concept)
         {
-            UserDto userDtoResponse = null;
+            ConceptDto conceptDtoResponse = null;
             _httpClient.DefaultRequestHeaders.Add("Authorization", this.TokenUser);
-            StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+            StringContent content = new StringContent(JsonConvert.SerializeObject(concept), Encoding.UTF8, "application/json");
 
-            // Sending request to find web api REST service resource to Add an User using HttpClient
-            HttpResponseMessage response = await _httpClient.PutAsync($"users/{user.id}", content);
+            // Sending request to find web api REST service resource to update an concept using HttpClient
+            HttpResponseMessage response = await _httpClient.PutAsync($"concepts/{concept.id}", content);
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)
@@ -113,18 +116,18 @@ namespace WebDev.Services
                 var responseContent = response.Content.ReadAsStringAsync().Result;
 
                 //Deserializing the response recieved from web api
-                userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
+                conceptDtoResponse = JsonConvert.DeserializeObject<ConceptDto>(responseContent);
             }
 
-            return userDtoResponse;
+            return conceptDtoResponse;
         }
 
-        public async Task<UserDto> DeleteUser(int id)
+        public async Task<ConceptDto> DeleteConcept(int id)
         {
-            UserDto userDtoResponse = null;
+            ConceptDto conceptDtoResponse = null;
             _httpClient.DefaultRequestHeaders.Add("Authorization", this.TokenUser);
-            // Sending request to find web api REST service resource to Delete the User using HttpClient
-            HttpResponseMessage response = await _httpClient.DeleteAsync($"users/{id}");
+            // Sending request to find web api REST service resource to Delete the concept using HttpClient
+            HttpResponseMessage response = await _httpClient.DeleteAsync($"concepts/{id}");
 
             // Checking the response is successful or not which is sent using HttpClient
             if (response.IsSuccessStatusCode)
@@ -133,10 +136,10 @@ namespace WebDev.Services
                 var responseContent = response.Content.ReadAsStringAsync().Result;
 
                 // Deserializing the response recieved from web api
-                userDtoResponse = JsonConvert.DeserializeObject<UserDto>(responseContent);
+                conceptDtoResponse = JsonConvert.DeserializeObject<ConceptDto>(responseContent);
             }
 
-            return userDtoResponse;
+            return conceptDtoResponse;
         }
     }
 }

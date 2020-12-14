@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebDev.Application.Models;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using WebDev.Application.Config;
 using WebDev.Services;

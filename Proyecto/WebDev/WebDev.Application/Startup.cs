@@ -29,7 +29,7 @@ namespace WebDev.Application
 
             services.AddDistributedMemoryCache();
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(3);//You can set Time   
             });
             services.AddMvc();
         }
@@ -66,6 +66,11 @@ namespace WebDev.Application
                 endpoints.MapControllerRoute(
                   name: "Users",
                   pattern: "{controller=Users}/{action=Index}/{id?}");
+                //Concepts
+                endpoints.MapControllerRoute(
+                  name: "Concepts",
+                  pattern: "{controller=Concepts}/{action=Index}/{id?}");
+
             });
         }
     }

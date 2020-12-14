@@ -1,0 +1,77 @@
+﻿@model IEnumerable<WebDev.Application.Models.Concept>
+
+@{
+    ViewData["Title"] = "ConceptListView";
+}
+
+<div class="container">
+    <h1>Concept List</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Create New</a>
+    </p>
+</div>
+<div class="container">
+    <table class="table table-bordered" id="conceptsTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Concept_Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vocabulary_Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Domain_Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CodeScheme)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Short_Desc)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Concept_Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vocabulary_Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Domain_Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CodeScheme)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Short_Desc)
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-primary" asp-action="Edit" asp-route-concept_id="@item.Concept_Id">Edit</a>
+                        <a class="btn btn-outline-info" asp-action="Details" asp-route-concept_id="@item.Concept_Id">Details</a>
+                        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-concept_id="@item.Concept_Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+		$(document).ready( function () {
+		    $('#conceptsTable').DataTable();
+		} );
+    </script>
+}

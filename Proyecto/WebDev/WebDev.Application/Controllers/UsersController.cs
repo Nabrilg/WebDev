@@ -4,37 +4,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using WebDev.Application.Models;
 using WebDev.Application.Config;
 using Microsoft.Extensions.Options;
 using WebDev.Services.Entities;
 using WebDev.Services;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+
 
 namespace WebDev.Application.Controllers
 {
     public class UsersController : Controller
     {
         private static List<User> _userList;
-        private static int numUsers;
 
         private readonly ApiConfiguration _apiConfiguration;
+        
         private UsersService usersService;
 
         public UsersController(IOptions<ApiConfiguration> apiConfiguration)
 
         {
             _apiConfiguration = apiConfiguration.Value;
-            //string token = HttpContext.Session.GetString("Token");
-            usersService = new UsersService(_apiConfiguration.ApiUsersUrl, "Bearer dhaskdjhjskad");
+            usersService = new UsersService(_apiConfiguration.ApiUsersUrl);
         }
 
         // GET: UsersController
         [HttpGet]
         public async Task<ActionResult> Index()
         {
+            usersService.TokenUser = HttpContext.Session.GetString("Token");
             IList<UserDto> users = await usersService.GetUsers();
 
             _userList = users.Select(userDto => MapperToUser(userDto)).ToList();
@@ -46,6 +44,7 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
+            usersService.TokenUser = HttpContext.Session.GetString("Token");
             var userFound = await usersService.GetUserById(id);
 
             if (userFound == null)
@@ -74,6 +73,7 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    usersService.TokenUser = HttpContext.Session.GetString("Token");
                     var userAdded = await usersService.AddUser(MapperToUserDto(user));
                 }
 
@@ -89,6 +89,7 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
+            usersService.TokenUser = HttpContext.Session.GetString("Token");
             var userFound = await usersService.GetUserById(id);
 
             if (userFound == null)
@@ -110,6 +111,7 @@ namespace WebDev.Application.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    usersService.TokenUser = HttpContext.Session.GetString("Token");
                     var userModified = await usersService.UpdateUser(MapperToUserDto(user));
 
                     return RedirectToAction(nameof(Index));
@@ -126,6 +128,7 @@ namespace WebDev.Application.Controllers
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
+            usersService.TokenUser = HttpContext.Session.GetString("Token");
             var userFound = await usersService.GetUserById(id);
 
             if (userFound == null)
@@ -145,6 +148,7 @@ namespace WebDev.Application.Controllers
         {
             try
             {
+                usersService.TokenUser = HttpContext.Session.GetString("Token");
                 var userFound = await usersService.GetUserById(user.Id);
 
                 if (userFound == null)

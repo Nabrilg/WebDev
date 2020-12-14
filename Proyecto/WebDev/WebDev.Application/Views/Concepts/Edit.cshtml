@@ -1,0 +1,176 @@
+﻿@model WebDev.Application.Models.Concept
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Concept</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" readonly />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pxordx" class="control-label"></label>
+                <input asp-for="Pxordx" type="text" id="txtPxordx" name="pxordx" class="form-control" />
+                <span asp-validation-for="Pxordx" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Oldpxordx" class="control-label"></label>
+                <input asp-for="Oldpxordx" type="text" id="txtOldpxordx" name="oldpxordx" class="form-control" />
+                <span asp-validation-for="Oldpxordx" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CodeType" class="control-label"></label>
+                <input asp-for="CodeType" type="text" id="txtCodeType" name="codetype" class="form-control" />
+                <span asp-validation-for="CodeType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Concept_Class_Id" class="control-label"></label>
+                <input asp-for="Concept_Class_Id" type="text" id="txtConcept_Class_Id" name="concept_class_id" class="form-control" />
+                <span asp-validation-for="Concept_Class_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Concept_Id" class="control-label"></label>
+                <input asp-for="Concept_Id" type="number" id="txtConcept_Id" name="concept_id" class="form-control" />
+                <span asp-validation-for="Concept_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vocabulary_Id" class="control-label"></label>
+                <input asp-for="Vocabulary_Id" type="text" id="txtVocabulary_Id" name="vocabulary_id" class="form-control" />
+                <span asp-validation-for="Vocabulary_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Domain_Id" class="control-label"></label>
+                <input asp-for="Domain_Id" type="text" id="txtDomain_Id" name="domain_id" class="form-control" />
+                <span asp-validation-for="Domain_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Track" class="control-label"></label>
+                <input asp-for="Track" type="text" id="txtTrack" name="track" class="form-control" />
+                <span asp-validation-for="Track" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Standard_Concept" class="control-label"></label>
+                <input asp-for="Standard_Concept" type="text" id="txtStandard_Concept" name="standard_concept" class="form-control" />
+                <span asp-validation-for="Standard_Concept" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Code" class="control-label"></label>
+                <input asp-for="Code" type="text" id="txtCode" name="code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CodeWithPeriods" class="control-label"></label>
+                <input asp-for="CodeWithPeriods" type="text" id="txtCodeWithPeriods" name="codewithperiods" class="form-control" />
+                <span asp-validation-for="CodeWithPeriods" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CodeScheme" class="control-label"></label>
+                <input asp-for="CodeScheme" type="text" id="txtCodeScheme" name="codescheme" class="form-control" />
+                <span asp-validation-for="CodeScheme" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Long_Desc" class="control-label"></label>
+                <input asp-for="Long_Desc" type="text" id="txtLong_Desc" name="long_desc" class="form-control" />
+                <span asp-validation-for="Long_Desc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Short_Desc" class="control-label"></label>
+                <input asp-for="Short_Desc" type="text" id="txtShort_Desc" name="short_desc" class="form-control" />
+                <span asp-validation-for="Short_Desc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Code_Status" class="control-label"></label>
+                <input asp-for="Code_Status" type="text" id="txtCode_Status" name="code_status" class="form-control" />
+                <span asp-validation-for="Code_Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Code_Change" class="control-label"></label>
+                <input asp-for="Code_Change" type="text" id="txtCode_Change" name="code_change" class="form-control" />
+                <span asp-validation-for="Code_Change" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Code_Change_Year" class="control-label"></label>
+                <input asp-for="Code_Change_Year" type="number" id="txtCode_Change_Year" name="code_change_year" class="form-control" />
+                <span asp-validation-for="Code_Change_Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Code_Planned_Type" class="control-label"></label>
+                <input asp-for="Code_Planned_Type" type="text" id="txtCode_Planned_Type" name="code_planned_type" class="form-control" />
+                <span asp-validation-for="Code_Planned_Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Code_Billing_Status" class="control-label"></label>
+                <input asp-for="Code_Billing_Status" type="text" id="txtCode_Billing_Status" name="code_billing_status" class="form-control" />
+                <span asp-validation-for="Code_Billing_Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Code_Cms_Claim_Status" class="control-label"></label>
+                <input asp-for="Code_Cms_Claim_Status" type="text" id="txtCode_Cms_Claim_Status" name="code_cms_claim_status" class="form-control" />
+                <span asp-validation-for="Code_Cms_Claim_Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sex_Cd" class="control-label"></label>
+                <input asp-for="Sex_Cd" type="text" id="txtSex_Cd" name="sex_cd" class="form-control" />
+                <span asp-validation-for="Sex_Cd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Anat_Or_Cond" class="control-label"></label>
+                <input asp-for="Anat_Or_Cond" type="text" id="txtAnat_Or_Cond" name="anat_or_cond" class="form-control" />
+                <span asp-validation-for="Anat_Or_Cond" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Poa_Code_Status" class="control-label"></label>
+                <input asp-for="Poa_Code_Status" type="text" id="txtPoa_Code_Status" name="poa_code_status" class="form-control" />
+                <span asp-validation-for="Poa_Code_Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Poa_Code_Change" class="control-label"></label>
+                <input asp-for="Poa_Code_Change" type="text" id="txtPoa_Code_Change" name="poa_code_change" class="form-control" />
+                <span asp-validation-for="Poa_Code_Change" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Poa_Code_Change_Year" class="control-label"></label>
+                <input asp-for="Poa_Code_Change_Year" type="text" id="txtPoa_Code_Change_Year" name="poa_code_change_year" class="form-control" />
+                <span asp-validation-for="Poa_Code_Change_Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Valid_Start_Date" class="control-label"></label>
+                <input asp-for="Valid_Start_Date" type="text" id="txtValid_Start_Date" name="valid_start_date" class="form-control" />
+                <span asp-validation-for="Valid_Start_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Valid_End_Date" class="control-label"></label>
+                <input asp-for="Valid_End_Date" type="text" id="txtValid_End_Date" name="valid_end_date" class="form-control" />
+                <span asp-validation-for="Valid_End_Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Invalid_Reason" class="control-label"></label>
+                <input asp-for="Invalid_Reason" type="text" id="txtInvalid_Reason" name="invalid_reason" class="form-control" />
+                <span asp-validation-for="Invalid_Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Create_Dt" class="control-label"></label>
+                <input asp-for="Create_Dt" type="number" id="txtCreate_Dt" name="create_dt" class="form-control" />
+                <span asp-validation-for="Create_Dt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
