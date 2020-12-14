@@ -1,0 +1,229 @@
+.App {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.gradient-bg {
+  height: 100%;
+  min-height: 100vh;
+  width: 100vw;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  background: #30475e;
+  background: radial-gradient(circle, #30475e 0%, #222831 100%);
+}
+
+.gradient-bg .concepts-container {
+  width: 80%;
+  background-color: white;
+}
+
+.gradient-bg .concepts-container .concepts {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.gradient-bg .concepts-container .concepts tbody {
+  display: block;
+  height: 500px;
+  overflow-x: hidden;
+}
+
+.gradient-bg .concepts-container .concepts thead, .gradient-bg .concepts-container .concepts tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.gradient-bg .concepts-container .concepts thead {
+  width: calc(100% - 1em);
+}
+
+.gradient-bg .concepts-container .concepts p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
+}
+
+@media (max-width: 400px) {
+  .gradient-bg .concepts-container .concepts p {
+    font-size: 12px;
+  }
+}
+
+.gradient-bg .concepts-container .concepts td, .gradient-bg .concepts-container .concepts th {
+  border: 1px solid rgba(75, 75, 75, 0.4);
+  padding: 1rem;
+}
+
+.gradient-bg .concepts-container .concepts th {
+  background-color: #f05454;
+  color: white;
+}
+
+.gradient-bg .login-container {
+  width: 30%;
+  -webkit-box-shadow: 2px 2px 10px 3px rgba(0, 0, 0, 0.4);
+          box-shadow: 2px 2px 10px 3px rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+}
+
+.gradient-bg .login-container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.gradient-bg .login-container form input {
+  width: 100%;
+  margin-top: 0rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-bottom: 1px solid #707070;
+  padding-top: 0.5vw;
+  font-size: 18px;
+  letter-spacing: 2px;
+  -webkit-transition: boder-bottom 1s ease;
+  transition: boder-bottom 1s ease;
+  text-align: center;
+}
+
+.gradient-bg .login-container form input:focus {
+  outline: none;
+  border-bottom: 3px solid #f05454;
+}
+
+.gradient-bg .login-container form input[type="button"] {
+  width: 50px;
+  height: 50px;
+  padding: 1rem 1rem;
+  border-radius: 50%;
+  background-color: transparent;
+  margin-top: 2rem;
+  border: 2px solid #f05454;
+  cursor: pointer;
+  letter-spacing: 0px;
+  font-weight: bold;
+  -webkit-transition: background 0.5s ease;
+  transition: background 0.5s ease;
+  font-size: 1.5vw;
+  -webkit-box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z' fill='rgba(240, 84, 84, 1)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.gradient-bg .login-container form input[type="button"]:hover {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z' fill='rgba(255, 255, 255, 1)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f05454;
+  border: none;
+}
+
+.gradient-bg .login-container form input[type="button"]:disabled {
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z' fill='rgba(255, 142, 0, 0.4)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 2px solid rgba(255, 142, 0, 0.4);
+}
+
+.gradient-bg .create-concept-container {
+  width: 50%;
+  -webkit-box-shadow: 2px 2px 10px 3px rgba(0, 0, 0, 0.4);
+          box-shadow: 2px 2px 10px 3px rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.gradient-bg .create-concept-container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.gradient-bg .create-concept-container form input {
+  width: 100%;
+  margin-top: 0rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-bottom: 1px solid #707070;
+  padding-top: 0.5vw;
+  font-size: 18px;
+  letter-spacing: 2px;
+  -webkit-transition: boder-bottom 1s ease;
+  transition: boder-bottom 1s ease;
+  text-align: center;
+}
+
+.gradient-bg .create-concept-container form input:focus {
+  outline: none;
+  border-bottom: 3px solid #f05454;
+}
+
+.gradient-bg .create-concept-container form input[type="button"] {
+  width: 50px;
+  height: 50px;
+  padding: 1rem 1rem;
+  border-radius: 50%;
+  background-color: transparent;
+  margin-top: 2rem;
+  border: 2px solid #f05454;
+  cursor: pointer;
+  letter-spacing: 0px;
+  font-weight: bold;
+  -webkit-transition: background 0.5s ease;
+  transition: background 0.5s ease;
+  font-size: 1.5vw;
+  -webkit-box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z' fill='rgba(240, 84, 84, 1)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.gradient-bg .create-concept-container form input[type="button"]:hover {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z' fill='rgba(255, 255, 255, 1)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f05454;
+  border: none;
+}
+
+.gradient-bg .create-concept-container form input[type="button"]:disabled {
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='32' height='32'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z' fill='rgba(255, 142, 0, 0.4)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 2px solid rgba(255, 142, 0, 0.4);
+}
+/*# sourceMappingURL=App.css.map */
