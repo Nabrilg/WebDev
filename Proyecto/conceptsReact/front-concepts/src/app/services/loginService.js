@@ -11,8 +11,8 @@ export function login(username, password) {
   var requestOptions = {
     method: 'POST',
     headers: myHeaders,
-    //body: JSON.stringify({email: username, password})
-    body: raw
+    body: JSON.stringify({email: username, password})
+    //body: raw
   };
 
   return fetch(URL + LOGIN_PATH, requestOptions);

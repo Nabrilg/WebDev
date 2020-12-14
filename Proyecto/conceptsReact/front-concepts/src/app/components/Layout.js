@@ -1,7 +1,7 @@
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 
-export default function Layout({ username, children }) {
+export default function Layout({ logout, username, children }) {
   return (
     <div className="d-flex flex-column flex-row-fluid">
       {/* Header */}
@@ -13,7 +13,7 @@ export default function Layout({ username, children }) {
             <Dropdown.Toggle id="kt-profile-dropdown" variant="btn btn-outline-light">{username} </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item>
-                <button className="btn btn-danger">Cerrar sesión</button>
+                <button className="btn btn-danger" onClick={logout}>Cerrar sesión</button>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

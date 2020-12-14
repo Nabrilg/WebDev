@@ -27,7 +27,7 @@ function InputForm({ handleChangeConcepts, handleChangeMenu, concept_info, isEdi
       <div className="card-body">
         <div className="form-group">
           {Object.keys(concept_info.data).map((key, index) => {
-            if(!isEdit || index !== 0) {
+            if(index !== 0) {
               return (<div key={key} className="row my-1 px-5">
                 <label className="col" id={`lbl${key}`}>{key}</label>
                 <input

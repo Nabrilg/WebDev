@@ -11,11 +11,15 @@ function App() {
   };
 
   const [AuthState, setAuthState] = React.useState(initAuthState);
+  
+  const logout = () => {
+    setAuthState(initAuthState);
+  };
 
   return (
     <>
     {AuthState.token !== undefined ? (
-      <Layout username={AuthState.user.name}>
+      <Layout username={AuthState.user.name} logout={logout}>
         <MedicalConcepts AuthState={AuthState} />
       </Layout>
     )

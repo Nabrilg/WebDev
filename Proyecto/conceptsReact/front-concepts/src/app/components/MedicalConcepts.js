@@ -27,6 +27,7 @@ export default function MedicalConcepts({ AuthState }) {
   }
 
   const addConcept = new_concept => {
+    console.log("concept", new_concept);
     conceptService.post(new_concept)
     .then(response => {
       if(!response.ok) throw new Error("Server connection error");
@@ -42,6 +43,7 @@ export default function MedicalConcepts({ AuthState }) {
     })
   };
   const editConcept = (new_concept, index) => {
+    console.log("concept", new_concept);
     conceptService.put(new_concept)
     .then(response => {
       if(response.ok || response.status===204) {
