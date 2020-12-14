@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<WebDev.Application.Models.Concept>
 
+@{
+    ViewData["Title"] = "ConceptListView";
+}
+
 
 <div class="container">
     <h1>Concept List</h1>
@@ -7,7 +11,6 @@
         <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Create New</a>
     </p>
 </div>
-
 
 <div class="container">
     <table class="table table-bordered" id="conceptsTable" width="100%" cellspacing="0">
@@ -17,19 +20,22 @@
                     @Html.DisplayNameFor(model => model.Id)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Concept_class_id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Concept_id)
+                    @Html.DisplayNameFor(model => model.ConceptId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Track)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Short_desc)
+                    @Html.DisplayNameFor(model => model.StandardConcept)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Sex_cd)
+                    @Html.DisplayNameFor(model => model.DomainId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShortDesc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SexCd)
                 </th>
                 <th>Actions</th>
             </tr>
@@ -37,37 +43,44 @@
         <tbody>
             @foreach (var item in Model)
             {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Id)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Concept_class_id)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Concept_id)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Track)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Short_desc)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Sex_cd)
-    </td>
-    <td style="padding: 20px;">
-        <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id" asp-route-concept_id="@item.Concept_id">Edit</a>
-        <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Concept_id">Details</a>
-        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id" asp-route-concept_id="@item.Concept_id">Delete</a>
-    </td>
-</tr>            }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConceptId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Track)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StandardConcept)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DomainId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortDesc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SexCd)
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id" asp-route-conceptid="@item.ConceptId">Edit</a>
+                    <a class="btn btn-outline-info" asp-action="Details" asp-route-conceptid="@item.ConceptId">Details</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id" asp-route-conceptid="@item.ConceptId">Delete</a>
+                    <!--asp-route-conceptid="@item.ConceptId"-->
+                </td>
+            </tr>
+            }
         </tbody>
     </table>
 </div>
 
 @section Scripts{
-    <script>$(document).ready( function () {
+    <script>
+		$(document).ready( function () {
 		    $('#conceptsTable').DataTable();
-		} );</script>
+		} );
+    </script>
 }

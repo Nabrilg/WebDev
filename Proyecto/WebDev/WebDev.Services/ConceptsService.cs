@@ -66,7 +66,6 @@ namespace WebDev.Services
             request.AddHeader("Content-Type", "application/json");
             request.AddParameter("concept_id", id);
             IRestResponse response = await _restClient.ExecuteAsync(request);
-
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var responseContent = response.Content;
@@ -151,6 +150,7 @@ namespace WebDev.Services
 
             // Wait until to get a response
             _restClient.Timeout = -1;
+
 
             // Assign the Method Type
             var request = new RestRequest(Method.DELETE);

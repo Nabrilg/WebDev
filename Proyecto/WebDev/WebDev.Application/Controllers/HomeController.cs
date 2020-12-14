@@ -59,12 +59,12 @@ namespace WebDev.Application.Controllers
                 if (ModelState.IsValid)
                 {
                     // Llamar a la API para validar el Login
-                    var SuccessLogin = await loginService.ValidUser(MapperToLoginDto(login));
-                    if (IsValidUser(SuccessLogin))
+                    var logVal = await loginService.ValidUser(MapperToLoginDto(login));
+                    if (IsValidUser(logVal))
                     {
                         return RedirectToAction(nameof(Index));
                     }
-                    ModelState.AddModelError(string.Empty, "Login Failed.");
+                    ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
                 }
             }
             catch (Exception ex)
