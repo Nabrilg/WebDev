@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebDev.Application.Models.Concept>
+
+
+<div class="container">
+    <h1>Concept List</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Create New</a>
+    </p>
+</div>
+
+
+<div class="container">
+    <table class="table table-bordered" id="conceptsTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Concept_class_id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Concept_id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Track)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Short_desc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sex_cd)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Concept_class_id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Concept_id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Track)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Short_desc)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Sex_cd)
+    </td>
+    <td style="padding: 20px;">
+        <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id" asp-route-concept_id="@item.Concept_id">Edit</a>
+        <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Concept_id">Details</a>
+        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id" asp-route-concept_id="@item.Concept_id">Delete</a>
+    </td>
+</tr>            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script>$(document).ready( function () {
+		    $('#conceptsTable').DataTable();
+		} );</script>
+}

@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using WebDev.Application.Config;
 
 namespace WebDev.Application
@@ -27,12 +23,11 @@ namespace WebDev.Application
             services.AddControllersWithViews();
             services.Configure<ApiConfiguration>(Configuration.GetSection("ApiConfiguration"));
 
-
             // Enable Session Handler
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time
+                options.IdleTimeout = TimeSpan.FromMinutes(3);//You can set Time
             });
             services.AddMvc();
         }
@@ -64,12 +59,17 @@ namespace WebDev.Application
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                   name: "default",
-                   pattern: "{controller=Home}/{action=Index}/{id?}");
+                          name: "default",
+                          pattern: "{controller=Home}/{action=Index}/{id?}");
                 // Users
                 endpoints.MapControllerRoute(
                   name: "Users",
                   pattern: "{controller=Users}/{action=Index}/{id?}");
+
+                // Concepts
+                endpoints.MapControllerRoute(
+                  name: "Concepts",
+                  pattern: "{controller=Concepts}/{action=Index}/{id?}");
             });
         }
     }

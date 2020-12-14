@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
 
 namespace WebDev.Services.Entities
 {
     public class LoginDto
     {
-        public string email { get; set; }
-        public string password { get; set; }
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("password")]
+        public string Password { get; set; }
 
         private LoginDto()
         {
-
         }
 
         public static LoginDto Build(string email, string password)
         {
             return new LoginDto
             {
-                email = email,
-                password = password
+                Email = email,
+                Password = password
             };
         }
     }

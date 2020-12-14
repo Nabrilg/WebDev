@@ -15,8 +15,8 @@ namespace WebDev.Application.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApiConfiguration _apiConfiguration;
         private LoginService loginService;
+        private readonly ApiConfiguration _apiConfiguration;
 
         public HomeController(ILogger<HomeController> logger, IOptions<ApiConfiguration> apiConfiguration)
         {
@@ -28,7 +28,7 @@ namespace WebDev.Application.Controllers
         public IActionResult Index()
         {
             ViewData["IsUserLogged"] = HttpContext.Session.GetString("IsUserLogged");
-            ViewData["Token "] = HttpContext.Session.GetString("Token");
+            ViewData["User"] = HttpContext.Session.GetString("User");
             return View();
         }
 
@@ -51,20 +51,20 @@ namespace WebDev.Application.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] //The basic purpose of ValidateAntiForgeryToken attribute is to prevent cross-site request forgery attacks.
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(Login login)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var loginCreds = await loginService.Login(MapperToLoginDto(login));
-                  
-                    if (IsValidUser(loginCreds))
+                    // Llamar a la API para validar el Login
+                    var SuccessLogin = await loginService.ValidUser(MapperToLoginDto(login));
+                    if (IsValidUser(SuccessLogin))
                     {
                         return RedirectToAction(nameof(Index));
                     }
-                    ModelState.AddModelError(string.Empty, "Login Failed");
+                    ModelState.AddModelError(string.Empty, "Login Failed.");
                 }
             }
             catch (Exception ex)
@@ -80,27 +80,35 @@ namespace WebDev.Application.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-        private bool IsValidUser(TokenDto loginCreds)
+        private bool IsValidUser(TokenDto tokenDto)
         {
-            if (loginCreds != null)
+            if (tokenDto != null)
             {
-                //Configure the session variables
                 HttpContext.Session.SetString("IsUserLogged", "true");
-                HttpContext.Session.SetString("Token", loginCreds.token);
-                HttpContext.Session.SetString("UserId", loginCreds.userId.ToString());
+                HttpContext.Session.SetString("User", tokenDto.Name);
+                HttpContext.Session.SetString("TokenData", tokenDto.Token);
                 return true;
             }
             HttpContext.Session.SetString("IsUserLogged", "false");
             return false;
         }
 
+        private Login MapperToLogin(LoginDto loginDto)
+        {
+            return new Login
+            {
+                Email = loginDto.Email,
+                Password = loginDto.Password,
+                RememberMe = false
+            };
+        }
+
         private LoginDto MapperToLoginDto(Login login)
         {
             return LoginDto.Build(
-                email: login.Email,
-                password: login.Password
-                );
+              email : login.Email,       
+              password: login.Password
+            );
         }
     }
 }

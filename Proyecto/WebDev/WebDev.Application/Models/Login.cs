@@ -4,11 +4,11 @@ namespace WebDev.Application.Models
 {
     public class Login
     {
-        [Required(ErrorMessage = "Email is needed")]
+        [Required(ErrorMessage = "¡El email es requerido!")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Password is needed")]
+        [Required(ErrorMessage = "¡La clave es requerida!")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
